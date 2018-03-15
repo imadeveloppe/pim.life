@@ -1,0 +1,62 @@
+<ion-view title="Home" hide-nav-bar="true" hide-back-button="true" id="list-account" class=" " can-swipe-back="false"> 
+    
+    <ion-content padding="true" class="manual-ios-statusbar-padding">
+
+ 
+            <ion-list ng-if="!isIOS" show-reorder="showReorder">
+                <ion-item ng-repeat="account in accounts" class="item-light item-avatar card homev2 " ng-class="account.cssClass" on-hold="toggleReorder()">
+
+
+                    <div  ui-sref="tab.info({id:account.id})">
+                       <div class="item-avatar item-icon-right positive  border-rounderd" >
+                            <img ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}" class="imgCompte">
+                            <h2positive class="oneLine"> 
+                                {{ account.name }}  
+                            </h2positive>
+                            <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                        </div>
+                    </div>
+                        <div ui-sref="tab.info({id:account.id})" ui-sref-opts="{reload: true, inherit: false}">
+                            <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;line-height: 100%;" class=" ">
+                            <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    
+                    <div class=" style-position">
+                         <i class="icon ion-ios-information-outline" ui-sref="tab.update({id:account.id})" ui-sref-opts="{reload: true, inherit: false}"></i>
+                    </div>
+                    <ion-reorder-button class="ion-navicon" ng-click="toggleReorder()"
+                                        on-reorder="onReorderAccounts($fromIndex, $toIndex)">
+                    </ion-reorder-button>
+                </ion-item>
+
+            </ion-list>  
+
+            <ion-list ng-if="isIOS" sortable draggable=".card" sorted="onReorderAccounts($fromIndex, $toIndex)">
+                <div ng-if="account.id"  ng-repeat="account in accounts" class="list card border-rounded homev2 {{ account.cssClass }}">
+                    <div  ui-sref="tab.info({id:account.id})">
+                       <ion-item class="item-avatar item-icon-right positive  border-rounderd" >
+                                <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                                <h2positive class="oneLine">
+                                    <!-- <i ng-if="account.principal == 1" class="ion-star"></i> -->
+                                    {{ account.name }}    
+                                </h2positive> 
+                            <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                        </ion-item>
+                        <div class="item item-body item-icon-right" id="home-list-item-container2">
+                            <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;line-height: 100%;" class=" ">
+                            <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    </div>
+
+                    <div class=" style-position">
+                         <i class="icon ion-ios-information-outline" ui-sref="tab.update({id:account.id})" ui-sref-opts="{reload: true, inherit: false}"></i>
+                    </div>
+                </div>
+            </ion-list>
+
+            <p ui-sref="tab.create" style="margin-top:0px;color:#fff;font-size:20px;text-align:center;font-weight: bold;text-shadow: 0 0 4px #000;    padding-bottom: 60px;">
+                {{ 'list_account.new_account' | translate }}
+            </p>
+                    
+    </ion-content>  
+</ion-view>

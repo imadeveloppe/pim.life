@@ -1,0 +1,252 @@
+<ion-view view-title="{{ 'home.statistiques' | translate }}" can-swipe-back="false"  hide-nav-bar="false"  id="pageStatistics"  > 
+
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    
+    <ion-content class="trans ContentStats" ng-controller="StatisticsCtrl"> 
+        <div style="width:100%;">
+            <ion-slide-box on-slide-changed="trans.selectedAccount = ($index);accountChange()" active-slide="trans.selectedAccount">
+                <ion-slide ng-repeat="account in accounts">
+                    <div class="list card border-rounded homev2 {{ account.cssClass }}"  style="margin-top:11px;">
+                        <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
+                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                            <h2positive  class="oneLine">{{ account.name }}
+                                <p style="white-space:normal;">{{ account.number }}</p>
+                            </h2positive>
+                        </ion-item>
+                        <div class="item item-body " id="home-list-item-container2">
+                            <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;" class=" ">
+                                <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div> 
+        <div class="list card border-rounded block-rang-picker"  id="getwith" style="margin-top:11px;">
+            <form> 
+                
+                <div class="row" style="display: none;">
+                    <input ng-model="period1" mobiscroll-range="settings" class="input-pickup-range input-pickup-range1" ng-change="initial()"  mobiscroll-instance="rangePickerDate1">
+                    <input ng-model="period2" mobiscroll-range="settings" class="input-pickup-range input-pickup-range2" ng-change="initial()" mobiscroll-instance="rangePickerDate2" > 
+                </div>
+                <div  layout="row" ng-if="currentLang == 'en'">   
+                    <label class="block-rang-picker" ng-click="showRangePicker1()">
+                        {{ period1[0]  | date:'MM-dd-yyyy' }}
+                        {{ period1[1]  | date:'MM-dd-yyyy' }}
+                        <span ng-if="!period1[0]">period 1</span>
+                         <i><img src="img/calendar.png" style="width: 29px"></i>
+                    </label> 
+                    <label class="block-rang-picker" ng-click="showRangePicker2()">
+                        {{ period2[0]  | date:'MM-dd-yyyy' }}
+                        {{ period2[1]  | date:'MM-dd-yyyy' }}
+                        <span ng-if="!period2[0]">period 1</span>
+                        <i><img src="img/calendar.png" style="width: 29px"></i>
+                    </label> 
+                </div> 
+                <div  layout="row" ng-if="currentLang == 'fr'">   
+                    <label class="block-rang-picker" ng-click="showRangePicker1()">
+                        {{ period1[0]  | date:'dd-MM-yyyy' }}
+                        {{ period1[1]  | date:'dd-MM-yyyy' }}
+                        <span ng-if="!period1[0]">period 1</span>
+                         <i><img src="img/calendar.png" style="width: 29px"></i>
+                         
+                    </label> 
+                    <label class="block-rang-picker" ng-click="showRangePicker2()">
+                        {{ period2[0]  | date:'dd-MM-yyyy' }}
+                        {{ period2[1]  | date:'dd-MM-yyyy' }}
+                        <span ng-if="!period2[0]">period 1</span>
+                        <i><img src="img/calendar.png" style="width: 29px"></i>
+                        
+                    </label> 
+                </div>  
+            </form>
+
+            <div ng-if="!etap2"> 
+                 <div class="tables tables-ecran-1">  
+                    <div class="table">
+                        <div class="thead">
+                            <div>{{ 'statistics.synthesis' | translate }}</div>
+                            <div class="align-right">{{ 'statistics.period_1' | translate }}</div>
+                            <div class="align-right">{{ 'statistics.period_2' | translate }}</div>
+                            <div class="align-right">%</div>
+                            <div style="padding-right: 15px;"> </div>
+                        </div>
+                        <!-- ////////////////////////////****** ng-repeat *******/////////////// -->
+
+                        <div class="tbody {{ Style[key] }}" ng-repeat="(key, detail) in details" ng-class="Style[$index]" ng-click="Statistics_detail(detail)" >
+                            <div>{{ 'statistics.'+detail.slug | translate }}</div>
+                            <div class="align-right">{{ detail.p1 }}</div>
+                            <div class="align-right">{{ detail.p2 }}</div>
+                            <div class="align-right">{{ detail.percent }}</div>
+                            <div>
+                                <i ng-if="detail.name != 'Saving'" class="icon ion-arrow-right-b"> 
+                                </i>
+                            </div> 
+                        </div>
+                    </div>
+                </div>  
+                
+            </div> 
+            <div ng-if="etap2">
+
+<button ng-click="initial()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-chevron-left "> 
+{{ 'global_fields.back' | translate }}
+</button>
+
+
+                <div class="tables">
+                    <div class="table">
+                        <div class="thead">
+                            <div>{{ details2.name }}</div>
+                            <div class="align-right">{{ 'statistics.period_1' | translate }}</div>
+                            <div class="align-right">{{ 'statistics.period_2' | translate }}</div>
+                            <div class="align-right">%</div>
+                            <div style="padding-right: 15px;"> </div>
+                        </div>
+                        <div class="tbody">
+                            <div>Total</div>
+                            <div class="align-right">{{ details2.p1 }}</div>
+                            <div class="align-right">{{ details2.p2 }}</div>
+                            <div class="align-right">{{ details2.percent }}</div>
+                            <div style="padding-right: 15px;"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tables">
+                    <div class="table table-categories" >
+                        <div class="thead header-category">
+                            <div>{{ 'statistics.categories' | translate }}</div>
+                            <div class="align-right">{{ 'statistics.period_1' | translate }}</div>
+                            <div class="align-right">{{ 'statistics.period_2' | translate }}</div>
+                            <div class="align-right">%</div>
+                            <div style="padding-right: 15px;"> </div>
+                        </div>
+                    </div> 
+                    <div class="table table-categories" ng-repeat="catg in dataList" >
+                        <div class="tbody" ng-click="OpenClose(catg);">
+                            <div>{{ catg.name }}</div>
+                            <div class="align-right">{{ catg.p1 }}</div>
+                            <div class="align-right">{{ catg.p2 }}</div>
+                            <div class="align-right">{{ catg.percent }}</div>
+
+                            <div style="min-width: 15px;" >
+                                <i class="icon {{ !catg.toggle ? 'ion-arrow-right-b' : 'ion-arrow-down-b' }}"></i>
+                            </div>
+                        </div>
+                        <div class="bub-tbody"  ng-show="catg.toggle"  ng-repeat="sub in catg.subs">
+                            <div>{{ sub.name }}</div>
+                            <div class="align-right">{{ sub.p1 }}</div>
+                            <div class="align-right">{{ sub.p2 }}</div>
+                            <div class="align-right">{{ sub.percent }}</div>
+                        </div>
+                    </div> 
+
+                </div> 
+                 
+                
+            </div>
+                <div ng-hide="etap2">
+
+                    <div ng-show=" !NulledAreaGraphe_1 " id="graphArea1" class="cssSlideUp"  style="margin-top: 20px;"></div>
+                    <p ng-if="NulledAreaGraphe_1" class="list card border-rounded NoDataForTheRange">
+                        <i class="icon ion-alert-circled"></i>
+                        <b ng-if="currentLang == 'en'">
+                            {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                            ({{ period1[0]  | date:'MM-dd-yyyy' }} => {{ period1[1]  | date:'MM-dd-yyyy' }})
+                        </b>
+                        <b ng-if="currentLang == 'fr'">
+                            {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                            ({{ period1[0]  | date:'dd-MM-yyyy' }} => {{ period1[1]  | date:'dd-MM-yyyy' }})
+                        </b>
+                    </p> 
+                    
+                    
+
+
+                    <div ng-show=" !NulledAreaGraphe_2 " id="graphArea2" class="cssSlideUp"  style="margin-top: 20px;"></div> 
+                    <p ng-if="NulledAreaGraphe_2" class="list card border-rounded NoDataForTheRange">
+                        <i class="icon ion-alert-circled"></i>
+                        <b ng-if="currentLang == 'en'">
+                            {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                            ({{ period2[0]  | date:'MM-dd-yyyy' }} => {{ period2[1]  | date:'MM-dd-yyyy' }})
+                        </b>
+                        <b ng-if="currentLang == 'fr'">
+                            {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                            ({{ period2[0]  | date:'dd-MM-yyyy' }} => {{ period2[1]  | date:'dd-MM-yyyy' }})
+                        </b>
+                    </p> 
+
+                </div>
+                
+                <div ng-show="etap2">
+
+                    <div ng-hide="showSubCat">
+
+                        <div ng-show=" !NulledAreaGraphe_1 "  id="graphColumn1" class="padding " ></div>
+                        <p ng-if="NulledAreaGraphe_1" class="list card border-rounded NoDataForTheRange" >
+                            <i class="icon ion-alert-circled"></i>
+                            <b  ng-if="currentLang == 'en'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period1[0]  | date:'MM-dd-yyyy' }} => {{ period1[1]  | date:'MM-dd-yyyy' }})
+                            </b>
+                            <b ng-if="currentLang == 'fr'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period1[0]  | date:'dd-MM-yyyy' }} => {{ period1[1]  | date:'dd-MM-yyyy' }})
+                            </b>
+                        </p> 
+
+                        <div  ng-show=" !NulledAreaGraphe_2 "  id="graphColumn2" class="padding"></div>
+                        <p ng-if="NulledAreaGraphe_2" class="list card border-rounded NoDataForTheRange">
+                            <i class="icon ion-alert-circled"></i>
+                            <b ng-if="currentLang == 'en'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period2[0]  | date:'MM-dd-yyyy' }} => {{ period2[1]  | date:'MM-dd-yyyy' }})
+                            </b>
+                            <b ng-if="currentLang == 'fr'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period2[0]  | date:'dd-MM-yyyy' }} => {{ period2[1]  | date:'dd-MM-yyyy' }})
+                            </b>
+                        </p> 
+                        
+                    </div>
+
+
+                    <div ng-show="showSubCat">
+                        <div   ng-show=" !NulledgraphPie_1 "  id="graphPie1" class="padding "></div> 
+                        <p ng-if="NulledgraphPie_1" class="list card border-rounded NoDataForTheRange">
+                            <i class="icon ion-alert-circled"></i>
+                            <b ng-if="currentLang == 'en'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period1[0]  | date:'MM-dd-yyyy' }} => {{ period1[1]  | date:'MM-dd-yyyy' }})
+                            </b>
+                            <b ng-if="currentLang == 'fr'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period1[0]  | date:'dd-MM-yyyy' }} => {{ period1[1]  | date:'dd-MM-yyyy' }})
+                            </b>
+                        </p> 
+
+                        <div   ng-show=" !NulledgraphPie_2 "  id="graphPie2" class="padding "></div> 
+                        <p ng-if="NulledgraphPie_2" class="list card border-rounded NoDataForTheRange">
+                            <i class="icon ion-alert-circled"></i>
+                            <b ng-if="currentLang == 'en'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period2[0]  | date:'MM-dd-yyyy' }} => {{ period2[1]  | date:'MM-dd-yyyy' }})
+                            </b>
+                            <b ng-if="currentLang == 'fr'">
+                                {{ 'statistics.no_data_for_the_range' | translate }} <br>
+                                ({{ period2[0]  | date:'dd-MM-yyyy' }} => {{ period2[1]  | date:'dd-MM-yyyy' }})
+                            </b>
+                        </p>
+                    </div>
+                </div>
+                
+
+        </div>
+
+
+    </ion-content>
+</ion-view>  

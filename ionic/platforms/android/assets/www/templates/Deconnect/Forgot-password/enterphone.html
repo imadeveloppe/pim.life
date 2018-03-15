@@ -1,0 +1,38 @@
+<ion-view title="{{ 'forgot_password.title_page' | translate }}" id="page5" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button data-tap-disabled="true"></ion-nav-back-button>
+        <ion-nav-back-button class="button-clear">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inDeconnect padding">
+        <div class="list card ">
+            <form class="list">
+                <!-- <div class="list list-inset smscode">
+                    <p>{{ 'forgot_password.sub_title' | translate }}</p>
+                    <label class="item item-input IndicatifNoir" style="width:30%;float:left;border-top: 0;" on-tap="openPickerIndicatif()">
+                        <input type="text" ng-model="data.Indicatif" style="text-align:right;padding-right:0;background-color: #fff;" disabled>
+                    </label>
+                    <label class="item item-input " style="width:70%;border-top: none;"> 
+                        <input type="tel" placeholder="{{ 'forgot_password.phone_number' | translate }}" ng-model="data.mobileNumber">
+                    </label>
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="enterphone()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block">
+                    {{ 'forgot_password.send_code' | translate }}
+                    </button>
+                </div> -->
+                <div class="list list-inset smscode">
+                    <p>{{ 'forgot_password.sub_title' | translate }}</p>
+                    <label class="item item-input " style=";border-top: none;"> 
+                        <input type="email" placeholder="{{ 'forgot_password.email' | translate }}" ng-model="data.email">
+                    </label>
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="enterphone()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block">
+                    {{ 'forgot_password.send_code' | translate }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

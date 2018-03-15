@@ -1,0 +1,87 @@
+<ion-view view-title="{{ 'payments.title_page' | translate }}" hide-back-button='false'  hide-nav-bar="true"  id="pageTransfers" can-swipe-back="false">
+
+    <ion-nav-bar class="bar-positive">
+
+        <ion-nav-back-button data-tap-disabled="true"></ion-nav-back-button>
+
+    </ion-nav-bar>
+
+
+
+    <ion-content class=" inHome">
+
+        <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button custom-back-button back-button buttons  button-clear header-item" ><i class="icon ion-ios-arrow-left"></i> {{ 'global_fields.back' | translate }}</button>
+
+        <center id="titlePage">
+
+            <h1>{{ 'payments.title_page' | translate }}</h1>
+
+        </center>
+
+        <div class="transfersIconsContinner">
+
+            <div class="row shareAndAlert">
+
+                <div ng-click="MakeTransfer()" class="col" style="text-align:center;">
+
+                    <div style="width:100%;">
+
+                        <img ng-src="img/sendtofriend.png" style="width: 60%;">
+
+                    </div>
+
+                    <span style="width:100%;">{{ 'payments.make_a_transfer' | translate }}</span>
+
+                </div>
+
+                <div ng-click="BetweenAccounts()" class="col" style="text-align:center;">
+
+                    <div style="width:100%;">
+
+                        <img ng-src="img/shared.png" style="width: 60%;">
+
+                    </div>
+
+                    <span style="width:100%;">{{ 'payments.between_my_accounts' | translate }}</span>
+
+                </div>
+
+            </div>
+
+            <div class="row shareAndAlert" style="margin-top:15px;">
+
+                
+
+                <div  ng-click="DemandeTransfer()" class="col" style="text-align:center;">
+
+                    <div style="width:100%;">
+
+                        <img ng-src="img/requestapayment.png" style="width: 60%;">
+
+                    </div>
+
+                    <span>{{ 'payments.request_payment_using_qr_code' | translate }}</span>
+
+                </div> 
+
+                <div ng-click="ScanQrCode()" class="col" style="text-align:center;">
+
+                    <div style="width:100%;">
+
+                        <img ng-src="img/requestapayment.png" style="width: 60%;">
+
+                    </div>
+
+                    <span>{{ 'payments.pay_using_qr_code' | translate }}</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </ion-content>
+
+</ion-view>

@@ -1,0 +1,34 @@
+<ion-view title="{{ 'settings.twitter' | translate }}" hide-nav-bar="true" hide-back-button='true' can-swipe-back="false" style="background: #fff;">
+    <ion-content class="socialsNetworks inviteToTwitter"> 
+        <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button custom-back-button back-button buttons  button-clear header-item" ><i class="icon ion-ios-arrow-left"></i> {{ 'global_fields.back' | translate }}</button>
+        <div ng-if="UserDetails.socialNetworks.twitter.registred!=1" class="padding">
+            <div style="text-align: center;">
+                <img src="templates/Connect/socials/twitter/img/twitter.png" class="logo">
+            </div>
+            <p>
+                {{ 'twitter.text1' | translate }}
+            </p>
+            <p>
+                {{ 'twitter.text2' | translate }}
+            </p>
+            <ul>
+                <li>{{ 'twitter.list1' | translate }}</li>
+                <li>{{ 'twitter.list2' | translate }}</li>
+                <li>{{ 'twitter.list3' | translate }}</li>
+            </ul>
+            <button  ng-click="twitterLogin()" class="button button-block button-positive btn-autorise">{{ 'twitter.link_to_twitter' | translate }}</button> 
+        </div>
+        <div ng-if="UserDetails.socialNetworks.twitter.registred==1" style="text-align: center;" class="padding">
+            <img src="templates/Connect/socials/twitter/img/twitter.png" class="logo">
+            <div class="continner-info">
+                <img ng-src="{{ twitterData.profile_image_url }}" class="profile-img">  
+                <h2>{{twitterData.name}}</h2>
+                <!-- <button ng-click="TwitterShare()" class="button button-block button-balanced" style="margin-bottom: 0;">Tweet (Just a test)</button> -->
+                <button ng-click="TwitterLogOut()" class="button button-block button-assertive" style="margin-bottom: 0;">
+                     {{ 'twitter.delete_account' | translate }}
+                </button>
+            </div> 
+        </div>
+        
+    </ion-content>
+</ion-view>

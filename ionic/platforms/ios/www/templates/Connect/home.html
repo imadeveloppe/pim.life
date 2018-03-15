@@ -1,0 +1,125 @@
+<ion-view title="Home" hide-nav-bar="true" hide-back-button="true" id="homePage" class=" " can-swipe-back="false"> 
+    
+    <ion-content padding="false" class="manual-ios-statusbar-padding hasCause" id="homePage" on-scroll-complete="gotoBottom()" ng-class="{'noCause': !isCause, 'assocAccount' : isPro == 2}">
+        
+        <div class="cause"  ng-if="SelectedAssocID > 0 || isPro == 2"> 
+            <div class="header">
+                <div class="cover-continer" style="background: #254f7b">
+                    <img ng-src="{{ cause.cover }}" class="cover-cause" style="width: 100%" ng-if="cause.cover != ''">
+                    <strong style="
+                        position: absolute;
+                        bottom: 3px;
+                        left: 97px;
+                        color: #ffffff;
+                        font-size: 18px;
+                        text-shadow: 0 0 4px #000;"
+                        ng-if="isPro != 2" ">{{ 'home.ma_cause' | translate }}</strong>
+                </div>
+                <img ng-src="{{ cause.logo }}" class="logo-cause" ng-if="cause.logo != ''">
+                <div class="logo-cause" ng-if="cause.logo == ''">
+                    <div class="initiales">
+                        {{ cause.initiales }}
+                    </div>
+                </div>
+            </div>
+            <div class="content" style="padding-top: 0;">
+                <div class="title">
+                    <h4 class="oneLine" style="margin: 0;">{{ cause.brandname }}</h4>
+                    <p class="oneLine" >{{ cause.slogan }}</p>
+                </div>  
+                <p class="analytics">{{ 'home.dons' | translate }} {{ cause.year }} : <strong>{{ cause.yeardonations }} {{ devise }}</strong><br>
+                    {{ 'home.nombre_de_donateurs' | translate }} : <strong>{{ cause.nbrdonors }}</strong><br>
+                    <div ng-if="SelectedAssocID > 0 && isCause">
+                        {{ 'home.mes_dons' | translate }} : <span>{{ cause.userdonations }} {{ devise }}</span>
+                    </div> 
+                </p>
+                <div class="more-info">
+                    <a class="positive" ui-sref="tab.detailCause({idCause: cause.id})">{{ 'home.more_infos' | translate }}</a>
+                </div>
+            </div>
+        </div>  
+        <div class="cause noCauseSelected" ng-if="isPro != 2 && !isCause && loaded">   
+            <div class="content">
+                {{ 'home.no_cause_selected' | translate }}
+                <div class="more-info" style="padding-top: 10px;">
+                    <a class="positive" ui-sref="tab.causes({idCause: cause.id})">{{ 'home.select_a_cause' | translate }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 30px;margin-top: 10px;"> 
+            <div ng-if="NotifHome.nbr > 0" ng-click="pendingNotifHome( NotifHome.type )" class="block padding notifs"> 
+
+                <div ng-if=" NotifHome.type == 'paiement' " style="margin-top: 0px;">
+                    <span ng-if="NotifHome.nbr == 1">
+                        {{ 'home.one_notif' | translate }}
+                    </span>
+                    <span ng-if="NotifHome.nbr > 1">
+                        {{ NotifHome.nbr }} {{ 'home.more_notifs' | translate }}
+                    </span>
+                </div>
+                <div ng-if=" NotifHome.type == 'document' " style="margin-top: 0px;">
+                    <span ng-if="NotifHome.nbr == 1">
+                        {{ 'home.one_notif_document' | translate }}
+                    </span>
+                    <span ng-if="NotifHome.nbr > 1">
+                        {{ NotifHome.nbr }} {{ 'home.more_notifs_document' | translate }}
+                    </span>
+                </div>
+                
+            </div>
+        </div>
+        <div class="block padding links">
+            <div class="row">
+                <div class="col button button-clear" ng-click="charger_mon_compte()">
+                    <img src="img/new-home/icon-charger.png">
+                    <strong>{{ 'home.charger_mon_compte' | translate }}</strong>
+                </div> 
+                <div class="col button button-clear" ui-sref="tab.listAccounts">
+                    <img src="img/new-home/icon-comptes.png">
+                    <strong>{{ 'home.mes_comptes' | translate }}</strong>
+                </div> 
+                <div class="col button button-clear" ng-click="ibanTransfer()">
+                    <img src="img/new-home/icon-transfer-iban.png">
+                    <strong>{{ 'home.transfert_iban' | translate }}</strong>
+                </div> 
+            </div>
+            <div style="height: 10px"></div>
+            <div class="row">
+                <div class="col button button-clear" ui-sref="tab.statistics">
+                    <img src="img/new-home/icon-statistics.png">
+                    <strong>{{ 'home.statistiques' | translate }}</strong>
+                </div> 
+                <div class="col button button-clear" ui-sref="tab.bankStatementFromHome">
+                    <img src="img/new-home/icon-bankstatment.png">
+                    <strong>{{ 'home.mes_releves' | translate }}</strong>
+                </div> 
+                <div class="col button button-clear" onclick="window.open('https://pim.life/faq', '_system')"> <!-- ui-sref="tab.faq" -->
+                    <img src="img/new-home/icon-faq.png">
+                    <strong>{{ 'home.faq' | translate }}</strong>
+                </div> 
+            </div>
+        </div>
+        <div class="block padding transfers" ng-controller="TransCtrl">
+            <div class="row">
+                <div class="col button button-clear" ng-click="MakeTransfer()" >
+                    <img src="img/new-home/icon-transfer.png">
+                    <strong>{{ 'home.payer_a_distance' | translate }}</strong>
+                </div> 
+                <div class="col button button-clear" ng-click="ScanQrCode()" >
+                    <img src="img/new-home/icon-qrcodescaner.png">
+                    <strong>{{ 'home.payer_a_proximite' | translate }}</strong>
+                </div> 
+                <div class="col button button-clear" ng-click="BetweenAccounts()">
+                    <img src="img/new-home/icon-acountoacount.png">
+                    <strong>{{ 'home.compte_a_compte' | translate }}</strong>
+                </div> 
+                <div class="col button button-clear" ng-click="DemandeTransfer()">
+                    <img src="img/new-home/icon-qrcodegenerator.png">
+                    <strong>{{ 'home.demander_un_paiement' | translate }}</strong>
+                </div> 
+            </div>
+        </div>
+    </ion-content>   
+
+</ion-view>

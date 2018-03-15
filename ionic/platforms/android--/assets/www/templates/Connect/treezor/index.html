@@ -1,0 +1,50 @@
+<ion-view view-title="Treezor" hide-nav-bar="true"  hide-back-button="true" id="page-treezor" can-swipe-back="false" style="background: #fff"> 
+    
+    <ion-content padding="true" class="manual-ios-statusbar-padding"> 
+
+            <div ng-if="state == 0" style="text-align: center;">
+                <ion-spinner icon="ripple" class="spinner-assertive"></ion-spinner>
+            </div>
+
+            <div ng-if="state == 1" style="text-align: center;font-size: 120px;margin:30px 0; color: green;">
+                <i class="icon ion-checkmark-circled"></i>
+            </div>
+
+            <div ng-if="state == 2" style="text-align: center;font-size: 120px;margin:30px 0; color: red;">
+                <i class="icon ion-close-circled"></i>
+                <p style="font-size: 15px;padding-top: 20px;">
+                    {{ fail }}
+                </p>
+            </div> 
+
+            <div class="list">
+
+                <a ng-repeat="user in users" class="item item-thumbnail-left">
+                  <img src="http://www.iconsdb.com/icons/download/orange/businessman-256.ico">
+                  <h2 ng-if="user.legalName == '' ">{{ user.firstname }} {{ user.lastname }}</h2>
+                  <h2 ng-if="user.legalName != '' ">{{ user.legalName }}</h2>
+                  <p>{{ user.email }}</p>
+                  <p>{{ user.postcode }} {{ user.city }}</p>
+                  <span style="background: #cccccc; font-size: 13px;padding: 2px 7px;border-radius: 10px;color: #555;">
+                    Nbr of wallets: {{ user.walletCount }}
+                  </span>
+                  <span ng-if="user.userStatus =='CANCELED' " class="badge badge-assertive">CANCELED</span>
+                  <span ng-if="user.userStatus =='VALIDATED' " class="badge badge-balanced">VALIDATED</span>
+                </a> 
+
+            </div>
+
+            
+            <div class="block-buttons">
+                <button ng-click="heartbeat()" class="button button-block button-large button-positive" style="text-transform: uppercase;">
+                    TEST heartbeat
+                </button> 
+                <button ng-click="getUsers()" class="button button-block button-large button-positive" style="text-transform: uppercase;">
+                    GET USERS
+                </button> 
+            </div>
+
+
+    </ion-content> 
+
+</ion-view>

@@ -1,0 +1,37 @@
+<ion-view title="BUSINESS INFORMATIONS" id="page5" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inDeconnect padding" >
+
+
+    <span class="title">Please provide the following business information.</span>
+        <div class="list card ">
+            <form class="list">
+                <div class="list list-inset busnissinfo"> 
+                     <label class="item item-input item-stacked-label blueforIphone" on-tap="openPickerBusinessType()">
+                        <input type="text" placeholder="BUSINESS TYPE" ng-model="informationBusinessType" disabled="disabled">
+                    </label> 
+
+                    <div>  
+                     <label class="item item-input item-floating-label">
+                        <span class="input-label">REGISTRED VAT NUMBER<span class="optional"> (optional)</span></span>
+                        <input type="text" class="registred" placeholder="REGISTRED VAT NUMBER (optional)" ng-model="data.registred">
+                     </label>   
+                     <!-- on-tap="openPickerCategories()" -->
+                    <label class="item item-input item-stacked-label select" ng-controller="ListCtrl" >
+
+                    <select ng-model="data.idsubcategories" class="mobiscrollselect" style="display:none;" mobiscroll-select="ListCategories" mobiscroll-instance="demo" > 
+                        </select> 
+                    </label> 
+
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="Update()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block"> UPDATE</button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

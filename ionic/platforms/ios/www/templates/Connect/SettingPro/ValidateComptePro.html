@@ -1,0 +1,26 @@
+<ion-view title="VALIDATION" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+
+        <p class="NotMessage">{{Message}}</p>
+        <div class="list card " style="padding-top: 0;">
+            <form class="list" style="padding-top:0px;">
+                <div ng-if="showtake" style="margin:0 auto;width:90%;" id="take">
+                    <button ng-click="takePhoto()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-ios-camera " ng-style="!isAndroid && {'width':'100%'} || {'width':'49%'}" style="display: inline-block;"> Take Picture</button>
+                    <button ng-if="isAndroid"  ng-click="choosePhoto()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-ios-folder" style="display: inline-block;width: 49%;"> Open Gallery</button>
+                </div>
+
+                <img ng-if="!showtake" ng-src="{{imgURI}}" style="text-align: center;width:100%;height:100%;">
+                <div ng-if="!showtake" style="margin:0 auto;width:90%;text-align: center;" id="send">
+                    <button ng-hide="isOldImage" ng-click="send()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-android-upload " style="display: inline-block;width: 49%;"> Save</button>
+                    <button ng-click="other()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-arrow-return-right" style="display: inline-block;width: 49%;"> Choose Other</button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

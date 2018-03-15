@@ -1,0 +1,50 @@
+<!--
+Create tabs with an icon and label, using the tabs-positive style.
+Each tab's child <ion-nav-view> directive will have its own
+navigation history that also transitions its views in and out.
+-->
+<ion-tabs class="tabs-icon-top tabs-dark tabs-striped"> 
+
+    <ion-tab title="{{ 'home_page.menuhome' | translate }}" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" ng-click="GotoHome()" id="tabsController-Home">
+        <ion-nav-view name="tab-home"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="{{ 'home_page.menustatistics' | translate }}" icon-off="ion-ios-people-outline" icon-on="ion-ios-people" ng-click="GotoCauses()">
+        <ion-nav-view name="tab-causes"></ion-nav-view>
+    </ion-tab>
+
+
+    <ion-tab title="{{ 'home_page.menushopping' | translate }}" icon-off="ion-ios-cart-outline" icon-on="ion-ios-cart" href="#/tab/shop" id="tab-shop" >
+        <ion-nav-view name="tab-shop"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="{{ 'home_page.menunotifications' | translate }}" icon-off="ion-ios-bell-outline" icon-on="ion-ios-bell" ng-click="GotoNotif()" badge="DATA_badg.badgeCount" ng-controller="NotifCtrl" badge-style="badge-assertive">
+        <ion-nav-view name="tab-notif"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="{{ 'home_page.menusettings' | translate }}" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" ng-click="GotoSettings()">
+        <ion-nav-view name="tab-settings"></ion-nav-view>
+    </ion-tab> 
+   
+    <!-- <ion-tab title="Home" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/home" id="tab-home">
+        <ion-nav-view name="tab-home"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Statistics" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/statistics" id="tab-statistics">
+        <ion-nav-view name="tab-statistics"></ion-nav-view>
+    </ion-tab>
+
+
+    <ion-tab title="Shopping" icon-off="ion-ios-cart-outline" icon-on="ion-ios-cart" href="#/tab/shop" id="tab-shop" >
+        <ion-nav-view name="tab-shop"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Notifications" icon-off="ion-ios-bell-outline" icon-on="ion-ios-bell" href="#/tab/list-notifications" id="tab-notif" badge="DATA_badg.badgeCount" ng-controller="NotifCtrl" badge-style="badge-assertive">
+        <ion-nav-view name="tab-notif"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Settings" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" ng-click="GotoSettings()">
+        <ion-nav-view name="tab-settings"></ion-nav-view> 
+    </ion-tab>-->
+
+</ion-tabs>

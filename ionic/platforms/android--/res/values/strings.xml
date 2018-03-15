@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PIM</string>
+    <string name="launcher_name">@string/app_name</string>
+    <string name="activity_name">@string/launcher_name</string>
+    <string name="empty_directory">Empty Directory</string>
+    <string name="storage_removed">Storage was removed or unmounted.</string>
+    <string name="choose_file">Select a file</string>
+    <string name="chooser_title">File Browser</string>
+    <string name="error_selecting_file">Error selecting File</string>
+    <string name="internal_storage">Internal storage</string>
+    
+    <string name="google_app_id">1:19743381474:android:a29c9ac0a284c034</string>
+    <string name="google_api_key">AIzaSyC7W3uDO4h0ootx_tpR4PwhIpIp3A-QmDs</string>
+</resources>

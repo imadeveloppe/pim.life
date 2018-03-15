@@ -1,0 +1,77 @@
+<ion-view title="{{ pageTitle }}" id="validateDoccument" class="validateDoccumentAddpersoFromPro" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs"> 
+
+        <center style="color: #fff">{{ 'validate_signatory_infos.text' | translate }}</center><br>    
+
+        <p style="color: #fff"><strong>{{ 'validate_signatory_infos.personal_informations' | translate }}</strong></p>
+        <div class="list card profileCard multiphotoContinner"> 
+
+            <ion-scroll direction="x" class="container-addPhoto wide-as-needed" style="margin-top: 4px;"> 
+                <div ng-if="arrayImgURIForIdentity.length > 0" ng-repeat="(key, file) in arrayImgURIForIdentity" class="item-photo" style="display: inline-block;">
+
+                    <i class="icon ion-close" ng-click="DeletePhoto( key, 'identity' )"></i> 
+                    
+                    <img ng-src="{{ file.photoname }}" ng-if=" typeFileUploaded( file ) == 'image' "> 
+                    
+                    <div ng-if=" typeFileUploaded( file ) == 'doc' " ng-click="previewFile( file.photoname )">
+                        <img ng-src="img/doc.png" >  
+                        <center ng-if="file.photolibelle!=''" class="oneLine">
+                            {{ file.photolibelle }}
+                        </center>
+                    </div>
+                    
+                </div>
+                <div style="display: inline-block;">
+                    <img  ng-click="choseAction('identity')" src="img/add-photo-feedback.png">
+                </div>   
+            </ion-scroll>
+
+             
+               
+        </div> 
+
+
+        <div style="height: 20px"></div>
+
+
+        <p style="color: #fff"><strong>{{ 'validate_signatory_infos.address' | translate }}</strong></p>
+        <div class="list card profileCard multiphotoContinner"> 
+
+            <ion-scroll direction="x" class="container-addPhoto wide-as-needed" style="margin-top: 4px;"> 
+                <div ng-if="arrayImgURIForAddress.length > 0" ng-repeat="(key, file) in arrayImgURIForAddress" class="item-photo" style="display: inline-block;">
+
+                    <i class="icon ion-close" ng-click="DeletePhoto( key, 'address' )"></i> 
+                    
+                    <img ng-src="{{ file.photoname }}" ng-if=" typeFileUploaded( file ) == 'image' "> 
+                    
+                    <div ng-if=" typeFileUploaded( file ) == 'doc' " ng-click="previewFile( file.photoname )">
+                        <img ng-src="img/doc.png" >  
+                        <center ng-if="file.photolibelle!=''" class="oneLine">
+                            {{ file.photolibelle }}
+                        </center>
+                    </div>
+                    
+                </div>
+                <div style="display: inline-block;">
+                    <img  ng-click="choseAction('address')" src="img/add-photo-feedback.png">
+                </div>   
+            </ion-scroll> 
+            
+        </div> 
+ 
+        <div class="profileCardButtons" style="height: auto; text-align: center;"> 
+            <button ng-click="send()" class="button " style="display: inline-block;background: #fff;margin-top: 20px;">
+                {{ 'validate_signatory_infos.send' | translate }}
+            </button>  
+        </div> 
+         
+            
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,47 @@
+<ion-modal-view> 	
+ 
+
+	<ion-content class="padding filterCatg" scroll="false"> 
+		
+		<ion-scroll class="categories" delegate-handle="subCat">
+			<div style="clear: both;"></div>
+				 <div class="catItem" ng-repeat="(key, subCategorie) in subCategorie" ng-click="selectSubCat(key, subCategorie)">
+				 	<span class="icon-continner">
+            <span ng-if="subCategorie.scatpicto==''" class="bg-color" style="background: {{ subCategorie.color  }}; position: absolute;opacity: 0.4;"></span>
+				 		<i class="icon ion-checkmark-circled" ng-if="subCategorie.selected"></i>
+				 		<img ng-if="subCategorie.scatpicto != ''" ng-src="{{ subCategorie.scatpicto }}"> 
+            <strong class="initiales-cat" ng-if="subCategorie.scatpicto==''">{{ subCategorie.scatlabel.charAt(0) }}</strong>
+				 	</span>
+			  	<p>{{ subCategorie.scatlabel }}</p>
+			    </div>
+			<div style="clear: both;"></div>
+		</ion-scroll> 
+
+    <!-- <div class="row button-terminer" style="text-align: center;"> 
+  			<div class="col">
+  				<button class="button button-clear" ng-click="SubCatFilter.hide()">
+  					<i class="icon ion-ios-arrow-back"></i>
+  				</button>
+  			</div>
+  			<div class="col">
+  				<button class="button button-clear" ng-click="ResetCat()">
+  					<i class="icon ion-refresh"></i>
+  				</button>
+  			</div>
+  			<div class="col">
+      		<button class="button  button-clear" ng-click="finishFilter()">
+      			<i class="icon ion-checkmark-circled"></i>
+      		</button>
+      	</div>
+        	
+    </div> -->
+    <div class="row button-terminer" style="background: #fff; border-top: 1px solid #eee;"> 
+        <div class="col">
+          <button class="button button-clear" ng-click="SubCatFilter.hide()">
+            <i class="icon ion-android-close"></i>
+          </button>
+        </div>  
+        </div>
+
+	</ion-content> 
+</ion-modal-view>

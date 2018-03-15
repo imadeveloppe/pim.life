@@ -1,0 +1,75 @@
+<ion-view view-title="{{ 'pay_receive.title_page' | translate }}" can-swipe-back="false" id="pagePayRecieve"> 
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="trans" ng-show="loaded">
+
+        <p class="NotMessage" style="margin-top: 10px;">
+            {{ 'pay_receive.sub_title' | translate }}
+        </p>
+        <div style="width:100%;">
+            <ion-slide-box on-slide-changed="trans.selectedAccount = ($index)" active-slide="trans.selectedAccount">
+                <ion-slide ng-repeat="account in accounts">
+                    <div class="list card border-rounded  homev2 {{ account.cssClass }}"   style="margin-top:0px;">
+                        <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
+                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                            <h2positive class="oneLine">
+                                {{ account.name }} 
+                            </h2positive>
+                            <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                        </ion-item>
+                        <div class="item item-body " id="home-list-item-container2">
+                            <p id="home-markdown1" style="margin-top:0px;color:#EF7E22;font-size:36px;text-align:center;" class=" ">
+                                <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+        <div class="list card  md-inline-form" layout="column" ng-cloak> 
+            <md-content layout-padding class="border-rounded">
+                <form name="userForm">
+                    <div class="row" style="text-align:center;">
+                        <div class="col">
+ 
+
+                <div class="BadgeUpdateInfo" ng-if="NotifInList.picto == ''">
+                    <span class="initialBadgeUpdateInfo CPro">{{ NotifInList.initiales}}</span>
+                </div>
+                <!-- <img ng-src="{{  PersonaleData.picto }}"  ng-if="PersonaleData.picto != 'img/female_40.jpg'" class="personaleInformation PhotoProfile" > -->
+                <img ng-src="{{  NotifInList.picto }}" ng-if="NotifInList.picto != ''" class="personaleInformation PhotoProfile"  ng-class="(NotifInList.isshop==1)?'CPro':'CPerso'">
+                            <p><span class="blueLabel oneLine"> {{ InfoNotif.fname}} {{ InfoNotif.lname}}</span></p>
+                            <p>{{ 'pay_receive.sent_you_a_payment' | translate }}</p> 
+                            <div class="Total"> {{ InfoNotif.amount}} {{devise}}</div>
+                            <p>{{ InfoNotif.date | date:"MM/dd/yyyy" }}</p>
+
+                        </div>
+                    </div>
+                    <div class="row sharedReson" ng-if="InfoNotif.reason.length > 0" style="border: 0">
+                        <div class="col">
+                            <p style="text-align: left;    border-top: 1px solid #eee;padding-top: 10px;">
+                                <span class="blueLabel" style="text-align: left;font-size: 13px; margin: 0">
+                                    {{ 'pay_receive.reason' | translate }}
+                                </span> {{ InfoNotif.reason }}
+                            </p>
+                        </div>
+                    </div>
+                </form> 
+                <div>
+                    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                        <md-button ng-click="Refuse()" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                            {{ 'pay_receive.refuse' | translate }}
+                        </md-button>
+                        <md-button ng-click="AcceptPayment()" class="md-raised md-primary" style="width: 43%;background-color:#f17f21;">
+                            {{ 'pay_receive.accept' | translate }}
+                        </md-button>
+                    </section>
+                </div>
+            </md-content>
+        </div>
+
+    </ion-content>
+</ion-view>

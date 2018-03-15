@@ -1,0 +1,111 @@
+<ion-view title="{{ 'payments_pending_confirmation.title_page' | translate }}" id="PayementsWaintingvalidation" class="view-pending-validation" can-swipe-back="false"> 
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <div class="tabs-striped tabs-top tabs-background-positive tabs-color-light">
+        <div class="tabs">
+          <span class="tab-item"  ng-click="changeTab('in') " ng-class="{'active': (activeTab == 'in')}" > 
+            {{ 'payments_pending_confirmation.incomes' | translate }}
+            <span ng-if="counts.to > 0 && activeTab == 'out' " class="badge badge-assertive" style="position: static;">{{ counts.to }}</span>
+          </span>
+          <span class="tab-item" href="#" ng-click="changeTab('out')" ng-class="{'active': (activeTab == 'out')}"> 
+            {{ 'payments_pending_confirmation.outgoing' | translate }}
+            <span ng-if="counts.from > 0 && activeTab == 'in' " class="badge badge-assertive" style="position: static;">{{ counts.from }}</span>
+          </span> 
+        </div>
+      </div>
+
+    <ion-content padding="false" class="has-header liste-transaction" style="background: #fff;top: 58px;">
+
+        <div class="liste-shopping-continner" style="margin-top: 47px;" ng-if=" activeTab == 'in' ">
+            <div ng-repeat="(key, listeTransaction) in listeTransaction.to"> 
+                 <div class="liste-shopping">
+
+                    <div ng-repeat="transaction in listeTransaction" ui-sref="tab.detailWatingRequest({idReq:transaction.id})" class="item-shopping" ng-class="{ 'transactionWithRaison' : transaction.description != '' }" >
+
+                        <div class="BadgeNotifList" ng-if="transaction.picto == '' " >
+                            <!-- ng-class="(transaction.isshop=='1')?'CPro':'CPerso'" -->
+                            <span class="initialTransfer Raduis" style="background-color: {{ transaction.color }} ;"  >
+
+                                {{ transaction.initiales}}
+
+                            </span>
+
+                        </div> 
+                        <img ng-src="{{ transaction.picto }}" ng-if="transaction.picto != '' " alt="" class="pecto" >
+
+                        <h2 class="oneLine">{{ transaction.fname }} {{ transaction.lname }}</h2>
+
+                        <span class="date-shopping">{{ transaction.date }} {{ transaction.time }}</span> 
+
+                        <p class="description-shopping">
+
+                            {{ transaction.description }}
+
+                        </p>
+
+                        <span class="amount-shopping amount-negative" ng-if="transaction.transtype=='send'">-{{ transaction.amount }}</span>
+
+                        <span class="amount-shopping"  ng-if="transaction.transtype!='send'">{{ transaction.amount }}</span>
+
+                    </div> 
+
+                </div> 
+            </div> 
+
+            <p ng-if="listeTransaction.to.length == 0" class="list card border-rounded" style="text-align: center;padding: 20px;background: #ffc602;box-shadow: none;position: relative;top: 10px;">
+                {{ 'payments_pending_confirmation.no_pending_payments' | translate }}
+            </p>
+        </div>
+        <div class="liste-shopping-continner" style="margin-top: 47px;"  ng-if=" activeTab == 'out' ">
+
+            <div class="liste-shopping-continner">
+
+                
+                <div ng-repeat="(key, listeTransaction) in listeTransaction.from" > 
+                    <div class="block-date">
+                    {{ accountsNames[key] }}
+                    </div>
+                     <div class="liste-shopping">
+
+                        <div ng-repeat="transaction in listeTransaction" ui-sref="tab.infoDetail({idreq:transaction.id})" class="item-shopping" ng-class="{ 'transactionWithRaison' : transaction.description != '' }">
+
+                            <div class="BadgeNotifList" ng-if="transaction.picto == '' " >
+                                <!-- ng-class="(transaction.isshop=='1')?'CPro':'CPerso'" -->
+                                <span class="initialTransfer Raduis" style="background-color: {{ transaction.color }} ;"  >
+
+                                    {{ transaction.initiales}}
+
+                                </span>
+
+                            </div> 
+                            <img ng-src="{{ transaction.picto }}" ng-if="transaction.picto != '' " alt="" class="pecto" >
+
+                            <h2 class="oneLine">{{ transaction.fname }} {{ transaction.lname }}</h2>
+
+                            <span class="date-shopping">{{ transaction.date }} {{ transaction.time }}</span> 
+
+                            <p class="description-shopping">
+
+                                {{ transaction.description }}
+
+                            </p>
+
+                            <span class="amount-shopping amount-negative" ng-if="transaction.transtype=='send'">-{{ transaction.amount }}</span>
+
+                            <span class="amount-shopping"  ng-if="transaction.transtype!='send'">{{ transaction.amount }}</span>
+
+                        </div> 
+
+                    </div> 
+            </div>
+
+            <p ng-if="listeTransaction.from.length == 0" class="list card border-rounded" style="text-align: center;padding: 20px;background: #ffc602;box-shadow: none;position: relative;top: 10px;">
+                {{ 'payments_pending_confirmation.no_pending_payments' | translate }} 
+            </p>
+        </div>
+    </ion-content>
+</ion-view>

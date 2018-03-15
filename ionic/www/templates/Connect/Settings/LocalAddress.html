@@ -1,0 +1,68 @@
+<ion-view title="{{ title }}" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <!-- <div class="map-popup" ng-style="{'visibility': showMap ? 'visible':'hidden'}">
+        <ng-map center="{{center}}" zoom="18" on-click="getpos($event)">
+            <marker position="{{latlng}}" title="Hello World!" on-dragend="getpos($event)" animation="Animation.BOUNCE" animation="DROP" draggable="true"></marker>
+        </ng-map>
+        <div class="options button-map">
+            <button id="fullName-button1" class=" button button-small button-positive  icon ion-close-round map-buttons" ng-click="$ionicGoBack()"> Cancel</button>
+            <button id="fullName-button1" class=" button button-small button-positive  icon ion-android-locate map-buttons" ng-click="setMyPositionToMap()"> MY POSITION</button>
+            <button id="fullName-button1" class=" button button-small button-positive  icon ion-checkmark-round map-buttons" ng-click="getAddressFromMap()"> OK</button>
+        </div>
+    </div> -->
+    <ion-content padding="true" class="has-header inSettigs">
+
+        <div style="text-align:center;margin: 0 -10px 10px;" ng-bind-html="ValidateMSG" ></div>
+        <center> 
+          <button ng-if="!validation && showBtns" ng-click="ValidateAddress()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive btnOrange  button-block btn-uploadoccumentadress" style="margin-top: 20px;margin-bottom: 10px;"> {{ TextButtonValidate }}</button>
+        </center>
+
+        <div class="list card " id="fullName-card23" style="margin-top: 0;">
+
+            <form id="fullName-form3" class="list padding" style="margin-bottom: 0px;"> 
+
+                <div class="list">
+
+                  <label class="item item-input item-floating-label">
+                    <span class="input-label">{{ 'local_address.full_address' | translate }}</span>
+                    <input type="text" placeholder="{{ 'local_address.full_address' | translate }}"  google-place ng-focus="disableTap()" name="autocomplete" ng-model="data.fullAddress" aria-label="search" ng-disabled="!showBtns">
+                  </label>  
+                  <label class="item item-input item-floating-label">
+                    <span class="input-label">{{ 'local_address.line_1' | translate }}</span>
+                    <input type="text" id="route" placeholder="{{ 'local_address.line_1' | translate }}"   ng-model="data.line1" ng-disabled="!showBtns">
+                  </label>
+                  <label class="item item-input item-floating-label">
+                    <span class="input-label">{{ 'local_address.line_2' | translate }}</span>
+                    <input type="text"  ng-model="data.line2" placeholder="{{ 'local_address.line_2' | translate }}" ng-disabled="!showBtns">
+                  </label>
+                  <div>
+                    <label class="item item-input item-floating-label">
+                      <span class="input-label">{{ 'local_address.city' | translate }}</span>
+                      <input type="text" id="locality" ng-model="data.city" placeholder="{{ 'local_address.city' | translate }}" ng-disabled="!showBtns">
+                    </label> 
+
+                    <label class="item item-input item-floating-label">
+                      <span class="input-label">{{ 'local_address.zip_code' | translate }}</span>
+                      <input type="text" id="postal_code" ng-model="data.zip" placeholder="{{ 'local_address.zip_code' | translate }}" ng-disabled="!showBtns">
+                    </label>
+
+                    <label class="item item-input item-floating-label">
+                      <span class="input-label">{{ 'local_address.country' | translate }}</span>
+                      <input type="text" id="country" ng-model="data.country" placeholder="{{ 'local_address.country' | translate }}" ng-disabled="!showBtns">
+                    </label> 
+                  </div>
+                </div>  
+                 
+                <button ng-if="showBtns" ng-click="ChangeAddress(false)" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-compose "> 
+                  {{ 'local_address.update' | translate }}
+                </button>  
+            </form>
+                        
+        </div>  
+    </ion-content>
+</ion-view>

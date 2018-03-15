@@ -1,0 +1,152 @@
+<ion-view view-title="List" hide-back-button='false' can-swipe-back="false" hide-nav-bar="true" style="background: #fff;"> 
+
+    <ion-content class="inHome liste-transaction" ng-show="loader" style="padding-top: 15px;">
+
+        <ion-refresher spinner="android" pulling-icon="ion-arrow-down-b" pulling-text="{{ 'transaction_list.pull_to_refresh' | translate }}" on-refresh="loadMore(true)"></ion-refresher>
+
+        <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button back-button buttons  button-clear header-item" ><i class="icon ion-ios-arrow-back"></i> 
+        {{ 'global_fields.back' | translate }}
+        </button>
+
+        <div>
+
+            <div class="solde">
+
+                <span>{{ Account.solde }} {{devise}}</span>
+
+            </div>
+
+
+
+            <div class="item-avatar CenterDivCreate">
+
+                <img class="okok" ng-src="{{ SelectedIconBlue.src }}">
+
+                <span class="label oneLine">{{ Account.name }}</span>
+
+                <span>{{ ibanMask(Account.number) }}</span>
+
+            </div> 
+
+
+
+            <!-- <ion-scroll class="listeIconsCompte" direction="x">
+
+                <div  style="width:{{ 50*requests.length }}px">
+
+                    <div ng-repeat="req in requests" class="itemIconCompte"> 
+
+                        <div class="BadgeNotifList" ng-if="req.picto == '' " >
+
+                            <span class="initialTransfer Raduis"  ng-class="(req.isshop=='1')?'CPro':'CPerso'" >{{ req.initiales}}</span>
+
+                        </div>
+
+                        <img ng-src="{{ req.picto }}" ng-if="req.picto != '' " alt="" class="pecto" >
+
+                    </div> 
+
+                </div> 
+
+            </ion-scroll > --> 
+
+    
+
+            <div class="liste-shopping-continner">
+ 
+
+
+                <!-- ********************************************************************************* --> 
+
+                <div ng-repeat="(key, listeTransaction) in transObject.data"> 
+
+                    <div ng-if="listeTransaction.date.search('commission') >= 0" ui-sref="tab.commisions({month: listeTransaction.data.month,year: listeTransaction.data.year})" class="commisions-bloc"> 
+                        <div class="liste-shopping" style="background: #234d7d;">
+                            <div class="item-shopping">
+                                <img ng-src="{{transObject.commissions[0].picto}}" class="pecto" >
+                                <h2 class="" style="margin-top: 15px;color: #fff">
+                                {{ 'transaction_list.commissions_du_mois' | translate: {
+                                    date: FullMonths[listeTransaction.data.month-1] +" "+ listeTransaction.data.year 
+                                } }}
+                                </h2>
+                            </div>
+
+                        </div>                        
+                    </div>
+
+                    <div ng-if="listeTransaction.date.search('commission') < 0">
+                        <!-- ///////////////////////////////////////////////////////////////////////////// -->
+
+                        <div class="block-date"> 
+                            {{ (listeTransaction.date == transObject.current_date) ? ('transaction_list.today' | translate) :'' }}
+
+                            {{ (dateDiff(transObject.current_date,listeTransaction.date).day == 1 ) ? ('transaction_list.yesterday' | translate) :''  }}  
+
+                            {{ (dateDiff(transObject.current_date,listeTransaction.date).day > 1 )? listeTransaction.date :''  }}  
+
+                        </div>
+
+                        <!-- ///////////////////////////////////////////////////////////////////////////// -->
+
+                        <div class="liste-shopping">
+
+                            <div ng-repeat="transaction in listeTransaction.data" ui-sref="tab.infoDetail({idreq:transaction.id})" class="item-shopping" ng-class="{ 'transactionWithRaison' : transaction.description != '' }">
+
+                                <div class="BadgeNotifList" ng-if="transaction.picto == '' " >
+                                    <!-- ng-class="(transaction.isshop=='1')?'CPro':'CPerso'" -->
+                                    <span class="initialTransfer Raduis" style="background-color: {{ transaction.color }} ;"  >
+
+                                        {{ transaction.initiales}}
+
+                                    </span>
+
+                                </div> 
+                                <img ng-src="{{ transaction.picto }}" ng-if="transaction.picto != '' " alt="" class="pecto" >
+
+                                <h2 class="oneLine"><span ng-if="transaction.isshop == 0 || transaction.isshop == 3">{{ transaction.fname }} </span>{{ transaction.lname }}</h2>
+
+                                <span class="date-shopping">{{ transaction.time }}</span><span ng-if="transaction.statut != ''" class="padding-left" style="color:#ef7f31;font-size: 100%;font-family: 'OpenSansBold';font-size: 11px;">
+                                {{ 'transaction_list.'+transaction.statut | translate }}
+                                </span>
+
+                                <p class="description-shopping">
+
+                                    {{ transaction.description }}
+
+                                </p>
+
+                                <span class="amount-shopping amount-negative" ng-if="transaction.transtype=='send'">-{{ transaction.amount }}</span>
+
+                                <span class="amount-shopping"  ng-if="transaction.transtype!='send'">{{ transaction.amount }}</span>
+
+                            </div> 
+
+                        </div> 
+                    </div>
+
+                </div>
+
+                <!-- ***************************************************************************** -->  
+
+                <p ng-if="transObject.data.length == 0" class="list card border-rounded" style="text-align: center;padding: 20px;background: #ffc602;box-shadow: none;">
+
+                    {{ 'transaction_list.no_data' | translate }}
+
+                </p>
+
+
+
+                 
+
+            </div>
+
+
+
+        </div>
+ 
+
+<ion-infinite-scroll ng-if="canMore" spinner="android" distance="2" on-infinite="loadMore(false)"></ion-infinite-scroll>
+
+</ion-content>
+
+</ion-view>

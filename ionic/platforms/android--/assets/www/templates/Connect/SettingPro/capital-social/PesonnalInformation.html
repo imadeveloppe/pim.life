@@ -1,0 +1,108 @@
+<ion-view title="{{ 'settings.personal_informations' | translate }}" id="PesonnalInformation" class="" can-swipe-back="false"> 
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs"> 
+
+        <p style="text-align:center;margin: 0 -10px;" ng-bind-html="ValidateMSG"></p> 
+
+        <center>
+            <button ng-if="!validation && showBtns" ng-click="ValidateInfo()"  data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive btnOrange  icon  ion-android-upload" > {{ 'personal_informations.valid_your_id_card' | translate }}</button>
+        </center>
+
+        <p class="NotMessage" ng-if="!ValidateMSG">
+        {{ 'personal_informations.text' | translate }}
+        </p>
+        <div class="list card ">
+            <div class="list list-inset">
+                <div class="row">
+
+                <!-- <i class="fa fa-cloud-upload uploadlogo"  ui-sref="tab.PhotoProfil" aria-hidden="true" style="position: absolute;
+                top: 12px;
+                font-size: 15px;
+                margin: auto;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                width: 20px;"></i>
+            
+                <div class="BadgeUpdateInfo" ng-if="PersonaleData.picto == ''"  ui-sref="tab.PhotoProfil" >
+                    <span class="initialBadgeUpdateInfo">{{ data.initiales}}</span>
+                </div> 
+                <img ng-src="{{  PersonaleData.picto }}" ng-if="PersonaleData.picto != ''" class="personaleInformation PhotoProfile" ui-sref="tab.PhotoProfil" image-lazy-loader="android"  image-lazy-background-image="true" image-lazy-loader="lines"> -->
+            
+                     
+
+                </div>
+                <div class="row">
+                    <div class="col sexe-Switch-text" ng-click="PersonaleData.sexe = false" style="text-align:right;">
+                        {{ 'sign_up_perso.male' | translate }}
+                    </div>
+                    <div class="col col-20">
+                        <md-switch ng-model="PersonaleData.sexe" aria-label="Switch 1" class="sexe-switch md-primary" ng-disabled="!showBtns">
+                        </md-switch>
+                    </div>
+                    <div class="col sexe-Switch-text" ng-click="PersonaleData.sexe = true">
+                        {{ 'sign_up_perso.female' | translate }}
+                    </div>
+                </div>
+
+                <label class="item item-input  item-floating-label">
+                    <span class="input-label">{{ 'sign_up_perso.fname' | translate }}</span>
+                    <input type="text" placeholder="{{ 'sign_up_perso.fname' | translate }}" ng-model="PersonaleData.fname" ng-disabled="!showBtns">
+                </label>
+                <label class="item item-input  item-floating-label"> 
+                    <span class="input-label">{{ 'sign_up_perso.lname' | translate }}</span>
+                    <input type="text" placeholder="{{ 'sign_up_perso.lname' | translate }}" ng-model="PersonaleData.lname" ng-disabled="!showBtns">
+                </label>
+                <label class="item item-input  item-floating-label" style="padding-bottom: 4px;">
+                    <span class="input-label">{{ 'sign_up_perso.birth_date' | translate }}</span>
+                    <input type="text" mask="39/39/9999" ng-model="PersonaleData.birth" ng-value="{{PersonaleData.birth}}"  placeholder="{{ 'sign_up_perso.birth_date' | translate }}"  ng-disabled="!showBtns">
+                </label> 
+
+
+                <label class="item item-input  item-floating-label"> 
+                    <span class="input-label">{{ 'sign_up_perso.placebirth' | translate }}</span>
+                    <input type="text" placeholder="{{ 'sign_up_perso.placebirth' | translate }}" ng-model="PersonaleData.placebirth" ng-type="" ng-focus="disableTap()" google-place ng-disabled="!showBtns">
+                </label>
+
+                <label class="item item-input  item-floating-label"> 
+                    <span class="input-label">{{ 'sign_up_perso.birthcountry' | translate }}</span>
+                    <input type="text" placeholder="{{ 'sign_up_perso.birthcountry' | translate }}" ng-model="PersonaleData.birthcountry" ng-disabled="true" ng-class="{'showBtns' : showBtns}">
+                </label>
+                <label class="item item-input  item-floating-label" ng-click="openPickerNationality(showBtns)">
+                    <span class="input-label">{{ 'sign_up_perso.nationality' | translate }}</span>
+                    <input type="text" placeholder="{{ 'sign_up_perso.nationality' | translate }}" ng-model="PersonaleData.nationality" disabled="disabled" ng-class="{'showBtns' : showBtns}">
+                </label>
+                <label class="" style="padding-bottom: 4px">
+                  <br><span class="input-label" style="">{{ 'sign_up_perso.revenumoyen' | translate }}</span>
+                  <div mobiscroll-form="revenumoyenSettings" > 
+                     <input ng-model="PersonaleData.revenumoyen" ng-value="PersonaleData.revenumoyen" type="range" id="sliderCS"  min="0" max="5" step="1" data-step-labels="[0, 1, 2, 3, 4, 5]">  
+                  </div> 
+                </label>    
+                <br>
+                <small style="color: #bebebe;line-height: 13px;display: block;margin-top: 8px;">{{ 'sign_up_perso.the_regulator_forces_us_to_ask_you_for_this_information' | translate }}</small>
+
+                <label class="item item-input item-floating-label" ng-if="isshop == 6">
+                  <span class="input-label">{{ 'sign_up_perso.percent' | translate }}</span>
+                  <input type="text" placeholder="{{ 'sign_up_perso.percent' | translate }}" ng-model="PersonaleData.percent"> 
+                </label>  
+
+                <div class="spacer" style="width: 300px; height: 16px;"></div>
+            </div>
+<!--             <div ng-if="validation" style="margin:0 auto;width:90%;">
+                <button ng-click="ChangeInfo(false)" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-compose " style="display: inline-block;width: 49%;"> Update</button>
+                <button ng-click="ValidateInfo()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-android-done" style="display: inline-block;width: 49%;"> Validate</button>
+            </div>
+ -->
+            
+            <button  ng-click="ChangeInfo()"  data-tap-disabled="true" id="fullName-button1" class=" button button-positive button-small   icon ion-compose "> {{ 'personal_informations.update' | translate }}</button>
+
+            
+
+        </div>
+    </ion-content>
+</ion-view>

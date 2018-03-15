@@ -1,0 +1,69 @@
+<ion-view view-title="{{ 'request_payment_using_qr_code.title_page' | translate }}" can-swipe-back="false" id="MarchandDemandPayment">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="trans" ng-show="loader">
+
+
+        <p class="NotMessage" style="margin-top: 10px;">
+            
+        </p>
+        <div style="width:100%;">
+            <ion-slide-box on-slide-changed="trans.selectedAccount = ($index)" active-slide="trans.selectedAccount">
+                <ion-slide ng-repeat="account in accounts">
+                    <div class="list card border-rounded  homev2 {{ account.cssClass }}" style="margin-top:0px;">
+                        <ion-item class="item-avatar item-icon-right positive  border-rounderd account">    
+                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                            <h2positive  class="oneLine">
+                                {{ account.name }} 
+                            </h2positive>
+                            <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                        </ion-item>
+                        <div class="item item-body " id="home-list-item-container2">
+                            <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;" class=" ">
+                                <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+
+
+        <div class="list card  md-inline-form" layout="column" ng-cloak>
+            <md-content layout-padding class="border-rounded">
+                <form name="userForm ">
+                    <div class="list list-inset" style="margin-top: 0;">
+                        <label class="item item-input  item-floating-label  numeric-keyboard-source"> 
+                            <span class="input-label">{{ 'make_a_transfer.amount' | translate }}</span>
+
+                                <i class="icon ion-social-euro placeholder-icon"></i>
+                                <!-- <input type="number" name="amount" ng-model="trans.amount" placeholder="AMOUNT" min="0" max="999999999999999" step="0.01" /> -->
+                                <input type="text" name="amount" class="numeric-keyboard-amount" placeholder="{{ 'make_a_transfer.amount' | translate }}" ng-model="amount" readonly  ng-click="showKeyboard('amount')" style="background-color: rgba(240, 248, 255, 0);"/>
+
+                            </label>
+                        <label class="item item-input  item-floating-label" style="border-top:none;">
+                            <span class="input-label">{{ 'make_a_transfer.reason' | translate }}</span>
+                                <textarea placeholder="{{ 'make_a_transfer.reason' | translate }}" ng-model="trans.reson"  class="CostumTextarea"   ng-style="isIOS && {'text-indent':'-3px'} || {'text-indent':'opx'}" ></textarea>
+                            </label>
+                        <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    </div>
+
+                </form>
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-button ui-sref="tab.home" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                        {{ 'request_payment_using_qr_code.cancel' | translate }}
+                    </md-button>
+                    <md-button ng-click="showQrCode()" class="md-raised md-primary" style="width: 43%;background-color:#f17f21;">
+                        {{ 'request_payment_using_qr_code.request' | translate }}
+                    </md-button>
+                    <!-- <md-button ng-click="ReciveshowGridBottomSheet($event)" class="md-raised md-primary" style="width: 43%;background-color:#EF7E22;">Recive</md-button> -->
+                </section>
+            </md-content>
+        </div>
+
+    </ion-content>
+    <ion-numeric-keyboard class="slide-up" options="keyboardOptions"></ion-numeric-keyboard>
+</ion-view>

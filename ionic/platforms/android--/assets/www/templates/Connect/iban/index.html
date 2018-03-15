@@ -1,0 +1,170 @@
+<ion-view hide-nav-bar="true" hide-back-button="true" id="iban-info" can-swipe-back="false"> 
+    
+    <ion-content padding="false" class="manual-ios-statusbar-padding">
+    	 <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button custom-back-button back-button buttons  button-clear header-item" style="position: absolute;top: 0"><i class="icon ion-ios-arrow-left"></i> {{ 'global_fields.back' | translate }}</button> 
+        <h1>
+        	{{ 'my_iban.title_page' | translate }}
+        </h1>
+        <div class="text-descriptive">{{ 'my_iban.text' | translate }}</div>
+
+
+        <div id="contentMail" style="background: #fff;display: none;">
+            <p><img style="width: 70px; margin-bottom: 20px" ng-src="{{ BASE64_LOGOS.pim }}"></p>
+            <h2><strong>{{ 'my_iban.iban' | translate }}</strong></h2><br>
+            <p>
+                {{ 'my_iban.text' | translate }}
+            </p><br>
+
+            <p style="margin-top: 0;">
+                <table>
+                    <tr> 
+                        <td>
+                            <h4><strong>{{ 'my_iban.account_owner' | translate }}</strong></h4>
+
+                            <p>
+                                <strong>{{ data.user.name }}</strong><br> 
+                                <span>{{ data.user.address }}</span><br>
+                                <span ng-if="data.user.address2 !='' ">{{ data.user.address2 }}<br></span>
+                                {{ data.user.zip }} {{ data.user.city }}<br>
+                                {{ data.user.country }}
+                            </p>
+
+                        </td>
+                    </tr>
+                </table>
+            </p> 
+            <p>
+                <h4 style="margin-bottom: 0"><strong>{{ 'my_iban.iban' | translate }} </strong></h4>
+                <p>{{ ibanMask(data.iban) }}</p>
+                <br>
+                <h4 style="margin-bottom: 0"><strong>{{ 'my_iban.bic' | translate }}</strong></h4>
+                <p>{{ data.bic }}</p>
+            </p>
+            <br>
+            <p>
+                <table>
+                    <tr>
+                        <th style="padding: 0px 10px 0 0; border-bottom: 2px solid #000"><strong>{{ 'my_iban.bank_code' | translate }}<strong></th>
+                        <th style="padding: 0px 10px; border-bottom: 2px solid #000"><strong>{{ 'my_iban.wicket_code' | translate }}<strong></th>
+                        <th style="padding: 0px 10px; border-bottom: 2px solid #000"><strong>{{ 'my_iban.account_number' | translate }}<strong></th>
+                        <th style="padding: 0px 10px; border-bottom: 2px solid #000"><strong>{{ 'my_iban.rib_key' | translate }}<strong></th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0px 10px 0 0;">{{ data.ibanDetail[0] }}</td>
+                        <td style="padding: 0px 10px;">{{ data.ibanDetail[1] }}</td>
+                        <td style="padding: 0px 10px;">{{ data.ibanDetail[2] }}</td>
+                        <td style="padding: 0px 10px;">{{ data.ibanDetail[3] }}</td>
+                    </tr>
+                </table>
+            </p>
+            <br>
+            <p>
+                <h4 style="margin-bottom"><strong>{{ 'my_iban.domiciliation_of_account' | translate }}</strong></h4>
+                  
+                 <p style="margin-top: 10px">
+                    {{ data.domiciliation.name }}<br>
+                    {{ data.domiciliation.address }},<br>
+                    {{ data.domiciliation.zip }} 
+                    {{ data.domiciliation.city }}<br>
+                    {{ data.domiciliation.country }}
+                 </p>
+
+                 <br><br><br>
+                 <div style="font-size: 12px;">{{ 'bank_statement_pdf.info_pim' | translate }}</div><br>
+                 <table>
+                     <td style="width: 60px;vertical-align: middle;"">
+                        <img ng-src="{{ BASE64_LOGOS.treezor }}" width="90%">
+                    </td>
+                    <td style="line-height: 15px;font-size: 10px;vertical-align: middle;">{{ 'bank_statement_pdf.footer_page' | translate }}</td>
+                 </table>
+            </p>
+        </div>
+
+
+        <ion-list>
+            <ion-item class="item-light card card block-1" style="margin-top: 0;">
+            	<table>
+            		<tr>
+            			<td ng-if="data.isPro == 1">
+            				<img ng-src="{{ data.user.logo_large }}" ng-if="data.user.logo_large != '' && data.isPro == 1"> 
+            				<div class="BadgeUpdateInfo" ng-if="data.user.logo_large == ''">
+			                    <span class="initialBadgeUpdateInfo CPro">
+			                    	{{ data.user.initiales }}
+			                    </span>
+			                </div>
+            			</td>
+            			<td ng-if="data.isPro == 0"> 
+            				<img ng-src="{{ data.user.picto }}" ng-if="data.user.picto != '' && data.isPro == 0">
+            				<div class="BadgeUpdateInfo" ng-if="data.user.picto == ''">
+			                    <span class="initialBadgeUpdateInfo CPerso">
+			                    	{{ data.user.initiales }}
+			                    </span>
+			                </div>
+            			</td>
+            			<td>
+            				<h2>{{ 'my_iban.account_owner' | translate }}</h2>
+
+            				<p>
+	            				<strong>{{ data.user.name }}</strong><br> 
+								<span>{{ data.user.address }}</span><br>
+								<span ng-if="data.user.address2 !='' ">{{ data.user.address2 }}<br></span>
+								{{ data.user.zip }} {{ data.user.city }}<br>
+								{{ data.user.country }}
+							</p>
+
+            			</td>
+            		</tr>
+            	</table>
+            </ion-item>
+
+            <ion-item class="item-light card block-2">
+            	<strong>{{ 'my_iban.iban' | translate }} </strong>
+            	<p>{{ ibanMask( data.iban ) }}</p>
+            	<br>
+            	<strong>{{ 'my_iban.bic' | translate }}</strong>
+            	<p>{{ data.bic }}</p>
+            </ion-item>
+
+            <ion-item class="item-light card block-3">
+            	<table>
+            		<tr>
+            			<th>{{ 'my_iban.bank_code' | translate }}</th>
+            			<th>{{ 'my_iban.wicket_code' | translate }}</th>
+            			<th>{{ 'my_iban.account_number' | translate }}</th>
+            			<th>{{ 'my_iban.rib_key' | translate }}</th>
+            		</tr>
+            		<tr>
+            			<td>{{ data.ibanDetail[0] }}</td>
+            			<td>{{ data.ibanDetail[1] }}</td>
+            			<td>{{ data.ibanDetail[2] }}</td>
+            			<td>{{ data.ibanDetail[3] }}</td>
+            		</tr>
+            	</table>
+            </ion-item>
+
+            <ion-item class="item-light card">
+            	 <strong>{{ 'my_iban.domiciliation_of_account' | translate }}</strong>
+            	  
+            	 <p style="margin-top: 10px">
+            	 	{{ data.domiciliation.name }}<br>
+					{{ data.domiciliation.address }},<br>
+					{{ data.domiciliation.zip }} 
+                    {{ data.domiciliation.city }}<br>
+					{{ data.domiciliation.country }}
+            	 </p>
+
+            	<div class="buttons">
+            		<md-button ng-click="send()" class="md-raised md-primary" style="background-color:#254E7B;margin-left: 0;">
+                        {{ 'my_iban.send' | translate }}
+                    </md-button>
+                    <md-button ng-click="download()" class="md-raised md-primary" style="background-color:#f17f21;margin-right: 0;">
+                        {{ 'my_iban.download' | translate }}
+                    </md-button>
+            	</div>
+            </ion-item>
+
+        </ion-list> 
+        
+    </ion-content> 
+
+</ion-view>

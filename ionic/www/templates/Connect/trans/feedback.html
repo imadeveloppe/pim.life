@@ -1,0 +1,96 @@
+<ion-view view-title="{{ 'feedback.title_page' | translate }}" id="payfriendstatus" hide-back-button='true' can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="trans" ng-controller="FeedbackCtrl as ctrl">
+
+
+
+
+        <div class="list card  md-inline-form" layout="column" ng-cloak style="margin-top: 13px;">
+
+            <md-content layout-padding class="border-rounded" style="overflow: hidden;">
+
+                <form name="userForm" ng-class="(ctrl.selectedCategories.length > 0)?'feedbackHideCatgs':''" class="multiphotoContinner">
+                    <!-- on-tap="openPickerCategories()"  -->
+                    <label class="item item-input item-floating-label selectCategorie" style="padding-left: 5px;" ng-click="showCategories()">
+                        <span class="blueLabel">
+                            {{ 'feedback.choose_a_category' | translate }}
+                        </span>
+                        <span ng-if=" data.subCategoryName ">{{ data.subCategoryName }}</span> 
+
+                    </label> 
+
+                    <ion-scroll direction="x" class="container-addPhoto wide-as-needed">
+                        <div ng-if="ImgURI.length > 0" ng-repeat="(key, URI) in ImgURI" class="item-photo" style="display: inline-block;">
+                            <i class="icon ion-close" ng-click="DeletePhoto( key )"></i> 
+                            <img ng-src="{{ URI }}"> 
+                        </div> 
+                        <div style="display: inline-block;" >
+                            <img  ng-click="choseAction()" src="img/add-photo-feedback.png">
+                        </div> 
+                    </ion-scroll> 
+
+
+                    <div class="list" style="margin-top: 0;"> 
+
+                      <label class="item item-input item-floating-label">
+                        <span class="input-label">{{ 'feedback.comment' | translate }}</span>
+                        <textarea ng-model="Comment" placeholder="{{ 'feedback.comment' | translate }}"  class="CostumTextarea" ></textarea>
+                      </label>
+
+
+                        <div class="spacer" style="width: 300px; height: 1px;"></div>
+                    </div>
+                    <div class="row" style="    margin-top: 20px;">
+                        <span class="blueLabel">
+                            {{ 'feedback.note_your_purchase' | translate }}
+                        </span>
+                    </div>
+                    <div class="row" style="margin: 10px 0;">
+                        <rating ng-model="rating.rate" max="rating.max" style="color: #f17f21;margin: 0 auto;"></rating>
+                    </div>
+                    <div class="row">
+                        <span class="blueLabel">
+                            {{ 'feedback.share' | translate }}
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="    text-align: center;">
+                            <md-icon md-svg-src="icons/facebook.svg" 
+                                     ng-class="{'registred': registredFacebook, 'Share': shareWithFaceBook}" 
+                                     class="socialLinks" 
+                                     ng-click="Share('facebook')"> 
+                            </md-icon>
+                            <md-icon 
+                                     md-svg-src="icons/twitter.svg" 
+                                     ng-class="{'registred': registredTwitter, 'Share': shareWithTwitter}" 
+                                     class="socialLinks" 
+                                     ng-click="Share('twitter')"> 
+                            </md-icon> 
+                        </div>
+                    </div>
+
+
+
+                </form>
+
+
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-button ui-sref="tab.home" class="md-raised md-primary"  style="width: 43%;background-color:#254E7B;">
+                        {{ 'feedback.goto_home' | translate }}
+                    </md-button>
+                    <md-button ng-click="SendFeedBack()" class="md-raised md-primary"  style="width: 43%;background-color:#f17f21;">
+                        {{ 'feedback.validate' | translate }}
+                    </md-button>
+                </section>
+            </md-content>
+        </div>
+
+
+
+    </ion-content>
+</ion-view>

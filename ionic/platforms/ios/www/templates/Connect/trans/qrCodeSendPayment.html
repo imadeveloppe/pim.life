@@ -1,0 +1,70 @@
+<ion-view view-title="{{ 'qr_payment_requested.title_page' | translate }}" can-swipe-back="false" id="pageQrCodeSendPayment">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="trans" ng-show="loader">
+         <p class="NotMessage" style="margin-top: 10px;">
+            {{ 'qr_payment_requested.sub_title' | translate }}
+         </p>
+        <div style="width:100%;">
+            <ion-slide-box on-slide-changed="trans.selectedAccount = ($index)" active-slide="trans.selectedAccount">
+                <ion-slide ng-repeat="account in accounts">
+                    <div class="list card border-rounded  homev2 {{ account.cssClass }}"  style="margin-top:0px;">
+                        <ion-item class="item-avatar item-icon-right positive  border-rounderd account" style="padding-bottom: 0 !important;">
+                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                            <h2positive class="oneLine">
+                                {{ account.name }} 
+                            </h2positive>
+                            <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                        </ion-item>
+                        <div class="item item-body " id="home-list-item-container2">
+                            <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;" class=" ">
+                                <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+
+
+        <div class="list card  md-inline-form" layout="column" ng-if="loadedPage">
+            <md-content layout-padding class="border-rounded">
+                <form name="userForm "> 
+
+                    <div ng-if="trans.users.length > 0" style="z-index: 10; width: 100%; background-color: rgb(255, 255, 255); padding: 6px 5px 0px 9px;border-radius: 5px;"> 
+                            <div>
+                                <div class="contentrans" style="overflow: hidden;"> 
+
+                                    <div class="BadgeUpdateInfo"  ng-if="trans.users[0].image == ''">
+                                        <span class="initialBadgeUpdateInfo CPro">{{ trans.users[0].initiales}}</span>
+                                    </div>
+                                    <img style="margin: 0" ng-src="{{  trans.users[0].image }}" ng-if="trans.users[0].image != ''"  class="personaleInformation PhotoProfile"> 
+
+                                    <h2 class="oneLine" style="margin-top: 10px">{{ trans.users[0].name }}</h2>
+                                    
+                                    <p style="margin:0;text-align: center;margin-top:5px;">  
+                                        <strong>{{ trans.amount }} {{devise}}</strong> 
+                                    </p>
+                                    <p class="raison">{{ trans.reson }}</p>
+                                </div>
+                            </div>
+
+                    </div>
+
+                </form>
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-button ng-click="Cancel()" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                    {{ 'qr_payment_requested.deny' | translate }}
+                    </md-button>
+                    <md-button ng-click="SendByQrCOde()" class="md-raised md-primary" style="width: 43%;background-color:#EF7E22;">
+                    {{ 'qr_payment_requested.pay' | translate }}  
+                    </md-button>
+                </section>
+            </md-content>
+        </div>
+
+    </ion-content>
+</ion-view>

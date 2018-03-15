@@ -1,0 +1,297 @@
+<ion-view title="{{ 'capital_social.title_page' | translate }}" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true" ng-click="GotoSettings()">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+
+    <style type="text/css">
+    	div#progressbarlabel {
+		    font-size: 12px;
+		}
+    </style>
+
+    <ion-content class="has-header inSettigs">
+    	<ion-list>
+            <ion-item class="item-divider">
+            	<strong>{{ 'capital_social.signatory' | translate }}</strong>
+            	<p style="font-size: 12px;;line-height: 15px;">{{ 'capital_social.sub_title_signatory' | translate }}</p>
+            </ion-item> 
+
+            <div ng-if="shareCapital.signataire">
+            	<ion-item class="profile item-avatar item-icon-right item item-complex" ui-sref="tab.capital-social-update-personal-infos({type: 1, index: 0})" type="item-text-wrap" style="padding:0;">
+	                <!-- <img image-lazy-src="{{  data.picto_small }}" class="setting" image-lazy-loader="android" > -->
+	                <!-- <img image-lazy-src="{{  data.picto_50  }}" class="setting" image-lazy-loader="android" image-lazy-distance-from-bottom-to-load="-200"> -->
+	                <div class="BadgeSettings">
+	                    <span class="initialBadgeSettings">{{ shareCapital.signataire.user.initiales }}</span>
+	                </div> 
+	                <h2 class="">{{ shareCapital.signataire.user.sexe }}. {{ shareCapital.signataire.user.fname }} {{ shareCapital.signataire.user.lname }} </h2>
+	                <div class="progressdiv" style="width: 100%;display: inline-flex;background-color: white;"> 
+		                <div id="progressbar" style="width: 80%;margin:0;height: 10px;background: #264f7c;border-radius: 10px;overflow: hidden;">
+		                    <div style="width: {{ shareCapital.signataire.user.percentage }}%;height: 10px;background: rgb(239, 127, 49);"></div>
+		                </div>
+		                <div id="progressbarlabel" style="width: 20%;margin: 0 0 0 13px;color: #254e7b;margin-top: -5px;">{{ shareCapital.signataire.user.percentage }} %</div>
+		            </div> 
+	                <i ng-if="shareCapital.signataire.logsPhoto.userlname.confirmed == -1 || shareCapital.signataire.logsPhoto.userlname.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+	                <i ng-if="shareCapital.signataire.logsPhoto.userlname.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+	                <i ng-if="shareCapital.signataire.logsPhoto.userlname.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+
+	                <ion-option-button class="button-assertive" ng-click="removeUser('signataire', '')" >
+	                	{{ 'capital_social.remove' | translate }}
+	                </ion-option-button>
+
+	            </ion-item> 
+	            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-address({type: 1, index: 0})">
+	                <i class="icon ion-map"></i>{{ shareCapital.signataire.user.fullAddress }}
+	                <i ng-if="shareCapital.signataire.logsPhoto.addressid.confirmed == -1 || shareCapital.signataire.logsPhoto.addressid.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+	                <i ng-if="shareCapital.signataire.logsPhoto.addressid.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+	                <i ng-if="shareCapital.signataire.logsPhoto.addressid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>   
+	            </ion-item>
+	            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-phone({type: 1, index: 0})">
+	                <i class="icon ion-ios-telephone-outline"></i>({{ shareCapital.signataire.user.Indicatif }}) {{ shareCapital.signataire.user.phone }}
+	                <i ng-if="shareCapital.signataire.logsPhoto.usermobile1.confirmed == -1 || shareCapital.signataire.logsPhoto.usermobile1.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+	                <i ng-if="shareCapital.signataire.logsPhoto.usermobile1.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+	                <i ng-if="shareCapital.signataire.logsPhoto.usermobile1.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>  
+	            </ion-item>
+	            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-mail({type: 1, index: 0})">
+	                <i class="icon ion-ios-at"></i>{{ shareCapital.signataire.user.mail }}
+	                <i ng-if="shareCapital.signataire.logsPhoto.usermail.confirmed == -1 || shareCapital.signataire.logsPhoto.usermail.confirmed == 0" class="icon ion-alert documentRequired assertive"></i> 
+	                <i ng-if="shareCapital.signataire.logsPhoto.usermail.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+	            </ion-item>
+
+	            
+
+	            <ion-item class="item-icon-left item-icon-right">
+                    <i class="icon ion-android-checkbox-outline"></i>{{ 'setting_pro.final_validation' | translate }}
+                    <i ng-if="shareCapital.signataire.logsPhoto.treezorid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>
+                    <i ng-if="shareCapital.signataire.logsPhoto.treezorid.confirmed != 1" class="icon ion-alert documentRequired assertive"></i> 
+                </ion-item> 
+            </div>
+
+            <div ng-if="!shareCapital.signataire" class="padding" style="background: whitesmoke;">
+            	<button ng-click="addUser('signataire')"  class="button button-full button-dark addNewUserTolist">
+            		{{ 'capital_social.add_signatory' | translate }}
+            	</button>
+            </div>
+            
+
+            
+
+
+            <ion-checkbox ng-show="shareCapital.signataire" ng-checked="checkbox.signataire_is_rep" ng-click="ChangeOptionSignataireIsRep(checkbox.signataire_is_rep)" ng-model="checkbox.signataire_is_rep"> {{ 'capital_social.signatory_is_legal_representative' | translate }}</ion-checkbox>  
+	            
+            <div ng-if="!checkbox.signataire_is_rep">
+
+            	<ion-item class="item-divider">
+            		<strong>{{ 'capital_social.legal_representative' | translate }}</strong>
+            		<p style="font-size: 12px;;line-height: 15px;">{{ 'capital_social.sub_title_rep' | translate }}</p>
+            	</ion-item> 
+	            <div ng-if="shareCapital.representant">
+	            	<ion-item class="profile item-avatar item-icon-right item item-complex" ui-sref="tab.capital-social-update-personal-infos({type: 2, index: 0})" type="item-text-wrap" style="padding:0;">
+		                <!-- <img image-lazy-src="{{  data.picto_small }}" class="setting" image-lazy-loader="android" > -->
+		                <!-- <img image-lazy-src="{{  data.picto_50  }}" class="setting" image-lazy-loader="android" image-lazy-distance-from-bottom-to-load="-200"> -->
+		                <div class="BadgeSettings">
+		                    <span class="initialBadgeSettings">{{ shareCapital.representant.user.initiales }}</span>
+		                </div> 
+		                <h2 class="">{{ shareCapital.representant.user.sexe }}. {{ shareCapital.representant.user.fname }} {{ shareCapital.representant.user.lname }} </h2>
+		                <div class="progressdiv" style="width: 100%;display: inline-flex;background-color: white;"> 
+			                <div id="progressbar" style="width: 80%;margin:0;height: 10px;background: #264f7c;border-radius: 10px;overflow: hidden;">
+			                    <div style="width: {{ shareCapital.representant.user.percentage }}%;height: 10px;background: rgb(239, 127, 49);"></div>
+			                </div>
+			                <div id="progressbarlabel" style="width: 20%;margin: 0 0 0 13px;color: #254e7b;margin-top: -5px;">{{ shareCapital.representant.user.percentage }} %</div>
+			            </div> 
+		                <i ng-if="shareCapital.representant.logsPhoto.userlname.confirmed == -1 || shareCapital.representant.logsPhoto.userlname.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="shareCapital.representant.logsPhoto.userlname.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="shareCapital.representant.logsPhoto.userlname.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+
+		                <ion-option-button class="button-assertive" ng-click="removeUser('representant', '')" >
+		                	{{ 'capital_social.remove' | translate }}
+		                </ion-option-button>
+
+		            </ion-item> 
+		            <ion-item class="item-icon-left item-icon-right"  ui-sref="tab.capital-social-update-address({type: 2, index: 0})">
+		                <i class="icon ion-map"></i>{{ shareCapital.representant.user.fullAddress }}
+		                <i ng-if="shareCapital.representant.logsPhoto.addressid.confirmed == -1 || shareCapital.representant.logsPhoto.addressid.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="shareCapital.representant.logsPhoto.addressid.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="shareCapital.representant.logsPhoto.addressid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>   
+		            </ion-item>
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-phone({type: 2, index: 0})">
+		                <i class="icon ion-ios-telephone-outline"></i>({{ shareCapital.representant.user.Indicatif }}) {{ shareCapital.representant.user.phone }}
+		                <i ng-if="shareCapital.representant.logsPhoto.usermobile1.confirmed == -1 || shareCapital.representant.logsPhoto.usermobile1.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="shareCapital.representant.logsPhoto.usermobile1.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="shareCapital.representant.logsPhoto.usermobile1.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>  
+		            </ion-item>
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-mail({type: 2, index: 0})">
+		                <i class="icon ion-ios-at"></i>{{ shareCapital.representant.user.mail }}
+		                <i ng-if="shareCapital.representant.logsPhoto.usermail.confirmed == -1 || shareCapital.representant.logsPhoto.usermail.confirmed == 0" class="icon ion-alert documentRequired assertive"></i> 
+		                <i ng-if="shareCapital.representant.logsPhoto.usermail.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+		            </ion-item>
+
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.letterofauthorisation">
+		                <i class="icon ion-ios-paper-outline"></i>{{ 'capital_social.letter_of_authorisation' | translate }}
+		                <i ng-if="shareCapital.representant.logsPhoto.letterauthorisation.confirmed == -1 || shareCapital.representant.logsPhoto.letterauthorisation.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="shareCapital.representant.logsPhoto.letterauthorisation.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="shareCapital.representant.logsPhoto.letterauthorisation.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+		            </ion-item> 
+
+		            <ion-item class="item-icon-left item-icon-right">
+	                    <i class="icon ion-android-checkbox-outline"></i>{{ 'setting_pro.final_validation' | translate }}
+	                    <i ng-if="shareCapital.representant.logsPhoto.treezorid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>
+	                    <i ng-if="shareCapital.representant.logsPhoto.treezorid.confirmed != 1" class="icon ion-alert documentRequired assertive"></i> 
+	                </ion-item>
+
+	                
+	            </div>
+
+	            <div ng-if="!shareCapital.representant" class="padding" style="background: whitesmoke;">
+	            	<button ng-click="addUser('representant')"  class="button button-full button-dark addNewUserTolist">
+	            		{{ 'capital_social.add_the_representative' | translate }} {{ signataire_is_rep }}
+	            	</button>
+	            </div>
+            </div>
+
+	            
+
+
+			
+            <ion-item class="item-divider" ng-if="isshop == 1">
+            	<strong>{{ 'capital_social.beneficial_beneficiaries' | translate }}</strong>
+            	<p style="font-size: 12px;;line-height: 15px;">{{ 'capital_social.sub_title_beneficiaries' | translate }}</p>
+            </ion-item> 
+            <div style="background: whitesmoke;" ng-if="isshop == 1">
+            	<div ng-repeat="(key, beneficiary) in shareCapital.beneficiary" style="margin-bottom: 10px">
+
+	            	<ion-item class="profile item-avatar item-icon-right item item-complex" ui-sref="tab.capital-social-update-personal-infos({type: 3, index: key})" type="item-text-wrap" style="padding:0;">
+		                <!-- <img image-lazy-src="{{  data.picto_small }}" class="setting" image-lazy-loader="android" > -->
+		                <!-- <img image-lazy-src="{{  data.picto_50  }}" class="setting" image-lazy-loader="android" image-lazy-distance-from-bottom-to-load="-200"> -->
+		                <div class="BadgeSettings">
+		                    <span class="initialBadgeSettings">{{ beneficiary.user.initiales }}</span>
+		                </div> 
+		                <h2 class="">{{ beneficiary.user.sexe }}. {{ beneficiary.user.fname }} {{ beneficiary.user.lname }} <em style="font-size: 12px;">({{ beneficiary.user.percent }}% du capital)</em></h2>
+		                <div class="progressdiv" style="width: 100%;display: inline-flex;background-color: white;"> 
+			                <div id="progressbar" style="width: 80%;margin:0;height: 10px;background: #264f7c;border-radius: 10px;overflow: hidden;">
+			                    <div style="width: {{ beneficiary.user.percentage }}%;height: 10px;background: rgb(239, 127, 49);"></div>
+			                </div>
+			                <div id="progressbarlabel" style="width: 20%;margin: 0 0 0 13px;color: #254e7b;margin-top: -5px;">{{ beneficiary.user.percentage }} %</div>
+			            </div> 
+		                <i ng-if="beneficiary.logsPhoto.userlname.confirmed == -1 || beneficiary.logsPhoto.userlname.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="beneficiary.logsPhoto.userlname.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="beneficiary.logsPhoto.userlname.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+
+		                <ion-option-button class="button-assertive" ng-click="removeUser('beneficiaire', beneficiary.user.associeid )" >
+		                	{{ 'capital_social.remove' | translate }} 
+		                </ion-option-button> 
+
+		            </ion-item> 
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-address({type: 3, index: key})">
+		                <i class="icon ion-map"></i>{{ beneficiary.user.fullAddress }}
+		                <i ng-if="beneficiary.logsPhoto.addressid.confirmed == -1 || beneficiary.logsPhoto.addressid.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="beneficiary.logsPhoto.addressid.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="beneficiary.logsPhoto.addressid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>   
+		            </ion-item>
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-phone({type: 3, index: key})">
+		                <i class="icon ion-ios-telephone-outline"></i>({{ beneficiary.user.Indicatif }}) {{ beneficiary.user.phone }}
+		                <i ng-if="beneficiary.logsPhoto.usermobile1.confirmed == -1 || beneficiary.logsPhoto.usermobile1.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="beneficiary.logsPhoto.usermobile1.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="beneficiary.logsPhoto.usermobile1.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>  
+		            </ion-item>
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-mail({type: 3, index: key})">
+		                <i class="icon ion-ios-at"></i>{{ beneficiary.user.mail }}
+		                <i ng-if="beneficiary.logsPhoto.usermail.confirmed == -1 || beneficiary.logsPhoto.usermail.confirmed == 0" class="icon ion-alert documentRequired assertive"></i> 
+		                <i ng-if="beneficiary.logsPhoto.usermail.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+		            </ion-item>
+
+		            <ion-item class="item-icon-left item-icon-right">
+	                    <i class="icon ion-android-checkbox-outline"></i>{{ 'setting_pro.final_validation' | translate }}
+	                    <i ng-if="beneficiary.logsPhoto.treezorid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>
+	                    <i ng-if="beneficiary.logsPhoto.treezorid.confirmed != 1" class="icon ion-alert documentRequired assertive"></i> 
+	                </ion-item>  
+	            </div>
+
+
+	             
+
+            <div class="padding" style="background: whitesmoke;">
+            	<button ng-click="addUser('beneficiare')"  class="button button-full button-dark addNewUserTolist">
+            		{{ 'capital_social.add_a_beneficiary' | translate }}
+            	</button>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <ion-item class="item-divider"  ng-if="isshop == 1">
+            	<strong>{{ 'capital_social.other_shareholders' | translate }}</strong>
+            	<p style="font-size: 12px;;line-height: 15px;">{{ 'capital_social.sub_title_shareholders' | translate }}</p>
+            </ion-item> 
+            <div style="background: whitesmoke;"  ng-if="isshop == 1">
+            	<div ng-if="shareCapital.other.length > 0" ng-repeat="(key, actionnary) in shareCapital.other" style="margin-bottom: 10px">
+	            	<ion-item class="profile item-avatar item-icon-right item item-complex" ui-sref="tab.capital-social-update-personal-infos({type: 4, index: key})" type="item-text-wrap" style="padding:0;">
+		                <!-- <img image-lazy-src="{{  data.picto_small }}" class="setting" image-lazy-loader="android" > -->
+		                <!-- <img image-lazy-src="{{  data.picto_50  }}" class="setting" image-lazy-loader="android" image-lazy-distance-from-bottom-to-load="-200"> -->
+		                <div class="BadgeSettings">
+		                    <span class="initialBadgeSettings">{{ actionnary.user.initiales }}</span>
+		                </div> 
+		                <h2 class="">{{ actionnary.user.sexe }}. {{ actionnary.user.fname }} {{ actionnary.user.lname }} <em style="font-size: 12px;">({{ actionnary.user.percent }}% du capital)</em></h2>
+		                <div class="progressdiv" style="width: 100%;display: inline-flex;background-color: white;"> 
+			                <div id="progressbar" style="width: 80%;margin:0;height: 10px;background: #264f7c;border-radius: 10px;overflow: hidden;">
+			                    <div style="width: {{ actionnary.user.percentage }}%;height: 10px;background: rgb(239, 127, 49);"></div>
+			                </div>
+			                <div id="progressbarlabel" style="width: 20%;margin: 0 0 0 13px;color: #254e7b;margin-top: -5px;">{{ actionnary.user.percentage }} %</div>
+			            </div> 
+		                <i ng-if="actionnary.logsPhoto.userlname.confirmed == -1 || actionnary.logsPhoto.userlname.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="actionnary.logsPhoto.userlname.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="actionnary.logsPhoto.userlname.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+
+		                <ion-option-button class="button-assertive" ng-click="removeUser('actionnaire', actionnary.user.associeid)" >
+		                	{{ 'capital_social.remove' | translate }}
+		                </ion-option-button>
+
+		            </ion-item> 
+		            <ion-item class="item-icon-left item-icon-right"  ui-sref="tab.capital-social-update-address({type: 4, index: key})">
+		                <i class="icon ion-map"></i>{{ actionnary.user.fullAddress }}
+		                <i ng-if="actionnary.logsPhoto.addressid.confirmed == -1 || actionnary.logsPhoto.addressid.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="actionnary.logsPhoto.addressid.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="actionnary.logsPhoto.addressid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>   
+		            </ion-item>
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-phone({type: 4, index: key})">
+		                <i class="icon ion-ios-telephone-outline"></i>({{ actionnary.user.Indicatif }}) {{ actionnary.user.phone }}
+		                <i ng-if="actionnary.logsPhoto.usermobile1.confirmed == -1 || actionnary.logsPhoto.usermobile1.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+		                <i ng-if="actionnary.logsPhoto.usermobile1.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+		                <i ng-if="actionnary.logsPhoto.usermobile1.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>  
+		            </ion-item>
+		            <ion-item class="item-icon-left item-icon-right" ui-sref="tab.capital-social-update-mail({type: 4, index: key})">
+		                <i class="icon ion-ios-at"></i>{{ actionnary.user.mail }}
+		                <i ng-if="actionnary.logsPhoto.usermail.confirmed == -1 || actionnary.logsPhoto.usermail.confirmed == 0" class="icon ion-alert documentRequired assertive"></i> 
+		                <i ng-if="actionnary.logsPhoto.usermail.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i> 
+		            </ion-item>
+
+		            <ion-item class="item-icon-left item-icon-right">
+	                    <i class="icon ion-android-checkbox-outline"></i>{{ 'setting_pro.final_validation' | translate }}
+	                    <i ng-if="actionnary.logsPhoto.treezorid.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>
+	                    <i ng-if="actionnary.logsPhoto.treezorid.confirmed != 1" class="icon ion-alert documentRequired assertive"></i> 
+	                </ion-item> 
+	            </div>
+
+	            <div class="padding" style="background: whitesmoke;">
+	            	<button ng-click="addUser('capitalesocial')"  class="button button-full button-dark addNewUserTolist">
+	            		{{ 'capital_social.add_a_shareholder' | translate }}
+	            	</button>
+	            </div>
+
+	             
+            </div>
+
+
+		</ion-list>
+
+    </ion-content>
+
+</ion-view>

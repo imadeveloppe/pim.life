@@ -1,0 +1,83 @@
+<ion-view view-title="{{ title }}" can-swipe-back="false" id="notifDetail">
+     
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="trans" ng-show="loaded">
+        <div class="list card  md-inline-form" layout="column" ng-cloak style="margin-top: 13px;">
+            <md-content layout-padding class="border-rounded">
+                <form name="userForm">
+ 
+                    <div style="text-align: center;">
+                        <div class="BadgeUpdateInfo" ng-if="NotifInList.picto == ''">
+                            <span class="initialBadgeUpdateInfo CPro">{{ NotifInList.initiales}}</span>
+                        </div>
+                        <img ng-src="{{  NotifInList.picto }}" ng-if="NotifInList.picto != ''" class="personaleInformation PhotoProfile"  ng-class="(NotifInList.isshop==1)?'CPro':'CPerso'">
+                    </div>
+
+
+
+                    <div ng-if="type != 'cancelledpaymenttofriend' &&  type != 'cancelledreceivedpayment' &&  type != 'cancelledpaymenttofriend_toblockeduser' &&  type != 'cancelledreceivedpayment_fromblockeduser' && type != 'refusepaymentbyqrcode' &&  type != 'cancelledpayin' && type != 'cancelledpayout' " class="row" style="text-align:center;">
+                        <div class="col">
+                            <p>{{ symbole }}<span class="blueLabel">{{ Fname(ObjNotif.fname)}} {{ Lname(ObjNotif.lname)}}</span>{{ text }}</p>
+                            <div class="Total"> {{ ObjNotif.amount}} {{devise}}</div>
+                            <p>{{ ObjNotif.date | date:"MM/dd/yyyy" }}</p>
+                        </div>
+                    </div> 
+
+
+                    <div ng-if="type == 'refusepaymentbyqrcode'" class="row" style="text-align:center;">
+                        <div class="col">
+                            <p>{{ 'notification_detail.the_payment_you_asked_for' | translate }} <span class="blueLabel">{{ Fname(ObjNotif.fname)}} {{ Lname(ObjNotif.lname) }} </span> {{ 'notification_detail.was_cancelled' | translate }}</p>
+
+                            <p>
+                                <span class="Total" style="color:#EF7E22;    display: block;"> {{ ObjNotif.amount}} {{devise}}</span>  
+                            </p>
+                            <p>{{ ObjNotif.date | date:"MM/dd/yyyy" }}</p>
+                        </div>
+                    </div>
+
+
+                     <div ng-if="type == 'cancelledpaymenttofriend' || type == 'cancelledpaymenttofriend_toblockeduser' || type == 'cancelledpayin' || type == 'cancelledpayout'" class="row" style="text-align:center;">
+                        <div class="col">
+                            <p>{{ 'notification_detail.the_payment_you_sent_to' | translate }} <span class="blueLabel">{{ Fname(ObjNotif.fname)}} {{ Lname(ObjNotif.lname) }} </span> {{ 'notification_detail.was_cancelled' | translate }}</p>
+
+                            <p>
+                                <span class="Total" style="color:#EF7E22;    display: block;"> {{ ObjNotif.amount}} {{devise}}</span> 
+                                {{ 'notification_detail.was_credited_on_your_account' | translate }}
+                            </p>
+                            <p>{{ ObjNotif.date | date:"MM/dd/yyyy" }}</p>
+                        </div>
+                    </div>
+
+
+                    <div ng-if="type == 'cancelledreceivedpayment' || type == 'cancelledreceivedpayment_fromblockeduser' " class="row" style="text-align:center;">
+                        <div class="col"> 
+                            <p>{{ text }}</p> 
+                            <p><span class="Total" style="color:#EF7E22;"> {{ ObjNotif.amount }} {{ devise }}</span></p>
+                             <p>{{ ObjNotif.date | date:"MM/dd/yyyy" }}</p>
+                        </div>
+                    </div>
+                    <div class="row sharedReson" ng-if="ObjNotif.reason.length > 0">
+                        <div class="col">
+                            <p style="margin:0;">
+                                <span class="blueLabel">{{ 'make_a_transfer.reason' | translate }}</span> {{ ObjNotif.reason }}
+                            </p>
+                        </div>
+                    </div>
+                </form> 
+                <div>
+                    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                        <md-button ng-click="GoBack()" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                            {{ 'notification_detail.back' | translate }}
+                        </md-button>
+                    </section>
+                </div>
+            </md-content>
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,30 @@
+<ion-modal-view> 	
+ 
+
+	<ion-content class="padding filterCatg" scroll="false"> 
+
+		<ion-scroll class="categories" delegate-handle="Cat">
+			<div style="clear: both;"></div>
+				 <div class="catItem" ng-repeat="(key, categorie) in categories" ng-click="showSubCat(key, categorie )" >
+				 	<span class="icon-continner">
+				 		<span ng-if="!categorie.catpicto" class="bg-color" style="background: {{ categorie.color  }}; position: absolute;opacity: 0.4;"></span>
+				 		<i class="icon ion-checkmark-circled" ng-if="categorie.selected"></i>
+				 		<img ng-if="categorie.catpicto" ng-src="{{ categorie.catpicto }}">
+				 		<strong class="initiales-cat" ng-if="!categorie.catpicto">{{ categorie.catlabel.charAt(0) }}</strong>
+				 	</span>
+			  		<p>{{ categorie.catlabel }}</p>
+			    </div>
+		    <div style="clear: both;"></div>
+
+		</ion-scroll> 
+
+		<div class="row button-terminer" style="background: #fff; border-top: 1px solid #eee;"> 
+  			<div class="col">
+  				<button class="button button-clear" ng-click="Filter.hide()">
+  					<i class="icon ion-android-close"></i>
+  				</button>
+  			</div>  
+        </div>
+
+	</ion-content> 
+</ion-modal-view>

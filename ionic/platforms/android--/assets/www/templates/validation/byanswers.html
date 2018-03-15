@@ -1,0 +1,31 @@
+<div class="">
+    <div class="content-block">
+        <div class="container">
+            <div class="form-inscription mainform">
+                <form name="answers" class="form posr" method="POST" accept-charset="utf-8" novalidate ng-submit="ValidateAnswersvalidation()">
+                    <div class="form-label-content mtop26">
+                        <label class="form-label-question" for="response1">{{ listQuestions[0].question }}</label>
+                        <div class="form-label-response">
+                            <input type="text" name="response1" placeholder="answer" ng-model="answer1" required>
+                        </div>
+                    </div>
+                    <div class="form-label-content addmargin8">
+                        <label class="form-label-question " for="response2">{{ listQuestions[1].question }}</label>
+                        <div class="form-label-response">
+                            <input type="text" name="response2" placeholder="answer" ng-model="answer2" required>
+                        </div>
+                    </div>
+                    <div class="form-label-content addmargin8">
+                        <label class="form-label-question" for="response3">{{ listQuestions[2].question }}</label>
+                        <div class="form-label-response">
+                            <input type="text" name="response3" value="" placeholder="answer" ng-model="answer3" required>
+                        </div>
+                    </div>
+                    <div class="form-control submitbtn">
+                        <input type="submit" name="singup" value="Valid">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<ion-view title="{{ 'sign_up_first_step.title_page' | translate }}" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button data-tap-disabled="true"></ion-nav-back-button>
+
+        <ion-nav-back-button class="button-clear">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+        
+    </ion-nav-bar>  
+    <ion-content padding="true" class="has-header inDeconnect"> 
+
+    <span class="title" style="margin: 20px 0;">{{ 'sign_up_first_step.text1' | translate }}</span>
+    <form id="fullName-form3" class="list"> 
+
+        <div class="list card" style="margin-top: 10px;">
+          <div class="list list-inset" style="margin-top: 5px;"> 
+
+              <label class="item item-input item-floating-label">
+                <span class="input-label">{{ 'sign_up_first_step.email' | translate }}</span>
+                <input type="email" placeholder="{{ 'sign_up_first_step.email' | translate }}" ng-model="data.mail">
+              </label> 
+              <div class="spacer" style="width: 300px; height: 8px;"></div>
+          </div>  
+
+          <div style="text-align: center;">
+            <button ng-click="sendEmail()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block ">
+              <span ng-if="firstVisite">{{ 'sign_up_first_step.next' | translate }} <i class="icon ion-ios-arrow-right"></i></span>
+              <span ng-if="!firstVisite">{{ 'sign_up_first_step.resend' | translate }}</span>
+            </button> 
+
+          </div>
+
+        </div>
+
+        
+    </form> 
+    </ion-content>
+</ion-view>

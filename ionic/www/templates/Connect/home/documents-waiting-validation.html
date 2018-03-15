@@ -1,0 +1,226 @@
+<ion-view title="{{ 'doccuments_wainting_validation.title_page' | translate }}" id="DoccumentsWaintingvalidation" class="view-pending-validation" can-swipe-back="false"> 
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="false" class="has-header" style="background: #fff;">
+        <ion-list ng-if="!isshop" class="groupListwaitingElements">
+
+            <div class="groupListwaitingElementsItem">
+                <!-- ////************************************************************************************************************************/////// -->
+                <ion-item class="item-divider">{{ 'doccuments_wainting_validation.title_1' | translate }}</ion-item>
+
+                
+                <ion-item ng-if="docs.userlname == -1 || docs.userlname == 2" ng-click="clickItem('userlname')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-android-person"></i>{{ 'doccuments_wainting_validation.personal_informations' | translate }} 
+                    <i ng-if="docs.userlname == -1" class="icon ion-alert documentRequired assertive"></i> 
+                    <i ng-if="docs.userlname == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.useraddressid == -1 || docs.useraddressid == 2" ng-click="clickItem('useraddressid')" class="item-icon-left item-icon-right">
+                    <i class="icon icon ion-map"></i><span>{{ 'doccuments_wainting_validation.useraddress' | translate }}</span>
+                    <i ng-if="docs.useraddressid == -1" class="icon ion-alert documentRequired assertive"></i> 
+                    <i ng-if="docs.useraddressid == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item>
+                
+                <ion-item ng-if="docs.usermail == 0" ng-click="clickItem('usermail')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-at"></i><span>{{ 'doccuments_wainting_validation.useremail' | translate }}</span> 
+                    <i class="icon ion-alert documentRequired assertive"></i> 
+                </ion-item> 
+
+                <ion-item ng-if="docs.usermobile == 0" ng-click="clickItem('usermobile')" class="item-icon-left item-icon-right">
+                    <i class="icon icon ion-map"></i><span>{{ 'doccuments_wainting_validation.usermobile' | translate }}</span> 
+                    <i class="icon ion-alert documentRequired assertive"></i> 
+                </ion-item>
+
+                <ion-item ng-if="selectedAssocId == 0" ng-click="clickItem('causes')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-people-outline"></i>{{ 'home.select_a_cause' | translate }}
+                    <i class="icon ion-alert documentRequired assertive"></i> 
+                </ion-item>
+
+            </div>
+
+
+            <div class="groupListwaitingElementsItem">
+                <!-- ////************************************************************************************************************************/////// --> 
+                <ion-item class="item-divider">{{ 'doccuments_wainting_validation.title_2' | translate }}</ion-item> 
+
+                <ion-item ng-if="docs.userlname == 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-android-person"></i>{{ 'doccuments_wainting_validation.personal_informations' | translate }}  
+                    <i ng-if="docs.userlname == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+                </ion-item>
+
+                <ion-item ng-if="docs.useraddressid == 0" class="item-icon-left item-icon-right">
+                    <i class="icon icon ion-map"></i><span>{{ 'doccuments_wainting_validation.useraddress' | translate }}</span> 
+                    <i ng-if="docs.useraddressid == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+                </ion-item>   
+
+                <ion-item ng-if="docs.usertreezorid >= 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-android-checkbox-outline"></i>{{ 'settings.final_validation' | translate }}
+                    <i ng-if="docs.usertreezorid == -1" class="icon ion-alert documentRequired assertive"></i>
+                    <i ng-if="docs.usertreezorid == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                    <i ng-if="docs.usertreezorid == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item>
+
+                <!-- ////************************************************************************************************************************/////// -->
+            </div>
+            
+
+            
+
+            
+ 
+         </ion-list>
+
+         <ion-list ng-if="isshop" class="groupListwaitingElements">
+
+            <div class="groupListwaitingElementsItem">
+                <!-- ////************************************************************************************************************************/////// -->
+                <ion-item class="item-divider">{{ 'doccuments_wainting_validation.title_1' | translate }}</ion-item>
+     
+                <ion-item ng-if="docs.shopname == -1 || docs.shopname == 2" ng-click="clickItem('shopname')" class="item-icon-left item-icon-right"> 
+                    <i class="icon ion-android-person"></i>
+                        <span ng-if="isPro == 1">{{ 'doccuments_wainting_validation.shopname' | translate }}</span> 
+                        <span ng-if="isPro == 2">{{ 'doccuments_wainting_validation.assocname' | translate }}</span> 
+                    <i ng-if="docs.shopname == -1" class="icon ion-alert documentRequired assertive"></i> 
+                    <i ng-if="docs.shopname == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.shophqphone == -1 || docs.shophqphone == 2" ng-click="clickItem('shophqphone')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-telephone-outline"></i><span>{{ 'doccuments_wainting_validation.shophqphone' | translate }}</span> 
+                    <i ng-if="docs.shophqphone == -1" class="icon ion-alert documentRequired assertive"></i> 
+                    <i ng-if="docs.shophqphone == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.shophqaddressid == -1 || docs.shophqaddressid == 2" ng-click="clickItem('shophqaddressid')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-map"></i><span>{{ 'doccuments_wainting_validation.shophqaddressid' | translate }}</span> 
+                    <i ng-if="docs.shophqaddressid == -1" class="icon ion-alert documentRequired assertive"></i> 
+                    <i ng-if="docs.shophqaddressid == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.sharecapital == -1 || docs.sharecapital == 2 || docs.sharecapital == 0" ng-click="clickItem('sharecapital')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-paper-outline"></i><span>{{ 'doccuments_wainting_validation.sharecapital' | translate }}</span> 
+                    <i ng-if="docs.sharecapital == -1 || docs.sharecapital == 0" class="icon ion-alert documentRequired assertive"></i> 
+                    <i ng-if="docs.sharecapital == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.shoptypeid == 0" ng-click="clickItem('shoptypeid')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-paper-outlinen"></i><span>{{ 'doccuments_wainting_validation.shoptypeid' | translate }}</span> 
+                    <i ng-if="docs.shoptypeid == 0" class="icon ion-alert documentRequired assertive"></i>  
+                </ion-item> 
+
+                <ion-item ng-if="docs.brvta == 0" ng-click="clickItem('brvta')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-paper-outline"></i><span>{{ 'doccuments_wainting_validation.brvta' | translate }}</span> 
+                    <i ng-if="docs.brvta == 0" class="icon ion-alert documentRequired assertive"></i>  
+                </ion-item> 
+
+                <ion-item ng-if="docs.nafid == 0" ng-click="clickItem('nafid')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-paper-outline"></i><span>{{ 'doccuments_wainting_validation.nafid' | translate }}</span> 
+                    <i ng-if="docs.nafid == 0" class="icon ion-alert documentRequired assertive"></i>  
+                </ion-item>  
+
+                <!-- contact email & phone -->
+
+                <ion-item ng-if="docs.shopcontactmail == 0" ng-click="clickItem('shopcontactmail')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-at"></i><span>{{ 'doccuments_wainting_validation.shopcontactmail' | translate }}</span>  
+                    <i ng-if="docs.shopcontactmail == 0" class="icon ion-alert documentRequired assertive"></i>
+                </ion-item> 
+
+
+                <!-- -->
+
+                <ion-item ng-if="docs.shopaddressid == -1 || docs.shopaddressid == 2" ng-click="clickItem('shopaddressid')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-map"></i><span>{{ 'doccuments_wainting_validation.shopaddressid' | translate }}</span> 
+                    <i ng-if="docs.shopaddressid == -1" class="icon ion-alert documentRequired assertive"></i> 
+                    <i ng-if="docs.shopaddressid == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.cat == 0" ng-click="clickItem('cat')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-paper-outline"></i><span>{{ 'doccuments_wainting_validation.cat' | translate }}</span> 
+                    <i ng-if="docs.cat == 0" class="icon ion-alert documentRequired assertive"></i>  
+                </ion-item> 
+
+                <!-- shop email & phone -->
+
+                <ion-item ng-if="docs.shopmail == 0" ng-click="clickItem('shopmail')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-at"></i><span>{{ 'doccuments_wainting_validation.shopmail' | translate }}</span>  
+                    <i ng-if="docs.shopmail == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.shopmobile == 0" ng-click="clickItem('shopmobile')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-telephone-outline"></i><span>{{ 'doccuments_wainting_validation.shopmobile' | translate }}</span>  
+                    <i class="icon ion-alert documentRequired assertive"></i>
+                </ion-item> 
+
+                <!-- -->
+
+                <ion-item ng-if="selectedAssocId == 0 && isPro != 2" ng-click="clickItem('causes')" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-people-outline"></i>{{ 'home.select_a_cause' | translate }}
+                    <i class="icon ion-alert documentRequired assertive"></i> 
+                </ion-item>
+
+
+            </div>
+
+            <div class="groupListwaitingElementsItem">
+            <!-- ////************************************************************************************************************************/////// --> 
+
+                 <ion-item class="item-divider">{{ 'doccuments_wainting_validation.title_2' | translate }}</ion-item> 
+
+                <ion-item ng-if="docs.shopname == 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-android-person"></i><span>{{ 'doccuments_wainting_validation.shopname' | translate }}</span>  
+                    <i ng-if="docs.shopname == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.shophqphone == 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-telephone-outline"></i><span>{{ 'doccuments_wainting_validation.shophqphone' | translate }}</span>  
+                    <i class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.shopphone == 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-ios-telephone-outline"></i><span>{{ 'doccuments_wainting_validation.shopphone' | translate }}</span>  
+                    <i class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                </ion-item> 
+
+                <ion-item ng-if="docs.shophqaddressid == 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-map"></i><span>{{ 'doccuments_wainting_validation.shophqaddressid' | translate }}</span>  
+                    <i ng-if="docs.shophqaddressid == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                </ion-item>   
+
+                <ion-item ng-if="docs.shopaddressid == 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-map"></i><span>{{ 'doccuments_wainting_validation.shopaddressid' | translate }}</span>  
+                    <i ng-if="docs.shopaddressid == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                </ion-item> 
+  
+
+                <ion-item ng-if="docs.shoptreezorid >= 0" class="item-icon-left item-icon-right">
+                    <i class="icon ion-android-checkbox-outline"></i>{{ 'settings.final_validation' | translate }}
+                    <i ng-if="docs.shoptreezorid == -1" class="icon ion-alert documentRequired assertive"></i>
+                    <i ng-if="docs.shoptreezorid == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i>
+                    <i ng-if="docs.shoptreezorid == 2" class="icon ion-close-circled documentRequired assertive"></i>
+                </ion-item>
+
+
+                <!-- ////************************************************************************************************************************/////// -->
+            </div>
+            
+
+            
+
+            
+
+            
+
+            
+
+            
+
+ 
+         </ion-list> 
+        
+         
+         
+    </ion-content>
+</ion-view>

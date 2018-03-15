@@ -1,0 +1,17 @@
+<ion-view title="{{ 'settings.delete_profile' | translate }}" id="page5" class=" blocked" can-swipe-back="false"> 
+    <ion-nav-bar class="bar-assertive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true" style="background-color:#c50b0b !important;color:#fff !important;">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class=" inSettigs padding2">
+        <div class="image">
+            <img src="img/delete-account.png" alt="">
+        </div>
+        <p class="">{{ 'delete_profil.text' | translate }}</p>
+        <button ng-click="DeleteAccount()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block"> 
+            {{ 'delete_profil.delete' | translate }}
+        </button>
+    </ion-content>
+</ion-view>

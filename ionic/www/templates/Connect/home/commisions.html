@@ -1,0 +1,115 @@
+<ion-view view-title="List" hide-back-button='false' can-swipe-back="false" hide-nav-bar="true" style="background: #fff;"> 
+
+    <ion-content class="inHome liste-transaction" ng-show="loader" style="padding-top: 15px;">
+
+          <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button back-button buttons  button-clear header-item" ><i class="icon ion-ios-arrow-back"></i> 
+        {{ 'global_fields.back' | translate }}
+        </button>
+
+        <div>
+
+            
+
+
+
+            <div class="CenterDivCreate commissions_du_mois" style="font-weight: bold;font-size: 16px;color: #244e7d;width: 240px;margin: -38px auto 14px;">   
+                {{ 'transaction_list.commissions_du_mois' | translate: {
+                    date: FullMonths[MonthCommission-1] +" "+ YearCommission 
+                } }}
+            </div> 
+
+            <div class="solde" style="margin-top: 13px">
+
+                <span>{{ twoDigitAfterCama(totalCommission) }} {{devise}}</span>
+
+            </div>
+ 
+
+    
+
+            <div class="liste-shopping-continner">
+
+
+
+                <!-- ********************************************************************************* -->
+ 
+
+                <div ng-repeat="(key, listeTransaction) in commissionData.data">
+
+ 
+                    <!-- ///////////////////////////////////////////////////////////////////////////// --> 
+                    <div class="block-date"> 
+                        {{ (key == commissionData.current_date) ? ('transaction_list.today' | translate) :'' }}
+
+                        {{ (dateDiff(commissionData.current_date,key).day == 1 ) ? ('transaction_list.yesterday' | translate) :''  }}  
+
+                        {{ (dateDiff(commissionData.current_date,key).day > 1 )? key :''  }}  
+
+                    </div>
+
+                    <!-- ///////////////////////////////////////////////////////////////////////////// -->
+
+                    <div class="liste-shopping">
+
+                        <div ng-repeat="transaction in listeTransaction" class="item-shopping" ng-class="{ 'transactionWithRaison' : transaction.description != '' }">
+
+                            <div class="BadgeNotifList" ng-if="transaction.picto == '' " >
+                                <!-- ng-class="(transaction.isshop=='1')?'CPro':'CPerso'" -->
+                                <span class="initialTransfer Raduis" style="background-color: {{ transaction.color }} ;"  >
+
+                                    {{ transaction.initiales}}
+
+                                </span>
+
+                            </div> 
+                            <img ng-src="{{ transaction.picto }}" ng-if="transaction.picto != '' " alt="" class="pecto" style="border: 0">
+
+                            <h2 class="oneLine">{{ transaction.fname }} {{ transaction.lname }}</h2>
+
+                            <span class="date-shopping">{{ transaction.time }}</span><span ng-if="transaction.statut != ''" class="padding-left" style="color:#ef7f31;font-size: 100%;font-family: 'OpenSansBold';font-size: 11px;">
+                            {{ 'transaction_list.'+transaction.statut | translate }}
+                            </span>
+
+                            <p class="description-shopping">
+
+                                {{ transaction.description }}
+
+                            </p>
+
+                            <!-- <span class="amount-shopping amount-negative" ng-if="transaction.transtype=='send'">-{{ transaction.amount }}</span> -->
+
+                            <span class="amount-shopping">{{ transaction.amount }}</span>
+
+                        </div> 
+
+                    </div>  
+
+                </div>
+
+                <!-- ***************************************************************************** -->  
+
+                <p ng-if="isEmpty(transObject.data)" class="list card border-rounded" style="text-align: center;padding: 20px;background: #ffc602;box-shadow: none;">
+
+                    {{ 'transaction_list.no_data' | translate }}
+
+                </p>
+
+
+
+                
+
+
+
+
+
+
+
+            </div>
+
+
+
+        </div> 
+
+</ion-content>
+
+</ion-view>

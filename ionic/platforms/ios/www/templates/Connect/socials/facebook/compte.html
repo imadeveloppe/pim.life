@@ -1,0 +1,35 @@
+<ion-view title="{{ 'settings.facebook' | translate }}"  hide-nav-bar="true" hide-back-button='true' can-swipe-back="false" style="background: #fff;">
+    <ion-content class="socialsNetworks inviteToFacebook"> 
+        <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button custom-back-button back-button buttons  button-clear header-item" ><i class="icon ion-ios-arrow-left"></i> {{ 'global_fields.back' | translate }}</button>
+        <div ng-if="UserDetails.socialNetworks.facebook.registred != 1" class="padding">
+            <div style="text-align: center;">
+                <img src="templates/Connect/socials/facebook/img/facebook.png" class="logo">
+            </div>
+            
+            <p>
+                {{ 'facebook.text1' | translate }}
+            </p>
+            <p>
+                {{ 'facebook.text2' | translate }}
+            </p>
+            <ul>
+                <li>{{ 'facebook.list1' | translate }}</li>
+                <li>{{ 'facebook.list2' | translate }}</li>
+                <li>{{ 'facebook.list3' | translate }}</li>
+            </ul>
+            <button ng-click="FBLogin()" class="button button-block button-positive btn-autorise">{{ 'facebook.link_to_facebook' | translate }}</button> 
+        </div>
+        <div ng-if="UserDetails.socialNetworks.facebook.registred == 1" style="text-align: center;" class="padding">
+            <img src="templates/Connect/socials/facebook/img/facebook.png" class="logo">
+            <div class="continner-info">
+                <img ng-src="https://graph.facebook.com/{{facebookData.id}}/picture?type=large" class="profile-img"> 
+                <h2>{{facebookData.name}}</h2>
+                <!-- <button ng-click="FBShare()" class="button button-block button-balanced" style="margin-bottom: 0;">Post To Facebook (Just a test)</button> -->
+                <button ng-click="FBlogOut()" class="button button-block button-assertive" style="margin-bottom: 0;">
+                    {{ 'facebook.delete_account' | translate }}
+                </button> 
+            </div> 
+        </div>
+        
+    </ion-content>
+</ion-view>

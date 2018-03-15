@@ -1,0 +1,145 @@
+<ion-view title="{{ 'setting_pro.association_informations' | translate }}" class="" can-swipe-back="false" id="updateCompanyInfos">
+
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+<ion-content padding="false" class="has-header inSettigs"  ng-show="loader">
+<div style="text-align:center;margin-top: 20px;" ng-bind-html="ValidateMSG"></div> 
+
+<section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+       <button ng-if="!validation  && showBtns && data.registrationnum !='' " ng-click="ValidateInfo()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive btnOrange  button-block ion-android-upload" >
+            {{ 'company_informations.upload_your_corporate_statutes' | translate }}
+       </button> 
+</section>
+
+<div class="list card " style="padding: 0px;margin: 0px;position: relative;border-radius: 0;">
+<!-- <div class="row" ui-sref="tab.Cover" style="background-image:url({{ (cover!='')? cover : 'img/default-cover.png'; }});background-color: #062a54;background-size: cover; background-position:center center;" > -->
+<div class="" ui-sref="tab.Cover" style="background-color: #062a54;padding: 0; position: relative;max-height: 180px;" >
+    <img ng-src="{{ (cover!='')? cover : 'img/default-cover.png'; }}" style="width: 100%;display: block;">
+    <i class="fa fa-cloud-upload uploadcover" aria-hidden="true" style="top: 10px;"></i>
+ 
+
+</div>
+
+    <i class="fa fa-cloud-upload uploadlogo"  ui-sref="tab.Logo" aria-hidden="true"  style="position: absolute;font-size: 15px;margin-left: 2px;left: 0;right: 0;margin: auto;width: 16px;margin-top: -43px;"></i>
+    <div class="BadgeUpdateInfo" ng-if="logo == ''"  ui-sref="tab.Logo">
+        <span class="initialBadgeUpdateInfo" style="background-color: #ef7e22;" >{{ data.initiales}}</span>
+    </div>
+     
+
+    <img ng-src="{{ logo }}" ng-if="logo != ''" class="personaleInformation Logo" ui-sref="tab.Logo" image-lazy-loader="android"  image-lazy-background-image="true" image-lazy-loader="lines">
+
+
+
+   <form id="fullName-form3" class="list" style="box-shadow: 0 0 3px #ddd;">
+    <div class="list list-inset liste-uppdate padding" style="width: 100%">
+        
+        <label class="item item-input item-floating-label" style="margin-top: 30px;">
+            <span class="input-label">{{ 'company_informations.association_name' | translate }}</span>
+            <input type="text" placeholder="{{ 'company_informations.company_name' | translate }}" ng-model="data.shopname"  ng-disabled="!showBtns">
+        </label> 
+
+        <label class="item item-input item-floating-label">
+            <span class="input-label">{{ 'company_informations.brand_name' | translate }}</span>
+            <input type="text" placeholder="{{ 'company_informations.brand_name' | translate }}" ng-model="data.brand"  ng-disabled="!showBtns">
+        </label>
+
+        <label class="item item-input item-floating-label">
+            <span class="input-label">{{ 'company_informations.slogan' | translate }}</span>
+            <input type="text" placeholder="{{ 'company_informations.slogan' | translate }}" ng-model="data.slogan">
+        </label>
+
+        <label class="item item-input item-floating-label">
+            <span class="input-label">{{ 'sign_up_pro.share_capital' | translate }}</span>
+            <input type="text" mask="9" repeat="20" placeholder="{{ 'sign_up_pro.share_capital' | translate }}" ng-model="data.sharecapital"  ng-disabled="!showBtns">
+        </label>
+
+        <label class="item item-input item-floating-label">
+            <span class="input-label">{{ 'company_informations.registrationnum' | translate }}</span>
+            <input type="text" placeholder="{{ 'company_informations.registrationnum' | translate }}" ng-model="data.registrationnum"  ng-disabled="!showBtns">
+        </label> 
+
+        <label class="" style="padding-bottom: 4px">
+          <div style="height: 10px;"></div>
+          <span class="input-label" style="">{{ 'company_informations.nbremploye' | translate }}</span>
+          <div mobiscroll-form="nbremployeSettings" class="nbremploye"> 
+             <input ng-disabled="!showBtns" ng-model="data.nbremployeIndex" ng-value="data.nbremployeIndex" type="range" id="nbremploye"  min="0" max="4" step="1" data-step-labels="[0, 1, 2, 3, 4]">  
+          </div> 
+          <div style="height: 30px;"></div>
+        </label>
+
+        <label class="" style="padding-bottom: 4px">
+          <div style="height: 10px;"></div>
+          <span class="input-label" style="">{{ 'company_informations.netincome' | translate }}</span>
+          <div mobiscroll-form="netincomeSettings" class="netincome"> 
+             <input ng-disabled="!showBtns" ng-model="data.netincomeIndex" ng-value="data.nbremployeIndex" type="range" id="netincome"  min="0" max="5" step="1" data-step-labels="[0, 1, 2, 3, 4, 5]">  
+          </div> 
+          <div style="height: 30px;"></div>
+        </label>
+
+        <label class="" style="padding-bottom: 4px">
+          <div style="height: 10px;"></div>
+          <span class="input-label" style="">{{ 'company_informations.annualturnover' | translate }}</span>
+          <div mobiscroll-form="annualturnoverSettings" class="annualturnover"> 
+             <input ng-disabled="!showBtns" ng-model="data.annualturnoverIndex" ng-value="data.annualturnoverIndex" type="range" id="annualturnover"  min="0" max="7" step="1" data-step-labels="[0, 1, 2, 3, 4, 5, 6, 7]">  
+          </div> 
+          <div style="height: 30px;"></div>
+        </label> 
+
+        <label class="item item-input item-floating-label" style="padding-bottom: 4px;">
+            <span class="input-label">{{ 'company_informations.creation_date' | translate }} </span> 
+            <input type="text"  mask="39/39/9999" ng-value="{{data.createdat}}" ng-model="data.createdat" placeholder="{{ 'company_informations.creation_date' | translate }}"  ng-disabled="!showBtns">  
+        </label> 
+
+        <label class="item item-input item-floating-label" ng-click="openPickerBusinessType(showBtns)">
+            <span class="input-label">{{ 'setting_pro.type' | translate }}</span>
+            <input type="text" placeholder="{{ 'setting_pro.type' | translate }}" class="lowercase" ng-model="data.informationBusinessType" disabled="disabled" ng-disabled="true" ng-class="{'showBtns' : showBtns}">
+        </label>
+
+        <label class="item item-input item-floating-label">
+            <span class="input-label">{{ 'company_informations.website' | translate }}</span>
+            <input type="text" placeholder="{{ 'company_informations.website' | translate }} (http ://)" class="lowercase" ng-model="data.siteweb">
+        </label>
+
+        <label class="item item-input  item-floating-label" style="border-top:none;padding-bottom: 10px;">
+            <span class="input-label textareastyle">{{ 'company_informations.description' | translate }}</span>
+            <textarea placeholder="{{ 'company_informations.description' | translate }}" rows="9" ng-model="data.desc"  style="color:#000000;padding-left: 4px !important;padding-bottom: 0px;margin-bottom: -6px;font-size: 14px;"  ng-style="isIOS && {'text-indent':'-3px'} || {'text-indent':'opx'}"></textarea>
+        </label>
+
+        <label class="item item-input  item-floating-label" style="border-top:none;padding-bottom: 10px;">
+            <span class="input-label textareastyle">{{ 'company_informations.mission' | translate }}</span>
+            <textarea placeholder="{{ 'company_informations.mission' | translate }}" rows="9" ng-model="data.assocmission"  style="color:#000000;padding-left: 4px !important;padding-bottom: 0px;margin-bottom: -6px;font-size: 14px;"  ng-style="isIOS && {'text-indent':'-3px'} || {'text-indent':'opx'}" ></textarea>
+        </label>
+        
+       <!--  <label class="item item-input item-floating-label">
+            <span class="input-label" style="opacity: 1; top: 0;">Page Facebook</span>
+            <span style="font-size: 14px">https://facebook.com/</span><input type="text" placeholder="..." ng-model="data.facebook" style="display: inline;width: inherit;padding-right: 0px !important;position:  relative;top:  -1px;left: 1px;">
+        </label> 
+
+        <label class="item item-input item-floating-label">
+            <span class="input-label" style="opacity: 1; top: 0;">Profil Twitter</span>
+            <span style="font-size: 14px">https://twitter.com/</span><input type="text" placeholder="..." ng-model="data.twitter" style="display: inline;width: inherit;padding-right: 0px !important;position:  relative;top:  -1px;left: 1px;">
+        </label>  -->
+        <div class="spacer" style="width: 300px; height: 8px;"></div>
+    </div> 
+
+
+            
+
+
+
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap style="margin-bottom: 30px;">
+    
+       <button ng-click="ChangeInfo()"  data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-compose "> 
+            {{ 'company_informations.update' | translate }}
+       </button>  
+        
+    </section>
+    
+</form>       
+</div>
+</ion-content>
+</ion-view>

@@ -1,0 +1,50 @@
+<ion-view title="{{ pageTitle }}" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar> 
+    <ion-content padding="true" class="has-header inSettigs">
+
+        <div class="list card " id="fullName-card23" style="margin-top: 0;">
+
+            <form id="fullName-form3" class="list padding" style="margin-bottom: 0px;"> 
+
+                <div class="list">
+
+                  <label class="item item-input item-floating-label">
+                    <span class="input-label">{{ 'local_address.full_address' | translate }}</span>
+                    <input type="text" placeholder="{{ 'local_address.full_address' | translate }}"  google-place ng-focus="disableTap()" name="autocomplete" ng-model="data.fullAddress" aria-label="search">
+                  </label>  
+                  <label class="item item-input item-floating-label">
+                    <span class="input-label">{{ 'local_address.line_1' | translate }}</span>
+                    <input type="text" id="route" placeholder="{{ 'local_address.line_1' | translate }}"   ng-model="data.line1">
+                  </label>
+                  <label class="item item-input item-floating-label">
+                    <span class="input-label">{{ 'local_address.line_2' | translate }}</span>
+                    <input type="text"  ng-model="data.line2" placeholder="{{ 'local_address.line_2' | translate }}">
+                  </label>
+                  <div>
+                    <label class="item item-input item-floating-label">
+                      <span class="input-label">{{ 'local_address.city' | translate }}</span>
+                      <input type="text" id="locality" ng-model="data.city" placeholder="{{ 'local_address.city' | translate }}">
+                    </label> 
+
+                    <label class="item item-input item-floating-label">
+                      <span class="input-label">{{ 'local_address.zip_code' | translate }}</span>
+                      <input type="text" id="postal_code" ng-model="data.zip" placeholder="{{ 'local_address.zip_code' | translate }}">
+                    </label>
+
+                    <label class="item item-input item-floating-label">
+                      <span class="input-label">{{ 'local_address.country' | translate }}</span>
+                      <input type="text" id="country" ng-model="data.country" placeholder="{{ 'local_address.country' | translate }}">
+                    </label> 
+                  </div>
+                </div>  
+                 
+                <button ng-click="InscriptionAddress()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block ">{{ 'sign_up_perso.next' | translate }} <i class="icon ion-ios-arrow-right"></i></button> 
+                </button>          
+        </div>  
+    </ion-content>
+</ion-view>

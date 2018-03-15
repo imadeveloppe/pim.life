@@ -1,0 +1,26 @@
+<ion-view view-title="" can-swipe-back="false" hide-back-button='false' hide-nav-bar="true"  style="background:#fff"> 
+	 
+    <ion-content class="padding" style="padding-top: 20px">
+        <center>
+            <h2 class="positive">
+                {{ 'customer_service.title_page' | translate }}
+            </h2>
+        </center>
+         <p  style="white-space: pre-wrap;">
+             {{ 'customer_service.text' | translate }}
+         </p> 
+          
+         <div style="height: 25px">
+             <button class="button button-clear button-positive" style="float: left;padding: 0" ui-sref="tab.home" ng-click="backToCode()">
+                <i class="icon ion-ios-arrow-left"></i>
+                {{ 'global_fields.back' | translate }}
+             </button>
+
+             <button class="button button-clear button-positive" style="float: right;padding: 0" ng-click="autoLogOut()"> 
+                {{ 'customer_service.jai_oubli_mon_code' | translate }}
+                <i class="icon ion-ios-arrow-right"></i>
+             </button>
+         </div>
+    </ion-content>
+
+</ion-view>

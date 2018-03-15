@@ -1,0 +1,106 @@
+<ion-view title="{{ 'letter_of_authorisation.title_page' | translate }}" id="lettreofautorisation" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+<ion-content  class="inSettigs has-header">
+
+
+
+<span ng-if="confirmed < 0"   class="title" style="padding: 10px 0 10px 9px">
+{{ 'letter_of_authorisation.text' | translate }}</span>
+<style type="text/css">
+    input::-moz-placeholder,
+    textarea::-moz-placeholder {
+    color: red !important;
+    opacity: 1; }
+
+</style>  
+<div class="list card profileCard" style="width: auto;margin: 10px;">
+     
+        <div class="list list-inset letter" style="padding-top: 15px">
+
+            <div class="etapes">
+                <span>{{ 'letter_of_authorisation.step_1' | translate }}</span>
+                <a ng-click="DownloadPdf()" style="color: #EF7E22"> {{ 'letter_of_authorisation.click_here_to_download_file' | translate }}</a>
+                
+            </div>
+            <div class="etapes">
+                <span>{{ 'letter_of_authorisation.step_2' | translate }}</span>
+                <p>{{ 'letter_of_authorisation.text_step_2' | translate }}</p>
+                
+            </div>
+            <div class="etapes etape3">
+                <span>{{ 'letter_of_authorisation.step_3' | translate }}</span>
+                <p>{{ 'letter_of_authorisation.text_step_3' | translate }}</p>
+                
+     
+           </div> 
+
+           <div style="margin-bottom: 10px;"> 
+
+                <div  ng-if="confirmed == '0'"  class="validation-state energized" style="margin-bottom: 0">
+                        <i class="icon ion-load-d"></i> {{ 'validate_document.waiting_validation' | translate }}
+                </div>
+
+                <div ng-if="confirmed == '1'"  class="validation-state balanced" style="margin-bottom: 0">
+                        <i class="icon ion-android-checkmark-circle"></i> {{ 'validate_document.document_validated' | translate }}
+                </div>
+
+                <div  ng-if="confirmed == '2'" class="validation-state assertive">
+                        <i class="icon ion-close"></i> {{ 'validate_document.your_document_was_refused' | translate }}
+                </div>
+                <div ng-if="confirmed == 2 && comment" class="validation-state assertive" style="text-align: left;" ng-bind-html="comment">
+                         
+                </div>
+            </div>
+              
+            <div class="continnerPhotoUploaded" ng-class="{'selectedDoc' : (imgURI.length > 0 && typeFile == 'doc')}">
+                <img  ng-if="imgURI.length == 0" ng-src="img/nodocument.png" style="margin: 0 auto !important;"> 
+                <img  ng-if="imgURI.length > 0 && typeFile == 'image'" class="imageUploaded" ng-src="{{imgURI[0].photoname}}" style="margin: 0 auto !important;"> 
+                <img  ng-if="imgURI.length > 0 && typeFile == 'doc'" class="documentUploaded" ng-src="img/doc.png" style="margin:0 0px!important"> 
+                <center style="margin-top: -49px;" ng-if="imgURI.length > 0 && imgURI[0].photolibelle !='' && typeFile == 'doc'" class="padding photolibelle oneLine">
+                    {{ imgURI[0].photolibelle  }}
+                </center> 
+            </div>   
+            
+             
+            <div class="profileCardButtons"> 
+
+                <button ng-if="imgURI.length > 0 && typeFile == 'doc'" ng-click="previewFile()" class="button button-positive saveBTN" style="width: 172px;left: 0;right: auto">
+                    {{ 'validate_document.preview' | translate }}
+                </button>
+
+                <div  ng-if="confirmed != '1' && confirmed != '0'">
+                    <button ng-if="imgURI!=''"  ng-click="other()" class="button button-energized editBTN">
+                        <i class="icon ion-edit"></i>
+                    </button>
+
+                    <button ng-if="imgURI=='' && showtake" ng-click="choseAction()" class="button button-positive addBTN">
+                        <i class="icon ion-plus-round"></i>
+                    </button>
+                </div> 
+
+            </div>   
+
+            <label ng-if="confirmed != '1' && confirmed != '0'" class="item item-input  complementary-info item-floating-label" style="border-top: none;padding-top: 13px!important;padding-bottom: 18px;">
+                <span class="input-label textareastyle" style="font-size: 15px;">
+                    {{ 'letter_of_authorisation.complementary_informations' | translate }}
+                </span>
+                <textarea ng-model="data.complementaryInformations" placeholder="{{ 'letter_of_authorisation.complementary_informations' | translate }}" ng-model="description"  style="color:#000000;padding-left: 4px !important;font-size: 14px;    border-bottom: 1px solid rgb(218, 218, 218);padding-bottom: 10px!important;height: 58px;" ></textarea>
+            </label>
+                
+        </div>
+        <button ng-if="confirmed != '1' && confirmed != '0'" ng-click="send()" class=" button button-small button-positive button-block icon icon-right ion-android-send" style="font-family: arial;"> 
+            {{ 'letter_of_authorisation.send' | translate }}
+        </button>
+     
+</div>
+
+ 
+
+</ion-content>
+ 
+</ion-view>

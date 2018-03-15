@@ -1,0 +1,48 @@
+<ion-view view-title="{{ 'update_account.title_page' | translate }}" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class=" inHome ">
+        <!--has-footer--> 
+        <div>
+            <div class="solde">
+                <span>{{ Account.solde }} {{devise}}</span>
+            </div>
+
+            <div class="item-avatar CenterDivCreate">
+                <img ng-src="{{ SelectedIcon.src }}">
+                <span class="label">{{ Account.name }}</span>
+                <span>{{ Account.number }}</span>
+            </div>
+
+
+            <div ng-if="Account.owner" class="IconList" style="margin-top:25px;">
+                <img ng-repeat="icon in icons" ng-src="{{ icon.src }}" ng-click="changeIcon($index)">
+            </div>
+            <div ng-if="Account.owner" class="list inputLabel">
+                <label class="item item-input">
+                    <input type="text" placeholder="{{ 'update_account.label' | translate }}" ng-model="account.update">
+                </label>
+                <button class="button button-light button-small" data-tap-disabled="true" ng-click="Update()">
+                    {{ 'update_account.validate' | translate }}
+                </button>
+            </div>
+            <div class="row shareAndAlert deleteAccountHeight">
+
+ 
+            </div>
+        </div>
+        <div class="button-bar" style="padding:0 20px;margin:20px 0;margin-top:40px;">
+
+            <a ng-if="Account.owner && Account.principal != 1 " class="button button-light" style="font-weight: bold;" data-tap-disabled="true" ng-click="Delete(Account)"> {{ 'update_account.delete_account' | translate }}</a>
+
+            <a ng-if="!Account.owner" class="button button-light" style="font-weight: bold;" data-tap-disabled="true" ng-click="Unsubscribe(Account)"> {{ 'update_account.unsubscribe_from_account' | translate }}</a>
+        </div> 
+
+    </ion-content>
+
+ 
+</ion-view>

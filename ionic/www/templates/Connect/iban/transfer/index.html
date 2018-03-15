@@ -1,0 +1,204 @@
+<ion-view view-title="{{ 'iban_transfer.title_page' | translate }}" hide-nav-bar="false" hide-back-button="false" id="iban-transfer" can-swipe-back="false"> 
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="false" class="trans">
+
+        <p class="NotMessage" style="margin-top: 10px;margin-bottom: 2px;">
+            {{ 'iban_transfer.transfers_offered' | translate : {n: 3} }}
+        </p>
+
+        <!-- <p class="NotMessage" style="margin-top: 10px;margin-bottom: 2px;">
+            {{ 'iban_transfer.transfer_offered' | translate }}
+        </p>-->
+        <!-- <p class="NotMessage" style="margin-top: 10px;margin-bottom: 2px;">
+            {{ 'iban_transfer.no_transfer_offered' | translate }}
+        </p>-->
+
+        <p class="NotMessage">
+            {{ 'iban_transfer.select_account' | translate }}
+        </p>	 
+
+          <ion-slide-box on-slide-changed="trans.selectedAccount = ($index)" active-slide="trans.selectedAccount">
+                <ion-slide ng-repeat="account in accounts">
+                  <div class="list card border-rounded  homev2 {{ account.cssClass }}"  style="margin-top:0px;margin-bottom: 20px;">
+                      <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
+                          <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                          <h2positive class="oneLine">{{ account.name }}</h2positive>
+                          <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                      </ion-item>
+                      <div class="item item-body " id="home-list-item-container2" style="padding-top: 0;padding-bottom: 16px">
+                          <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;background: rgb(241, 127, 33);" class="">
+                              <strong>{{ account.solde }}</strong> {{devise}}</p>
+                      </div>
+                  </div>
+                </ion-slide>
+          </ion-slide-box>
+             
+          <!-- <div ng-repeat="account in accounts"> account.principal == 1 
+                <div class="list card border-rounded  homev2 {{ account.cssClass }}"  style="margin-top:0px;margin-bottom: 20px;">
+                    <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
+                        <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                        <h2positive class="oneLine">{{ account.name }}</h2positive>
+                        <p style="white-space:normal;">{{ account.number }}</p>
+                    </ion-item>
+                    <div class="item item-body " id="home-list-item-container2" style="padding-top: 28px;">
+                        <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;background: rgb(241, 127, 33);" class="">
+                            <strong>{{ account.solde }}</strong> {{devise}}</p>
+                    </div>
+                </div>
+          </div>   -->
+
+
+
+        <div ng-if="realaccounts.length == 0" ng-click="modal.show()" class="list card border-rounded add-recipient"  style="margin-top:0px;margin-bottom: 22px;" >
+            <img src="img/icon-user.png" class="user">
+            <h2>{{ 'iban_transfer.add_recipient' | translate }}</h2>
+        </div>
+        <p class="NotMessage" ng-if="realaccounts.length > 1" >
+            {{ 'iban_transfer.select_a_recipient' | translate }}
+        </p>
+        <div ng-if="realaccounts.length > 0" class="recipients-list">
+            <ion-slide-box on-slide-changed="trans.selectedRecipient = ($index)" active-slide="trans.selectedRecipient">
+                <ion-slide ng-repeat="(key, realaccount) in realaccounts" on-hold="delete( key )">
+                    <div class="list card"  style="margin-top:0px;">
+                         <h2>{{ realaccount.fname }} {{ realaccount.lname }}</h2>
+                         <p>
+                             <strong>{{ 'iban_transfer.iban' | translate }}</strong>
+                             <span style="text-transform: uppercase;">{{ realaccount.iban }}</span>
+                         </p>
+                         <p>
+                             <strong>{{ 'iban_transfer.bic' | translate }}</strong> 
+                             <span style="text-transform: uppercase;">{{ realaccount.bic }}</span>
+                         </p>
+                    </div>
+                </ion-slide>
+            </ion-slide-box> 
+        </div> 
+
+        <div ng-if="realaccounts.length > 0" style="text-align: right;">
+            <span class="padding new-recipient" ng-click="modal.show()">
+                <i class="icon ion-android-person-add" style="margin-right: 4px;"></i>{{ 'iban_transfer.new_recipient' | translate }}
+            </span>
+        </div>
+
+        <div class="list card  md-inline-form" layout="column" ng-cloak style="margin-top: 11px;margin-bottom: 20px;">
+            <md-content layout-padding class="border-rounded">
+
+                <form name="userForm "> 
+
+                    <div class="list list-inset" style="margin-top: 0;">
+                        <label class="item item-input  item-floating-label  numeric-keyboard-source"> 
+                            <span class="input-label">{{ 'make_a_transfer.amount' | translate }}</span>
+                                <i class="icon ion-social-euro placeholder-icon"></i>
+                                <!-- <input type="number" name="amount" ng-model="trans.amount" placeholder="AMOUNT" min="0" max="999999999999999" step="0.01" /> -->
+                                <input type="text" name="amount" placeholder="{{ 'make_a_transfer.amount' | translate }}" ng-model="trans.amount" readonly  ng-click="showKeyboard('amount')" class="numeric-keyboard-amount" style="background-color: rgba(240, 248, 255, 0);"/>
+                            </label>
+
+
+                        <label class="item item-input  item-floating-label" style="border-top:none;">
+                            <span class="input-label">{{ 'make_a_transfer.reason' | translate }}</span>
+                                <textarea placeholder="{{ 'make_a_transfer.reason' | translate }}" ng-model="trans.reason"  class="CostumTextarea"   ng-style="isIOS && {'text-indent':'-3px'} || {'text-indent':'opx'}" ></textarea>
+                            </label>
+                        <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    </div>
+
+                </form>
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-button ui-sref="tab.home" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                        {{ 'iban_transfer.cancel' | translate }}
+                    </md-button>
+                    <md-button ng-click="sendPayment()" class="md-raised md-primary" style="width: 43%;background-color:#f17f21;"> 
+                        {{ 'iban_transfer.transfert' | translate }}
+                    </md-button>
+                </section>
+            </md-content>
+        </div> 
+
+
+    <script id="iban-transfer-adduser.html" type="text/ng-template">
+          <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive">
+              <h1 class="title">{{ 'new_recipient_iban.title_page' | translate }}</h1> 
+            </ion-header-bar>
+            <ion-content class="" style="background: #254e7b"> 
+                 <form id="fullName-form3" class="list">
+                    <div class="list card " style="padding-bottom: 20px;margin-bottom: 10px;margin-top: 12px;"> 
+                      <div class="list list-inset">
+                     
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'new_recipient_iban.fname' | translate }}</span>
+                          <input type="text" placeholder="{{ 'new_recipient_iban.fname' | translate }}" ng-model="form.fname">
+                        </label>
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'new_recipient_iban.lname' | translate }}</span>
+                          <input type="text" placeholder="{{ 'new_recipient_iban.lname' | translate }}" ng-model="form.lname">
+                        </label> 
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'new_recipient_iban.address' | translate }}</span>
+                          <input type="text" placeholder="{{ 'new_recipient_iban.address' | translate }}" ng-model="form.address">
+                        </label> 
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'new_recipient_iban.postal_code' | translate }}</span>
+                          <input type="text" placeholder="{{ 'new_recipient_iban.postal_code' | translate }}" ng-model="form.zip">
+                        </label> 
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'new_recipient_iban.city' | translate }}</span>
+                          <input type="text" placeholder="{{ 'new_recipient_iban.city' | translate }}" ng-model="form.city">
+                        </label> 
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'new_recipient_iban.country' | translate }}</span>
+                          <input type="text" placeholder="{{ 'new_recipient_iban.country' | translate }}" ng-model="form.country">
+                        </label> 
+
+
+
+                      </div>
+                    </div> 
+
+                    <div class="list card " style="padding-bottom: 20px;"> 
+                      <div class="list list-inset">
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'new_recipient_iban.iban' | translate }}</span>
+                          <input type="text" class="ibanFeild" placeholder="{{ 'new_recipient_iban.iban' | translate }}" ng-model="form.iban" style="text-transform: uppercase;">
+                        </label>
+
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">{{ 'iban_transfer.bic' | translate }}</span>
+                          <input type="text" id="ibanFeild" placeholder="{{ 'iban_transfer.bic' | translate }}" ng-model="form.bic" style="text-transform: uppercase;">
+                        </label> 
+                        
+                      </div> 
+
+                      <section layout="row" layout-sm="column" layout-align="center center" layout-wrap style="margin-top: 21px;">
+                          <md-button ng-click="closeModal()" class="md-raised md-primary" style="width: 44%;background-color:#254E7B;">
+                              {{ 'new_recipient_iban.cancel' | translate }}
+                          </md-button>
+                          <md-button  ng-if="!validate"  ng-click="validateForm()" class="md-raised md-primary" style="width: 45%;background-color:#f17f21;">
+                              {{ 'new_recipient_iban.valider' | translate }}
+                          </md-button>
+                          <md-button  ng-if="validate"  ng-click="confirmation()" class="md-raised md-primary" style="width: 45%;background-color:#f17f21;">
+                              {{ 'new_recipient_iban.confirmation' | translate }}
+                          </md-button>
+                      </section>
+                    </div> 
+
+                    
+                </form>
+            </ion-content>
+          </ion-modal-view>
+        </script> 
+        
+    </ion-content> 
+    <ion-numeric-keyboard class="slide-up" options="keyboardOptions"></ion-numeric-keyboard>
+</ion-view>

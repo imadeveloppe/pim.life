@@ -1,0 +1,67 @@
+<ion-view title="CAUSES" hide-nav-bar="true" hide-back-button="true" id="causes" can-swipe-back="false"> 
+    
+    <div class="padding" style="padding-top: 25px;">
+    	<div class="bar-search">
+	        <div class="bar item-input-inset"> 
+	          <label class="item-input-wrapper"> 
+	            <input type="search" placeholder="{{ 'shop_search.search' | translate }}" name="searchInput" id="searchInputShop" ng-focus="search()" ng-model="searchInput" ng-change="search()" >
+	            <ion-spinner ng-show="searchProgress" icon="ios-small"></ion-spinner>
+	          </label>
+	          <button class="button button-clear icon-loop" ng-click="search()">
+	            <i class="ion-android-search dark" ></i>
+	          </button>
+	        </div> 
+	    </div> 
+        <div class="chipsCat" ng-if="chipCats.length > 0" style="height: 33px;">
+              <div class="chipCat" ng-repeat="cat in chipCats">
+                  <span class="oneLine">{{ cat }}</span>
+                  <button class="button button-clear" ng-click="RemoveCategory()">
+                      <i class="ion-ios-close-outline closeChipCat"></i>
+                  </button> 
+              </div>  
+          </div>
+	</div>
+    <ion-content class="manual-ios-statusbar-padding hasCause listCauses" ng-class="{'hasCategory' : chipCats.length > 0}">
+          
+        <div class="cause" ng-repeat="cause in causes" ng-click="detailCause(cause)">  
+            <div class="header">
+                <div class="cover-continer">
+	                <span class="donors" ng-if="cause.nbrdonors < 2 ">
+	                	{{ cause.nbrdonors }} {{ 'detail_cause.donor' | translate }}
+	                </span>
+                  <span class="donors" ng-if="cause.nbrdonors > 1 ">
+                    {{ cause.nbrdonors }} {{ 'detail_cause.donors' | translate }}
+                  </span>
+	                <span class="distance">
+	                	<i class="icon ion-ios-location"></i> {{ cause.distance }}
+                        <strong ng-if="cause._rankingInfo.matchedGeoLocation.distance < 1000">
+                          {{ twoDigitAfterCama(cause._rankingInfo.geoDistance) }}m
+                        </strong>
+                        <strong ng-if="cause._rankingInfo.matchedGeoLocation.distance > 1000">
+                          {{ twoDigitAfterCama(cause._rankingInfo.geoDistance / 1000) }}Km
+                        </strong>
+	                </span>
+                    <img ng-src="{{ cause.cover }}" class="cover-cause" style="width: 100%" ng-if="cause.cover != ''" > 
+                </div>
+                <img  ng-if="cause.logo != ''" ng-src="{{ cause.logo }}" class="logo-cause">
+                <div class="logo-cause" ng-if="cause.logo == ''">
+                    <div class="initiales">
+                        {{ cause.initiales }}
+                    </div>
+                </div>
+                   
+            </div>
+            <div class="content">
+                <div class="title">
+                    <h4 class="oneLine" style="margin: 0;">{{ cause.brandname }}</h4>
+                    <p class="oneLine" >{{ cause.slogan }}</p>
+                </div>   
+            </div>
+        </div>
+
+        
+    </ion-content> 
+
+     <button class="button filter-list" ng-click="Filter.show()"> <i class="icon ion-android-options"></i></button>
+
+</ion-view>

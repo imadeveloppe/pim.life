@@ -1,0 +1,98 @@
+<ion-view view-title="{{ 'make_transfer_confirmation.title_page' | translate }}" can-swipe-back="false" id="pagepayToFriend"> 
+
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-content class="trans">
+
+        <p class="NotMessage" style="margin-top: 10px;margin-bottom: -3px;">
+            {{ 'make_transfer_confirmation.sub_title' | translate }}
+        </p> 
+
+        <div class="list card border-rounded  homev2 {{ accounts[trans.selectedAccount].cssClass }}"  style="margin-top:0px;">
+            <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
+                <img  ng-src="{{accounts[trans.selectedAccount].cssClass == 'compte-pro' && icons[accounts[trans.selectedAccount].iconId].src || iconsBlue[accounts[trans.selectedAccount].iconId].src}}">
+                <h2positive class="oneLine">
+                    {{ accounts[trans.selectedAccount].name }} 
+                </h2positive>
+                <p style="white-space:normal;">{{ ibanMask(accounts[trans.selectedAccount].number) }}</p>
+            </ion-item>
+            <div class="item item-body " id="home-list-item-container2">
+                <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;background: rgb(241, 127, 33);" class=" ">
+                    <strong>{{ accounts[trans.selectedAccount].solde }}</strong> {{devise}}</p>
+            </div>
+        </div>
+
+
+        <div class="list card  md-inline-form" layout="column" ng-cloak>
+
+            <!--            
+            <h1>Value $ {{currencyVal}}</h1>
+            <form ng-submit="enterCurrency()">
+                <input type="text" field="currencyVal" currency-input size="30" placeholder="insert currency value"></input>
+            </form>
+--> 
+            <md-content layout-padding class="border-rounded">
+
+                <form name="userForm"> 
+
+
+                    <div ng-if="trans.users.length > 0" style="z-index: 10; width: 100%; background-color: rgb(255, 255, 255); padding: 6px 5px 0px 9px;border-radius: 5px;"> 
+                            <div>
+                                <div class="contentrans" style="overflow: hidden;"> 
+
+                                    <div class="BadgeUpdateInfo"  ng-if="trans.users[0].logo == ''">
+                                        <span class="initialBadgeUpdateInfo CPro">{{ trans.users[0].initiales}}</span>
+                                    </div>
+                                    <img style="margin: 0" ng-src="{{  trans.users[0].logo }}" ng-if="trans.users[0].logo != ''"  class="personaleInformation PhotoProfile"> 
+
+                                    <h2 ng-if="trans.users[0].isshop" class="oneLine">{{ trans.users[0].brandname }}</h2>
+                                    <h2 ng-if="!trans.users[0].isshop" class="oneLine">{{ trans.users[0].fname }} {{ trans.users[0].lname }}</h2>
+                                    <p style="margin:0;text-align: center;margin-top:5px;">  
+                                        <strong>{{ trans.amount }} {{devise}}</strong> 
+                                    </p>
+                                </div>
+                            </div>
+
+                    </div>
+
+
+ 
+                    <!--<md-datepicker ng-model="user.submissionDate" md-placeholder="Enter date" flex>
+                    </md-datepicker>-->
+
+
+                    <!-- <div class="row sharedReson" ng-if="trans.reson.length > 0" style="border: 0">
+                        <div class="col"> 
+                            <div class="row">
+                                <div class="col Switch-text" ng-click="Option.Resonswitch = false" style="text-align:right;">
+                                    {{ 'make_transfer_confirmation.private' | translate }}
+                                </div>
+                                <div class="col col-20">
+                                    <md-switch ng-model="Option.Resonswitch" aria-label="Switch 1" class="md-primary Trans-switch">
+                                    </md-switch>
+                                </div>
+                                <div class="col Switch-text" ng-click="Option.Resonswitch = true">
+                                    {{ 'make_transfer_confirmation.shared' | translate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <p class="raison">{{ trans.reson }}</p>
+                </form>
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-button ui-sref="tab.TransFriend" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                        {{ 'make_transfer_confirmation.back' | translate }}
+                    </md-button>
+                    <md-button ng-click="PayFriend(true)" class="md-raised md-primary" style="width: 43%;background-color:#f17f21;">
+                        {{ 'make_transfer_confirmation.pay' | translate }}
+                    </md-button>
+                </section>
+            </md-content>
+        </div>
+    </ion-content>
+</ion-view>

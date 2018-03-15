@@ -1,0 +1,16 @@
+<ion-view title="{{ 'blocked_account.title_page' | translate }}" id="page5" class="blocked" can-swipe-back="false">
+    <ion-nav-bar class="bar-assertive"> 
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true" style="background-color:#c50b0b !important;color:#fff !important;border: 0">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+        <div class="image">
+            <img src="img/delete-account.png" alt="">
+        </div>
+        <p class="">{{ 'blocked_account.text' | translate }}</p>
+        <a ng-click="SmsUnblock()" data-tap-disabled="true" class=" button button-block  button-positive" style="width: 100%;">{{ 'blocked_account.send_sms' | translate }}</a>
+        <!--<a ng-click="AnswersUnblock()" data-tap-disabled="true" class=" button button-block  button-positive" style="width: 100%;">Answer the questions</a>-->
+    </ion-content>
+</ion-view>

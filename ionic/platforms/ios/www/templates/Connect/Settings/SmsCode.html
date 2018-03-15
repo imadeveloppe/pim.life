@@ -1,0 +1,33 @@
+<ion-view title="{{ 'sms_code.title_page' | translate }}" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+        <div class="list card ">
+            <form class="list">
+                <div class="list list-inset smscode">
+                    <!--You have changed your number phone.-->
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <p>
+                        {{ 'sms_code.text1' | translate }}
+                    </p>
+                    <label class="item item-input" style="border-top:none;"> 
+                          <input type="tel" placeholder="{{ 'sms_code.pin_digit' | translate }}" ng-model="data.smscode">
+                      </label>
+
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="ValidateSMS()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-android-checkbox-outline "> 
+                        {{ 'sms_code.validate' | translate }}
+                    </button>
+                    <!-- <p>
+                        {{ 'sms_code.text2' | translate }}
+                    </p> -->
+                </div>
+
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

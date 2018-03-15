@@ -1,0 +1,17 @@
+<ion-view view-title="{{ 'settings.languages' | translate }}" can-swipe-back="false"> 
+	<ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="" style="top: 56px;;">
+        <div class="list">  
+            <div ng-repeat="lang in langs" ng-click="changeLanguage( lang.key )"  class="item item-icon-left item-icon-right flag-wrapper">
+                <i class="flag flag-icon-background flag-icon-{{ lang.key }}"></i>
+                {{ lang.label }}
+                <i ng-if="selectedLang == lang.key" class="icon ion-android-checkmark-circle positive"></i>
+            </div>
+        </div> 
+    </ion-content>
+</ion-view>

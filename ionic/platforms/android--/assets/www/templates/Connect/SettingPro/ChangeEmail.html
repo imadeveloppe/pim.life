@@ -1,0 +1,56 @@
+<ion-view title="{{ title }}" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+        <p class="NotMessage" ng-if="!isWaitingValidationEmail">
+          {{ 'change_email.text' | translate }}
+        </p>
+        <div class="list card" ng-if="!isWaitingValidationEmail">
+            <form class="list">
+                <div class="list list-inset">
+                    <label class="item item-input  item-floating-label">
+                          <span class="input-label">{{ 'change_email.new_email' | translate }}</span>
+                          <input type="email" placeholder="{{ 'change_email.new_email' | translate }}" class="changeEmail" ng-model="data.Email" autocorrect="off" autocapitalize="none">
+                    </label>
+                    <label class="item item-input  item-floating-label">
+                          <span class="input-label">{{ 'change_email.confirm_email' | translate }}</span>
+                          <input ng-paste="$event.preventDefault()" type="email" placeholder="{{ 'change_email.confirm_email' | translate }}"  class="changeEmail" ng-model="data.ConfirmEmail"  autocorrect="off" autocapitalize="none">
+                    </label> 
+                <div class="spacer" style="width: 300px; height: 16px;"></div>
+                </div>
+                <button ng-click="Update()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-compose "> 
+                {{ 'change_email.update' | translate }}
+                </button>
+            </form>
+        </div>
+
+        <div class="list card " ng-if="isWaitingValidationEmail">
+            <form class="list">
+                <div class="list list-inset">
+                    <label class="item item-input  item-floating-label">
+                          <div class="spacer" style="width: 300px; height: 20px;"></div>
+                          <span style="text-transform: uppercase;">
+                            {{ 'change_email.email_waiting_validation' | translate }}
+                          </span> 
+                          <div class="spacer" style="width: 300px; height: 10px;"></div>
+                          {{ data.newMail }}
+                        </label> 
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                </div> 
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-button ng-click="CancelChangeEmail()"  class="md-raised md-primary" style="width: 40%;background-color:#254E7B;">
+                        {{ 'change_email.cancel' | translate }}
+                    </md-button>
+                    <md-button ng-click="ResendEmailValidation()" class="md-raised md-primary" style="width: 46%;background-color:#f17f21;">
+                        {{ 'change_email.resend_mail' | translate }}
+                    </md-button>
+                </section>
+                <div class="spacer" style="width: 300px; height: 20px;"></div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

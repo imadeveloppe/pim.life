@@ -1,0 +1,179 @@
+<ion-view title="{{ 'sign_up_pro.title_page' | translate }}" id="page5" hide-nav-bar="false" class="" can-swipe-back="false">
+<ion-nav-bar class="bar-positive">
+    <ion-nav-back-button data-tap-disabled="true"></ion-nav-back-button>
+    <ion-nav-back-button class="button-clear">
+      <i class="icon ion-ios-arrow-left"></i> 
+      {{ 'global_fields.back' | translate }}
+    </ion-nav-back-button>
+</ion-nav-bar>
+<ion-content padding="true" class="has-header inDeconnect">
+<span class="title">{{ 'sign_up_pro.sub_title' | translate }}</span>
+<style type="text/css">
+    input::-moz-placeholder,
+    textarea::-moz-placeholder {
+    color: red !important;
+    opacity: 1; }
+    .landline{
+        padding-right: 0px !important;
+        font-size: 10px !important;}
+
+    .phone-pro{
+        width: 100% !important;
+        margin:0px !important;   }
+ .phone-pro input{
+        font-size: 14px !important;color: #254E7B; }
+
+
+
+  .phoneNumber input::-moz-placeholder{
+    font-size: 10px ; }
+  .phoneNumber input:-ms-input-placeholder{
+    font-size: 10px ; }
+  .phoneNumber input::-webkit-input-placeholder{
+    font-size: 10px ;}
+
+
+
+</style>
+<div class="list card ">
+    <div id="fullName-form3" class="list">
+        <div class="list list-inset">
+
+            <label class="item item-input item-floating-label">
+                <span class="input-label">{{ 'sign_up_pro.company_name' | translate }}</span>
+                <input type="text" placeholder="{{ 'sign_up_pro.company_name' | translate }}" ng-model="data.companyname">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">{{ 'sign_up_pro.brand_name' | translate }}</span>
+                <input type="text" placeholder="{{ 'sign_up_pro.brand_name' | translate }}" ng-model="data.brand">
+            </label> 
+
+
+            <label class="item item-input item-floating-label companyType" on-tap="openPickerBusinessType()">
+                <span class="input-label">{{ 'sign_up_pro.business_type' | translate }}</span>
+                <input ng-hide="data.type" type="text" placeholder="{{ 'sign_up_pro.business_type' | translate }}" ng-model="data.type" disabled="disabled" style="text-transform: uppercase;">
+                <span ng-show="data.type!=''" style="color: #254E7B;display: block;padding-bottom: 6px;">{{data.type}}</span>
+            </label> 
+
+            <label class="item item-input  item-floating-label" style="padding-bottom: 4px;" > 
+                <span ng-show="data.createdat">{{ 'sign_up_pro.creation_date' | translate }}</span><br>
+                <input type="text" mask="39/39/9999"  ng-model="data.createdat" placeholder="{{ 'sign_up_pro.creation_date' | translate }}">
+            </label>
+
+            <label class="item item-input item-floating-label">
+                <span class="input-label">{{ 'sign_up_pro.share_capital' | translate }}</span>
+                <input type="text" mask="9" repeat="20"  placeholder="{{ 'sign_up_pro.share_capital' | translate }}" ng-model="data.sharecapital">
+            </label> 
+
+            <label class="item item-input item-floating-label">
+                <span class="input-label">{{ 'sign_up_pro.vat_number' | translate }}</span>
+                <input type="text" placeholder="{{ 'sign_up_pro.vat_number' | translate }}" ng-model="data.vta">
+            </label> 
+
+
+
+            
+            
+            <div class="list list-inset smscode phone-pro" style="margin-top: 16px !important;">
+                <label class="item item-input IndicatifNoir" style="width:22%;float:left;border-top: 0;" on-tap="openPickerIndicatifHQ()">
+                    <input type="text" ng-model="data.IndicatifHQ" style="padding-right:0;background-color: #fff;" disabled>
+                </label>
+                <label class="item item-input phoneNumber" style="width:78%;border-top: none;"> 
+                    <input type="tel" placeholder="{{ 'sign_up_pro.headquarter_landline_phone' | translate }}" ng-model="data.fixeNumber" class="landline">
+                </label>
+
+                <div class="spacer" style="width: 300px; height: 8px;"></div>
+            </div>
+             
+            <div class="list list-inset smscode phone-pro" style="margin-top: 16px !important;">
+                <label class="item item-input IndicatifNoir" style="width:22%;float:left;border-top: 0;" on-tap="openPickerIndicatifShop()">
+                    <input type="text" ng-model="data.IndicatifShop" style="padding-right:0;background-color: #fff;" disabled>
+                </label>
+                <label class="item item-input phoneNumber" style="width:78%;border-top: none;"> 
+                    <input type="tel" placeholder="{{ 'sign_up_pro.shop_landline_phone' | translate }}" ng-model="data.fixeNumberShop" class="landline">
+                </label>
+
+                <div class="spacer" style="width: 300px; height: 8px;"></div>
+            </div>
+           
+             
+            <label class="item item-input item-floating-label" style="border-top:0px;">
+                <span class="input-label">{{ 'sign_up_pro.contact_email' | translate }}</span>
+                <input type="email" placeholder="{{ 'sign_up_pro.contact_email' | translate }}" class="changeEmail" ng-model="data.contactemail">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">{{ 'sign_up_pro.website_http' | translate }}</span>
+                <input type="text" placeholder="{{ 'sign_up_pro.website_http' | translate }}" ng-model="data.website" class="lowercase">
+            </label>
+            <label class="item" style="display: none;"></label>
+        </div>
+    </div>
+</div>
+
+<div class="list card " style="margin-top: 10px;">
+    <div id="fullName-form3" class="list">
+        <div class="list list-inset" style="margin-top: 5px;"> 
+            <!-- <label class="item item-input item-floating-label">
+                <span class="input-label ">{{ 'sign_up_pro.email' | translate }}</span>
+                <input type="email" placeholder="{{ 'sign_up_pro.email' | translate }}" class="changeEmail" ng-model="data.emailpro">
+            </label> -->
+            <label class="item item-input item-floating-label">
+                <span class="input-label">{{ 'sign_up_pro.password' | translate }}</span>
+                <input type="password" placeholder="{{ 'sign_up_pro.password' | translate }}" ng-model="data.password">
+            </label>
+            <label class="item item-input item-floating-label" style="border-width: 1px;">
+                <span class="input-label">{{ 'sign_up_pro.confirm_password' | translate }}</span> 
+                <input type="password" placeholder="{{ 'sign_up_pro.confirm_password' | translate }}" ng-model="data.confirmpassword">
+            </label> 
+            <label class="item" style="display: none;"></label>
+        </div> 
+    </div>
+</div>
+
+
+
+<div class="list card " style="margin-top: 10px;">
+    <div id="fullName-form3" class="list">
+        <div class="list list-inset" style="margin-top: 5px;">
+
+          <label class="item item-input item-floating-label">
+            <span class="input-label">{{ 'sign_up_perso.lock_code' | translate }}</span>
+            <input type="password" placeholder="{{ 'sign_up_perso.lock_code' | translate }}" ng-model="data.code" pattern="\d*" maxlength="4" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+          </label>
+
+          <label class="item item-input item-floating-label" style="border-width: 1px;">
+            <span class="input-label">{{ 'sign_up_perso.code_confirmation' | translate }}</span> 
+            <input type="password" placeholder="{{ 'sign_up_perso.code_confirmation' | translate }}" ng-model="data.confirmcode" pattern="\d*" maxlength="4" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+          </label>
+          <div class="spacer" style="width: 300px; height: 8px;"></div>
+        </div>  
+
+          <div style="text-align: center;">
+            <button ng-click="signupPro()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block ">{{ 'sign_up_pro.next' | translate }}  <i class="icon ion-ios-arrow-right"></i></button> 
+          </div>
+    </div> 
+</div>
+
+
+<script id="pro-CGV.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive" style="height:54px">
+      <h1 class="title">{{ 'cgv_pro.title_page' | translate }}</h1> 
+    </ion-header-bar>
+    <ion-content class="page-cgv"> 
+        <div class="padding" data-ng-bind-html="trustAsHtml(cgv)" style="padding-bottom: 5px;padding-top: 20px;">  
+        </div>  
+        <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-button ng-click="RefuseCGV()" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                {{ 'cgv_pro.refuse' | translate }}
+            </md-button>
+            <md-button ng-click="AcceptCGV()" class="md-raised md-primary" style="width: 43%;background-color:#EF7E22;">
+                {{ 'cgv_pro.accepte' | translate }}
+            </md-button>
+        </section>
+    </ion-content>
+  </ion-modal-view>
+</script> 
+
+</ion-content>
+</ion-view>

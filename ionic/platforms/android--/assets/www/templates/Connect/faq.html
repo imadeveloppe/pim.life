@@ -1,0 +1,23 @@
+<ion-view title="{{ 'home.faq' | translate }}" hide-nav-bar="false" hide-back-button="false" id="faq" class=" " can-swipe-back="false" style="background:none"> 
+        
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-content padding="false" class="manual-ios-statusbar-padding" on-scroll-complete="gotoBottom()"  style="background:#fff">
+         
+        <ion-list>
+            <ion-item class="item-light item-icon-right" ng-repeat="(key, row) in rows" ng-click="toggle(key)"> 
+                <h2>{{ row.question }}</h2>
+                <p ng-show="row.show">{{ row.reponse }}</p>  
+                <i ng-if="!row.show" class="icon ion-ios-arrow-right"></i>
+                <i ng-if="row.show" class="icon ion-ios-arrow-down"></i>
+            </ion-item>
+        </ion-list>
+
+    </ion-content> 
+
+</ion-view>

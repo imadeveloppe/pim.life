@@ -1,0 +1,31 @@
+<ion-view title="{{ 'company_type.association_type' | translate }}" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding" >
+
+
+    <span class="title">{{ 'company_type.text_association' | translate }}</span>
+        <div class="list card ">
+            <form class="list" style="padding-top: 10px;">
+
+                <div class="list list-inset busnissinfo"> 
+
+                    <label class="item item-input item-floating-label blueforIphone" on-tap="openPickerBusinessType()">
+                        <span class="input-label">{{ 'setting_pro.type' | translate }}</span>
+                        <input ng-hide="informationBusinessType" type="text" placeholder="{{ 'setting_pro.type' | translate }}" ng-model="informationBusinessType" disabled="disabled" style="text-transform: uppercase;">
+                       
+                        <span ng-show="informationBusinessType" style="color: #254E7B;display: block;padding-bottom: 6px;">{{informationBusinessType}}</span>
+                    </label>   
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="Update()" data-tap-disabled="true" id="fullName-button1" class="button button-small button-positive icon ion-compose"> 
+                    {{ 'company_type.update' | translate }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

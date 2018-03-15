@@ -1,0 +1,160 @@
+<ion-view title="Home" hide-nav-bar="true" hide-back-button="true" id="oldHome" class=" " can-swipe-back="false">
+
+    <!-- <button class="button btn-sort-home" ng-if="!isIOS" ng-class="showReorder ? 'active' : ''">Sort</button> -->
+
+    <ion-content padding="false" class="manual-ios-statusbar-padding">
+
+
+        <ion-slide-box on-slide-changed="" active-slide="">
+
+        <!-- ********************************************************************************************************************************************************** -->
+             <ion-slide id="pageTransfers" ng-controller="TransCtrl"> 
+
+               <center id="titlePage">
+
+                    <h1>{{ 'payments.title_page' | translate }}</h1>
+
+                </center>
+
+                <div class="transfersIconsContinner">
+
+                    <div class="row shareAndAlert">
+
+                        <div ng-click="MakeTransfer()" class="col" style="text-align:center;">
+
+                            <div style="width:100%;">
+
+                                <img ng-src="img/sendtofriend.png" style="width: 60%;">
+
+                            </div>
+
+                            <span style="width:100%;">{{ 'payments.make_a_transfer' | translate }}</span>
+
+                        </div>
+
+                        <div ng-click="BetweenAccounts()" class="col" style="text-align:center;">
+
+                            <div style="width:100%;">
+
+                                <img ng-src="img/shared.png" style="width: 60%;">
+
+                            </div>
+
+                            <span style="width:100%;">{{ 'payments.between_my_accounts' | translate }}</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row shareAndAlert" style="margin-top:15px;">
+
+                        
+
+                        <div  ng-click="DemandeTransfer()" class="col" style="text-align:center;">
+
+                            <div style="width:100%;">
+
+                                <img ng-src="img/requestapayment.png" style="width: 60%;">
+
+                            </div>
+
+                            <span>{{ 'payments.request_payment_using_qr_code' | translate }}</span>
+
+                        </div> 
+
+                        <div ng-click="ScanQrCode()" class="col" style="text-align:center;">
+
+                            <div style="width:100%;">
+
+                                <img ng-src="img/requestapayment.png" style="width: 60%;">
+
+                            </div>
+
+                            <span>{{ 'payments.pay_using_qr_code' | translate }}</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </ion-slide>
+        <!-- ********************************************************************************************************************************************************** -->
+
+
+
+        <!-- ********************************************************************************************************************************************************** --> 
+                <ion-slide id="AccountsListHome"> 
+                    <ion-content>   
+                        <ion-list ng-if="!isIOS" show-reorder="showReorder">
+                            <ion-item ng-repeat="account in accounts" class="item-light item-avatar card homev2 " ng-class="account.cssClass" on-hold="toggleReorder()">
+
+
+                                <div  ui-sref="tab.info({id:account.id})">
+                                   <div class="item-avatar item-icon-right positive  border-rounderd" >
+                                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}" class="imgCompte">
+                                            <h2positive class="oneLine">
+                                                <!-- <i ng-if="account.principal == 1" class="ion-star"></i> -->
+                                                {{ account.name }} 
+                                                 
+                                            </h2positive>
+                                            <p style="white-space:normal;">{{ account.number }}</p>
+                                    </div>
+                                </div>
+                                    <div ui-sref="tab.info({id:account.id})" ui-sref-opts="{reload: true, inherit: false}">
+                                        <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;line-height: 100%;" class=" ">
+                                        <strong>{{ account.solde }}</strong> {{devise}}</p>
+                                    </div>
+                                
+                                <div class=" style-position">
+                                     <i class="icon ion-ios-information-outline" ui-sref="tab.update({id:account.id})" ui-sref-opts="{reload: true, inherit: false}"></i>
+                                </div>
+                                <ion-reorder-button class="ion-navicon" ng-click="toggleReorder()"
+                                                    on-reorder="onReorderAccounts($fromIndex, $toIndex)">
+                                </ion-reorder-button>
+                            </ion-item>
+
+                        </ion-list>  
+
+                        <ion-list ng-if="isIOS" sortable draggable=".card" sorted="onReorderAccounts($fromIndex, $toIndex)">
+                            <div ng-if="account.id"  ng-repeat="account in accounts" class="list card border-rounded homev2 {{ account.cssClass }}">
+                                <div  ui-sref="tab.info({id:account.id})">
+                                   <ion-item class="item-avatar item-icon-right positive  border-rounderd" >
+                                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                                            <h2positive class="oneLine">
+                                                <!-- <i ng-if="account.principal == 1" class="ion-star"></i> -->
+                                                {{ account.name }}   
+                                                <p style="white-space:normal;">{{ account.number }}</p>
+                                            </h2positive>
+                                    </ion-item>
+                                    <div class="item item-body item-icon-right" id="home-list-item-container2">
+                                        <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;line-height: 100%;" class=" ">
+                                        <strong>{{ account.solde }}</strong> {{devise}}</p>
+                                    </div>
+                                </div>
+
+                                <div class=" style-position">
+                                     <i class="icon ion-ios-information-outline" ui-sref="tab.update({id:account.id})" ui-sref-opts="{reload: true, inherit: false}"></i>
+                                </div>
+                            </div>
+                        </ion-list>
+
+                        <p ui-sref="tab.create" style="margin-top:0px;color:#fff;font-size:20px;text-align:center;font-weight: bold;text-shadow: 0 0 4px #000;    padding-bottom: 60px;">
+                            {{ 'home_page.new_account' | translate }}
+                        </p>
+                    </ion-content>   
+                </ion-slide> 
+        <!-- ********************************************************************************************************************************************************** -->
+
+        </ion-slide-box>
+
+    </ion-content>
+    <!-- <div class="lock-size">
+        <md-fab-speed-dial md-open="false" md-direction="up" class="md-scale md-fab-bottom-right" style="bottom: 60px;right: 10px;">
+            <md-fab-trigger>
+                <md-button aria-label="menu" class="md-fab md-warn" ng-click="GotoTrans()" style="background-color:#087FBC;">
+                    <i style="font-size: 37px;" class="icon ion-paper-airplane"></i>
+                </md-button>
+            </md-fab-trigger>
+        </md-fab-speed-dial>
+    </div> -->
+</ion-view>

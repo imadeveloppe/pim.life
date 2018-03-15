@@ -1,0 +1,110 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "https://github.com/ohh2ahh/AppAvailability.git",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "https://github.com/ohh2ahh/AppAvailability.git",
+        "spec": "git+https://github.com/ohh2ahh/AppAvailability.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:ohh2ahh/AppAvailability.git",
+          "sshUrl": "git+ssh://git@github.com/ohh2ahh/AppAvailability.git",
+          "httpsUrl": "git+https://github.com/ohh2ahh/AppAvailability.git",
+          "gitUrl": "git://github.com/ohh2ahh/AppAvailability.git",
+          "shortcut": "github:ohh2ahh/AppAvailability",
+          "directUrl": "https://raw.githubusercontent.com/ohh2ahh/AppAvailability/master/package.json"
+        }
+      },
+      "/ST/ionic/pim.life/node_modules"
+    ]
+  ],
+  "_from": "git+https://github.com/ohh2ahh/AppAvailability.git",
+  "_id": "cordova-plugin-appavailability@0.4.2",
+  "_inCache": true,
+  "_location": "/cordova-plugin-appavailability",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "https://github.com/ohh2ahh/AppAvailability.git",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "https://github.com/ohh2ahh/AppAvailability.git",
+    "spec": "git+https://github.com/ohh2ahh/AppAvailability.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:ohh2ahh/AppAvailability.git",
+      "sshUrl": "git+ssh://git@github.com/ohh2ahh/AppAvailability.git",
+      "httpsUrl": "git+https://github.com/ohh2ahh/AppAvailability.git",
+      "gitUrl": "git://github.com/ohh2ahh/AppAvailability.git",
+      "shortcut": "github:ohh2ahh/AppAvailability",
+      "directUrl": "https://raw.githubusercontent.com/ohh2ahh/AppAvailability/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/ohh2ahh/AppAvailability.git#75482c76797e400b76f203b7d1e8a33a4e7db0a9",
+  "_shasum": "ef64c7b375572817d101c03b65ef6401f0872e0a",
+  "_shrinkwrap": null,
+  "_spec": "https://github.com/ohh2ahh/AppAvailability.git",
+  "_where": "/ST/ionic/pim.life/node_modules",
+  "author": {
+    "name": "ohh2ahh"
+  },
+  "bugs": {
+    "url": "https://github.com/ohh2ahh/AppAvailability/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-appavailability",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "dependencies": {},
+  "description": "This plugin for Cordova and PhoneGap allows you to check if an app is installed. It requires an URI Scheme (iOS) or a Package Name (Android).",
+  "devDependencies": {},
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "gitHead": "75482c76797e400b76f203b7d1e8a33a4e7db0a9",
+  "homepage": "https://github.com/ohh2ahh/AppAvailability#readme",
+  "keywords": [
+    "Cordova",
+    "PhoneGap",
+    "plugin",
+    "app",
+    "availability",
+    "installed",
+    "URIScheme",
+    "URI",
+    "Scheme",
+    "PackageName",
+    "Package",
+    "Name",
+    "iOS",
+    "Android",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-appavailability",
+  "optionalDependencies": {},
+  "readme": "# AppAvailability for iOS and Android\n\n[![GitHub version](https://badge.fury.io/gh/ohh2ahh%2FAppAvailability.svg)](https://badge.fury.io/gh/ohh2ahh%2FAppAvailability) [![npm version](https://badge.fury.io/js/cordova-plugin-appavailability.svg)](https://badge.fury.io/js/cordova-plugin-appavailability)\n\nA Plugin for Apache Cordova and Adobe PhoneGap by [ohh2ahh](http://ohh2ahh.com).\n\n1. [Description](https://github.com/ohh2ahh/AppAvailability#1-description)\n2. [Installation](https://github.com/ohh2ahh/AppAvailability#2-installation)\n\t2. [Automatically (Command-line Interface)](https://github.com/ohh2ahh/AppAvailability#automatically-command-line-interface)\n\t2. [PhoneGap Build](https://github.com/ohh2ahh/AppAvailability#phonegap-build)\n3. [Usage](https://github.com/ohh2ahh/AppAvailability#3-usage)\n\t3. [iOS](https://github.com/ohh2ahh/AppAvailability#ios)\n\t3. [Android](https://github.com/ohh2ahh/AppAvailability#android)\n\t3. [Full Example](https://github.com/ohh2ahh/AppAvailability#full-example)\n\t3. [Old Approach (AppAvailability < 0.3.0)](https://github.com/ohh2ahh/AppAvailability#old-approach-appavailability--030)\n4. [Some URI Schemes / Package Names](https://github.com/ohh2ahh/AppAvailability#4-some-uri-schemes--package-names)\n5. [License](https://github.com/ohh2ahh/AppAvailability#5-license)\n\n## Important: iOS 9 and iOS 10 URL Scheme Whitelist\nApple changed the `canOpenURL` method on iOS 9. Apps which are checking for URL Schemes have to declare these Schemes as it is submitted to Apple. The article [Quick Take on iOS 9 URL Scheme Changes](http://awkwardhare.com/post/121196006730/quick-take-on-ios-9-url-scheme-changes) expains the changes in detail.\n\n### Add URL Schemes to the Whitelist\nSimply open your app's .plist (usually `platforms/ios/<appname>/<appname>-Info.plist)` with an editor and add the following code with your needed Schemes.\n\n```xml\n<key>LSApplicationQueriesSchemes</key>\n<array>\n    <string>twitter</string>\n    <string>whatsapp</string>\n</array>\n```\n\n## 1. Description\n\nThis plugin allows you to check if an app is installed on the user's device.\nIt requires an URI Scheme (e.g. twitter://) on iOS or a Package Name (e.g com.twitter.android) on Android.\n\n* Ready for the Command-line Interface of Cordova / PhoneGap 3.0 and later\n* Works with PhoneGap Build\n\n### Supported Platforms\n\n* iOS\n* Android\n\n## 2. Installation\n\nThe Cordova CLI is the recommended way to install AppAvailability, see [The Command-line Interface](http://cordova.apache.org/docs/en/4.0.0/guide_cli_index.md.html#The%20Command-Line%20Interface). You can find the plugin on these registries:\n* [GitHub](https://github.com/ohh2ahh/AppAvailability)\n* [npm](https://www.npmjs.com/package/cordova-plugin-appavailability)\n* ~~[Cordova Plugin Registry](http://plugins.cordova.io/#/package/com.ohh2ahh.plugins.appavailability)~~ (deprecated [in favor of npm](http://cordova.apache.org/announcements/2015/04/21/plugins-release-and-move-to-npm.html))\n* ~~[PhoneGap Plugin Registry](https://build.phonegap.com/plugins/1054)~~ (deprecated)\n\n### Automatically (Command-line Interface)\n\nSimply run this command to add the latest version of AppAvailability from [npm](https://www.npmjs.com/package/cordova-plugin-appavailability) to your project:\n```\n$ cordova plugin add cordova-plugin-appavailability --save\n```\n\nDon't forget to prepare and compile your project:\n```\n$ cordova prepare\n$ cordova build\n```\n\nYou don't have to reference the JavaScript in your `index.html`.\n\nAlternatively you can install AppAvailability from [GitHub](https://github.com/ohh2ahh/AppAvailability):\n```\n$ cordova plugin add https://github.com/ohh2ahh/AppAvailability.git --save\n```\n\n### PhoneGap Build\n\nAppAvailability works with PhoneGap build too. You can include this plugin from either npm or directly from this repository:\n```xml\n<plugin name=\"cordova-plugin-appavailability\" source=\"npm\" />\n```\n```xml\n<plugin spec=\"https://github.com/ohh2ahh/AppAvailability.git\" source=\"git\" />\n```\n\nThere is no need to reference the JavaScript in your `index.html`.\n\n## 3. Usage\n\n:exclamation: The code changed in version 0.3.0 and supports now success and error callbacks! But you can still use the old approach, which is [described below](https://github.com/ohh2ahh/AppAvailability#old-approach-appavailability--030).\n\n### iOS\n\n```javascript\nappAvailability.check(\n    'twitter://', // URI Scheme\n    function() {  // Success callback\n        console.log('Twitter is available');\n    },\n    function() {  // Error callback\n        console.log('Twitter is not available');\n    }\n);\n```\n\n### Android\n\n```javascript\nappAvailability.check(\n    'com.twitter.android', // Package Name\n    function() {           // Success callback\n        console.log('Twitter is available');\n    },\n    function() {           // Error callback\n        console.log('Twitter is not available');\n    }\n);\n```\n\n### Full Example\n\n```javascript\nvar scheme;\n\n// Don't forget to add the cordova-plugin-device plugin for `device.platform`\nif(device.platform === 'iOS') {\n    scheme = 'twitter://';\n}\nelse if(device.platform === 'Android') {\n    scheme = 'com.twitter.android';\n}\n\nappAvailability.check(\n    scheme,       // URI Scheme or Package Name\n    function() {  // Success callback\n        console.log(scheme + ' is available :)');\n    },\n    function() {  // Error callback\n        console.log(scheme + ' is not available :(');\n    }\n);\n```\n\n### Old Approach (AppAvailability < 0.3.0)\n\nThe only thing you have to do is replacing `appAvailability.check` with `appAvailability.checkBool`:\n\n```javascript\nappAvailability.checkBool('twitter://', function(availability) {\n    // availability is either true or false\n    if(availability) { console.log('Twitter is available'); }\n});\n```\n\n## 4. Some URI Schemes / Package Names\n\n[How do I get the URI Scheme / Package Name?](https://github.com/ohh2ahh/AppAvailability/issues/2#issuecomment-22203591)\n\nTwitter:\n* iOS: `twitter://`\n* Android: `com.twitter.android`\n\nFacebook:\n* iOS: `fb://`\n* Android: `com.facebook.katana`\n\nWhatsApp:\n* iOS: `whatsapp://` (only since v. 2.10.1, [more information](http://www.whatsapp.com/faq/en/iphone/23559013))\n* Android: `com.whatsapp`\n\n## 5. License\n\n[The MIT License (MIT)](http://www.opensource.org/licenses/mit-license.html)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ohh2ahh/AppAvailability.git"
+  },
+  "version": "0.4.2"
+}

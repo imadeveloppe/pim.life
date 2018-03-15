@@ -1,0 +1,140 @@
+<ion-view view-title="{{ 'make_a_transfer.title_page' | translate }}" id="pageSendToFriend" can-swipe-back="false" ng-controller="TransCtrl">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="trans"  ng-show="loader">
+    <p class="NotMessage" style="margin-top: 10px;">{{ 'make_a_transfer.sub_title' | translate }}</p>
+        <div style="width:100%;">
+            <ion-slide-box on-slide-changed="trans.selectedAccount = ($index)" active-slide="trans.selectedAccount">
+                <ion-slide ng-repeat="account in accounts">
+                    <div class="list card border-rounded  homev2 {{ account.cssClass }}"  style="margin-top:0px;">
+                        <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
+                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                            <h2positive class="oneLine">
+                                {{ account.name }} 
+                            </h2positive>
+                            <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                        </ion-item>
+                        <div class="item item-body " id="home-list-item-container2">
+                            <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;background: rgb(241, 127, 33);" class=" ">
+                                <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+
+        <div class="list card  md-inline-form" layout="column" ng-cloak>
+
+            <!--            
+            <h1>Value $ {{currencyVal}}</h1>
+            <form ng-submit="enterCurrency()">
+                <input type="text" field="currencyVal" currency-input size="30" placeholder="insert currency value"></input>
+            </form>
+-->
+
+
+            <md-content layout-padding class="border-rounded"> 
+                <form name="userForm" style="width: auto">
+                    
+                    <div class="row" ng-if="trans.users.length > 0" style=""> 
+                        <div class="col"> 
+                            <span style="" class="Recipients">
+                                {{ 'make_a_transfer.recipient' | translate }}
+                            </span> 
+                        </div>
+                    </div>
+
+
+                    <div class="list list-inset" style="margin-top: 0;overflow: inherit;">
+                        <div class="addedUserFromAlgoliaList"  ng-if="trans.users.length > 0"> 
+                            <div>
+                                <div> 
+
+                                <div class="BadgeTransfer" ng-if="trans.users[0].logo == ''" >
+                                    <span class="initialTransfer"  ng-class="(trans.users[0].isshop=='1')?'CPro':'CPerso'" >{{ trans.users[0].initiales}}</span>
+                                </div>
+                                <img ng-src="{{ trans.users[0].logo }}" ng-if="trans.users[0].logo != ''" alt="">
+                                
+                                </div>
+                                <div class="userName" ng-if="trans.users[0].isshop">{{ trans.users[0].brandname }}</div>
+                                <div class="userName" ng-if="!trans.users[0].isshop">{{ trans.users[0].fname }} {{ trans.users[0].lname }}</div>
+                                <div class="clearRecipient" style="" ng-click="clearRecipient()"><i class="ion-ios-close-empty"></i></div>
+                            </div> 
+                        </div>
+                        <label ng-hide="hideInputRecipient"  class="item item-input  item-floating-label" style="padding:0;border: 0;"> 
+                            <!-- <span class="input-label">SELECT YOUR RECIPIENT</span>
+                                <input type="text" name="user" ng-change="changeRecipient()" ng-model="trans.recipient" placeholder="SELECT YOUR RECIPIENT" autocomplete="false"/> --> 
+                                <button ng-click="ShowSearchForRecipient()" class="button button-full button-dark" style="font-size: 14px;min-height: 16px;height: 35px;line-height: 34px;border-radius: 3px;background-color:#f17f21;">
+                                 {{ 'make_a_transfer.select_your_recipient' | translate }}
+                                </button>
+                        </label>
+
+                        <label class="item item-input  item-floating-label  numeric-keyboard-source" style="border-top: 0;"> 
+                            <span class="input-label">{{ 'make_a_transfer.amount' | translate }}</span>
+                                <i class="icon ion-social-euro placeholder-icon"></i>
+                                <input type="text" name="amount" id="amount" placeholder="{{ 'make_a_transfer.amount' | translate }}" ng-model="amount"  ng-click="showKeyboard('amount')" class="numeric-keyboard-amount" style="background-color: rgba(240, 248, 255, 0);" readonly/> 
+                        </label> 
+
+                        <label class="item item-input  item-floating-label" style="border-top:none;">
+                            <span class="input-label">{{ 'make_a_transfer.reason' | translate }}</span>
+                                <textarea placeholder="{{ 'make_a_transfer.reason' | translate }}" ng-model="trans.reson" class="CostumTextarea"  ng-style="isIOS && {'text-indent':'-3px'} || {'text-indent':'opx'}" ></textarea>
+                        </label>
+                        
+                        <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    </div>
+ 
+                </form>
+                <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+                    <md-button ui-sref="tab.home" class="md-raised md-primary" style="width: 43%;background-color:#254E7B;">
+                        {{ 'make_a_transfer.cancel' | translate }}
+                    </md-button>
+                    <md-button ng-click="PayFriend(false)" class="md-raised md-primary" style="width: 43%;background-color:#f17f21;">
+                        {{ 'make_a_transfer.validate' | translate }}
+                    </md-button>
+                </section>
+            </md-content>
+        </div>  
+
+    </ion-content>
+    <div class="overlay-result-recipient algoliaGetUserList">
+        <form class="bar-search">
+            <div class="bar item-input-inset">  
+              <label class="item-input-wrapper">  
+                <input type="text" placeholder="" id="inputSearchRecipient" ng-model="trans.recipient" ng-change="changeRecipient()">
+                <ion-spinner ng-show="searchProgress" icon="ios-small"></ion-spinner>
+              </label>
+              <button class="button button-clear" ng-click="backToTransfer()">
+                <i class="icon ion-ios-close-outline dark" ></i>
+              </button>
+            </div> 
+        </form>
+        <ion-scroll direction="y" on-scroll="OnscrollingResult()" class="result-recepient" delegate-handle="result-recepient">
+            <div ng-if=" user.authmail != userMail && (user.isshop < 2 && user.associationid > 0) " ng-repeat="user in Users" ng-click="setUserTrans(user)"  class="item item-avatar" >
+                  <img src="{{ user.logo }}" ng-if="user.logo != ''">
+                  <div class="initiales"  ng-if="user.logo == ''">
+                      {{ user.initiales }}
+                  </div>
+                  <h2 ng-if="user.isshop">{{ user.brandname }}</h2>
+                  <h2 ng-if="!user.isshop">{{ user.fname }} {{ user.lname }}</h2> 
+                  <p>{{ user.contactmail }}</p>   
+            </div> 
+            <div ng-if=" user.authmail != userMail && user.isshop == 2" ng-repeat="user in Users" ng-click="setUserTrans(user)"  class="item item-avatar" >
+                  <img src="{{ user.logo }}" ng-if="user.logo != ''">
+                  <div class="initiales"  ng-if="user.logo == ''">
+                      {{ user.initiales }}
+                  </div>
+                  <h2 ng-if="user.isshop">{{ user.brandname }}</h2>
+                  <h2 ng-if="!user.isshop">{{ user.fname }} {{ user.lname }}</h2> 
+                  <p>{{ user.contactmail }}</p>   
+            </div> 
+            <div class="LoadingMoreShops" ng-hide="!LoadingMoreShops" style="text-align: center;">
+              <ion-spinner icon="ios-small"></ion-spinner> 
+            </div> 
+        </ion-scroll>
+    </div>
+    <ion-numeric-keyboard class="slide-up" options="keyboardOptions"></ion-numeric-keyboard>
+</ion-view>

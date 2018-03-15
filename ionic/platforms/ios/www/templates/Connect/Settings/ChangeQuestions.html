@@ -1,0 +1,93 @@
+<ion-view title="{{ 'security_questions.title_page' | translate }}" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2" ng-show="loader">
+        <p class="NotMessage">
+            {{ 'security_questions.text' | translate }}
+        </p>
+        <div class="list card ">
+
+<!--             <select ng-model="myselect" mobiscroll-select="settings" mobiscroll-instance="demo">
+        <option value="1">Percentage of assets covered by systematic risk assessments (>99)</option>
+        <option value="2">Number of personal vacancies in the security roles required for ISMS (Nil)</option>
+        <option value="3">Time taken to grant, change and remove access privileges (Max. 2 hours)</option>
+        <option value="4">Percentage of agents covered by an effective security awareness program (100%)</option>
+        <option value="5">Number of security access violations (<2)</option>
+        <option value="6">Number of emergency changes (<5)</option>
+        <option value="7">Number of security incidents involving malicious code (Max. 2)</option>
+        <option value="8">Number of systems where security requirements are not met (Max. 2)</option>
+        <option value="9">Average turnaround time of incidents (Max. 2 hours)</option>
+        <option value="10">Number of pending actions to meet response and recovery requirements (Max. 5)</option>
+        <option value="11">Number of scheduled internal audits not done (Max. 1)</option>
+        <option value="12">Number of scheduled penetration tests not done (Max. 1)</option>
+        <option value="13">Number of overdue actions arising out of audit reports (Max. 5)</option>
+        <option value="14">Number of changes not carried out as per change control procedure (Max. 1)</option>
+    </select> -->
+
+
+
+
+
+            <form class="list" style="padding: 10px;">
+                <div class="list list-inset" style="margin: 0; width: 100%;">
+                    <label class="item item-input item-stacked-label singup_question" >
+                        <!-- <input type="text" placeholder="Question1" ng-model="data.question1" disabled="disabled"> -->
+
+
+                    <select id="q1" ng-model="data.idquestion1" mobiscroll-select="settings" mobiscroll-instance="mobiscrollInstance" style="display: none;"> 
+                        <option ng-repeat="q in listQuestions1" value="{{ q.id }}">{{ q.view }}</option>
+                    </select> 
+
+                        <span ng-repeat="q in listQuestions1" ng-if="q.id == data.idquestion1">{{ q.view }}</span> 
+                        <span ng-if="!data.idquestion1">{{ 'secret_questions.choose_a_question' | translate }}</span> 
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'secret_questions.answer1' | translate }}" ng-model="data.answer1">
+                    </label>
+                    <label class="item item-input item-stacked-label singup_question" >
+                    <!-- on-tap="openPickerQuestion2()" -->
+                        <!-- <input type="text" placeholder="Question2" ng-model="data.question2" disabled="disabled"> -->
+                        <select id="q2" ng-model="data.idquestion2" mobiscroll-select="settings" mobiscroll-instance="mobiscrollInstance" style="display: none;">
+                            <!-- <option value="" selected="selected" disabled="true">Choose Question 2</option> -->
+                            <option ng-repeat="q in listQuestions2" value="{{ q.id }}">{{ q.view }}</option>
+                        </select> 
+                        <span ng-repeat="q in listQuestions2" ng-if="q.id == data.idquestion2">{{ q.view }}</span>
+                        <span ng-if="!data.idquestion2">{{ 'secret_questions.choose_a_question' | translate }}</span> 
+
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'secret_questions.answer2' | translate }}" ng-model="data.answer2">
+                    </label>
+                    <label class="item item-input item-stacked-label singup_question">
+                        <!-- on-tap="openPickerQuestion3()" -->
+                        <!-- <input type="text" placeholder="Question3" ng-model="data.question3" disabled="disabled"> -->
+                        <select id="q3" ng-model="data.idquestion3" mobiscroll-select="settings" mobiscroll-instance="mobiscrollInstance" style="display: none;">
+                            <!-- <option value="" selected="selected" disabled="true">Choose Question 3</option> -->
+                            <option ng-repeat="q in listQuestions3" value="{{ q.id }}">{{ q.view }}</option>
+                        </select> 
+
+                        <span ng-repeat="q in listQuestions3" ng-if="q.id == data.idquestion3">{{ q.view }}</span>
+                        <span ng-if="!data.idquestion3">{{ 'secret_questions.choose_a_question' | translate }}</span> 
+
+              <!--           <select mobiscroll-select="settings" mobiscroll-instance="mobiscrollInstance"
+      ng-options="item.id as item.view for item in listQuestions3"
+      ng-model="data.selectedOption"></select> -->
+
+
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'secret_questions.answer3' | translate }}" ng-model="data.answer3">
+                    </label>
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                </div>
+                <button ng-click="ChangeQuestions()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-compose "> 
+                {{ 'security_questions.update' | translate }}
+                </button>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

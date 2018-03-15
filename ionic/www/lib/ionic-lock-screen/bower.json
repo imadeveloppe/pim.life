@@ -1,0 +1,31 @@
+{
+  "name": "ionic-lock-screen",
+  "version": "1.0.0",
+  "homepage": "https://github.com/AlexDisler/ionic-lock-screen",
+  "authors": [
+    "Alex Disler <alexdisler@gmail.com>"
+  ],
+  "description": "A pin code lock screen for ionic cordova mobile apps",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "ionic",
+    "cordova",
+    "pin",
+    "code",
+    "lock",
+    "screen"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "main": [
+    "./dist/index.js"
+  ]
+}

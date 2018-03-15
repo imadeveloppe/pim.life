@@ -1,0 +1,265 @@
+const lockScreenService = ($rootScope) => {
+  return {
+    show(settings) {
+      $rootScope.$broadcast('ionic-lock-screen:show', {
+        touchId           : settings.touchId || false,
+        ACDelbuttons      : settings.ACDelbuttons || false,
+        passcode          : settings.code,
+        onCorrect         : settings.onCorrect || null,
+        onWrong           : settings.onWrong || null,
+        passcodeLabel     : settings.passcodeLabel || 'Enter Passcode',
+        touchLabel        : settings.touchLabel,
+        backgroundColor   : settings.backgroundColor || '#F1F1F1',
+        textColor         : settings.textColor || '#464646',
+        buttonColor       : settings.buttonColor || '#F8F8F8',
+        buttonTextColor   : settings.buttonTextColor || '#464646',
+        buttonPressed     : settings.buttonPressed || '#E0E0E0',
+        buttonACColor     : settings.buttonACColor || "#F8F8F8",
+        buttonACTextColor : settings.buttonACTextColor || "#464646",
+        buttonDelColor    : settings.buttonDelColor || "#F8F8F8",
+        buttonDelTextColor: settings.buttonDelTextColor || "#464646",
+        cancelBtn         : settings.cancelBtn || false
+      });
+    },
+  };
+};
+
+const lockScreenDirective = ($timeout) => {
+  return {
+    restrict: 'E',
+    scope : {},
+    link (scope) {
+      let passcodeAttempts = 0;
+      scope.enteredPasscode = '';
+      scope.$on('ionic-lock-screen:show', (e, data) => {
+        scope._showLockScreen   = true;
+        scope.ACDelbuttons      = data.ACDelbuttons;
+        scope.passcode          = data.passcode;
+        scope.onCorrect         = data.onCorrect;
+        scope.onWrong           = data.onWrong;
+        scope.passcodeLabel     = data.passcodeLabel;
+        scope.touchLabel        = data.touchLabel;
+        scope.backgroundColor   = data.backgroundColor;
+        scope.textColor         = data.textColor;
+        scope.buttonColor       = data.buttonColor;
+        scope.buttonTextColor   = data.buttonTextColor;
+        scope.buttonPressed     = data.buttonPressed;
+        scope.buttonACColor     = data.buttonACColor;
+        scope.buttonACTextColor = data.buttonACTextColor;
+        scope.buttonDelColor    = data.buttonDelColor;
+        scope.buttonDelTextColor= data.buttonDelTextColor;
+        scope.cancelBtn         = data.cancelBtn;
+
+        $timeout(() => {
+          if (data.touchId && window.touchid) {
+            window.touchid.checkSupport(() => {
+              window.touchid.authenticate(() => {
+                // success
+                scope.$apply(() => {
+                  scope._showLockScreen = false;
+                });
+                scope.onCorrect && scope.onCorrect();
+              }, () => {
+                // failure
+              }, scope.touchLabel);
+            }, () => {
+              console.info('touch id is not supported on your device');
+            });
+          }
+        }, 50);
+        
+      });
+      scope.all_clear = () => {
+        scope.enteredPasscode = "";
+      };
+      scope.delete = () => {
+        scope.enteredPasscode = scope.enteredPasscode.slice(0,-1);
+      };
+      scope.digit = (digit) => {
+        scope.selected = +digit;
+        if (scope.passcodeWrong) {
+          return;
+        }
+        scope.enteredPasscode += '' + digit;
+        if (scope.enteredPasscode.length >= 4) {
+          if (scope.enteredPasscode === '' + scope.passcode) {
+            scope.enteredPasscode = '';
+            passcodeAttempts = 0;
+            scope.onCorrect && scope.onCorrect();
+            scope._showLockScreen = false;
+          } else {
+            scope.passcodeWrong = true;
+            passcodeAttempts++;
+            scope.onWrong && scope.onWrong(passcodeAttempts);
+            $timeout(() => {
+              scope.enteredPasscode = '';
+              scope.passcodeWrong = false;
+            }, 800);
+             
+          }
+        }
+      };
+    },
+    template: `<style>
+          /* Animations*/
+          @keyframes ILS_shake {
+            from, to {
+              transform: translate3d(0, 0, 0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+              transform: translate3d(-10px, 0, 0);
+            }
+            20%, 40%, 60%, 80% {
+              transform: translate3d(10px, 0, 0);
+            }
+          }
+          @keyframes ILS_buttonPress {
+            0% {
+              background-color: {{buttonPressed}};
+            }
+            100% {
+              background-color: {{buttonColor}};
+            }
+          }
+          /* Lock Screen Layout*/
+          .ILS_lock {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            background-color: {{backgroundColor}};
+          }
+          .ILS_lock-hidden {
+            display: none;
+          }
+          .ILS_label-row {
+            height: 50px;
+            width: 100%;
+            text-align: center;
+            font-size: 23px;
+            padding-top: 10px;
+            color: {{textColor}};
+          }
+          .ILS_circles-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+            height: 44px;
+            width: 250px;
+            margin: 0 auto;
+            position: relative;
+            margin-top: 10px;
+           }
+          .ILS_circle {
+            background-color: {{backgroundColor}}!important;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            border:solid 1px {{textColor}};
+            margin: 0 15px;
+          }
+          .ILS_numbers-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+            height: 100px;
+          }
+          .ILS_digit {
+            margin: 0 14px;
+            width: 80px;
+            border-radius: 10%;
+            height: 80px;
+            text-align: center;
+            padding-top: 29px;
+            font-size: 21px;
+            color: {{buttonTextColor}};
+            background-color: {{buttonColor}};
+          }
+          .ILS_digit.activated {
+            -webkit-animation-name: ILS_buttonPress;
+            animation-name: ILS_buttonPress;
+            -webkit-animation-duration: 0.3;
+            animation-duration: 0.3s;
+          }
+          .ILS_ac {
+            color: {{buttonACTextColor}};
+            background-color: {{buttonACColor}};
+            }
+          .ILS_del {
+            color: {{buttonDelTextColor}};
+            background-color: {{buttonDelColor}};
+            }
+          .ILS_full {
+            background-color:{{textColor}}!important;
+          }
+          .ILS_shake {
+            -webkit-animation-name: ILS_shake;
+            animation-name: ILS_shake;
+            -webkit-animation-duration: 0.5;
+            animation-duration: 0.5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+          }
+          .button.button-clear.bt-cleancode{
+            color: #fff!important;
+            min-height: inherit;
+            margin-top: -17px;
+            position: absolute;
+            right: -9px;
+          }
+          .ILS_lock .service-client{
+            position: absolute;
+            right: 11px;
+            bottom: 6px;
+            color: #fff;    
+            font-size: 16px;
+          }
+      </style>
+      <div class="ILS_lock" ng-class="!_showLockScreen ?  'ILS_lock-hidden' : ''">
+        <div class="ILS_label-row">
+          {{passcodeLabel}}
+        </div>
+        <div class="ILS_circles-row" ng-class="passcodeWrong ?  'ILS_shake' : ''">
+          <div class="ILS_circle" ng-class=" enteredPasscode.length>0 ? 'ILS_full' : ''"></div>
+          <div class="ILS_circle" ng-class=" enteredPasscode.length>1 ? 'ILS_full' : ''"></div>
+          <div class="ILS_circle" ng-class=" enteredPasscode.length>2 ? 'ILS_full' : ''"></div>
+          <div class="ILS_circle" ng-class=" enteredPasscode.length>3 ? 'ILS_full' : ''"></div>
+          <button class="button button-clear bt-cleancode" ng-show="enteredPasscode.length>0" ng-click="delete()">
+                <i class="icon ion-backspace"></i>
+          </button>
+        </div>
+        <div class="ILS_numbers-row">
+          <div ng-click="digit(1)" class="ILS_digit">1</div>
+          <div ng-click="digit(2)" class="ILS_digit">2</div>
+          <div ng-click="digit(3)" class="ILS_digit">3</div>
+        </div>
+        <div class="ILS_numbers-row">
+          <div ng-click="digit(4)" class="ILS_digit">4</div>
+          <div ng-click="digit(5)" class="ILS_digit">5</div>
+          <div ng-click="digit(6)" class="ILS_digit">6</div>
+        </div>
+        <div class="ILS_numbers-row">
+          <div ng-click="digit(7)" class="ILS_digit">7</div>
+          <div ng-click="digit(8)" class="ILS_digit">8</div>
+          <div ng-click="digit(9)" class="ILS_digit">9</div>
+        </div>
+        <div class="ILS_numbers-row">
+          <div ng-show="ACDelbuttons" ng-click="all_clear()" class="ILS_digit ILS_ac">AC</div>
+          <div ng-click="digit(0)" class="ILS_digit">0</div>
+          <div ng-show="ACDelbuttons" ng-click="delete()" class="ILS_digit ILS_del">DEL</div>
+        </div>
+
+        <a href="#" class="service-client"> Service Client </a>
+      </div>
+    `,
+  };
+};
+
+angular.module('ionic-lock-screen', []);
+angular.module('ionic-lock-screen').directive('lockScreen', lockScreenDirective);
+angular.module('ionic-lock-screen').service('$lockScreen', lockScreenService);

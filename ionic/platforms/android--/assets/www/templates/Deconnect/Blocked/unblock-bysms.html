@@ -1,0 +1,29 @@
+<ion-view title="{{ 'unlock_blocked_account_by_sms.title_page' | translate }}" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+        <div class="list card ">
+            <form class="list">
+                <div class="list list-inset smscode">
+                    <!--You have changed your number phone.-->
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <p>{{dataBS.SMStext1}}</p>
+                    <label class="item item-input" style="border-top:none; padding: 0;"> 
+                        <input type="tel" placeholder="{{ 'unlock_blocked_account_by_sms.code' | translate }}" ng-model="dataBS.smscode">
+                    </label>
+
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="confirmSMS()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-android-checkbox-outline "> 
+                    {{ 'unlock_blocked_account_by_sms.validate' | translate }}
+                    </button>
+                    <p>{{dataBS.SMStext2}}</p>
+                </div>
+
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

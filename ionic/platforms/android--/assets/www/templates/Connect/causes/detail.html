@@ -1,0 +1,103 @@
+<ion-view title="CAUSES" hide-nav-bar="true" hide-back-button="true" can-swipe-back="false" style="background: #fff"> 
+     
+    <ion-content class="manual-ios-statusbar-padding hasCause detailCause" ng-show="loadedInfos">
+          
+        <div class="cause">  
+            <div class="header">
+                <div class="cover-continer">
+                    <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button custom-back-button back-button buttons  button-clear header-item" style="position: absolute;"><i class="icon ion-ios-arrow-left"></i> {{ 'global_fields.back' | translate }}</button> 
+	                 
+	                <span class="distance" ng-if="cause._rankingInfo">
+	                	<i class="icon ion-ios-location"></i>
+                        <strong ng-if="cause._rankingInfo.matchedGeoLocation.distance < 1000">
+                          {{ twoDigitAfterCama(cause._rankingInfo.geoDistance) }}m
+                        </strong>
+                        <strong ng-if="cause._rankingInfo.matchedGeoLocation.distance > 1000">
+                          {{ twoDigitAfterCama(cause._rankingInfo.geoDistance / 1000) }}Km
+                        </strong>
+	                </span>
+                    <img ng-src="{{ cause.cover }}" class="cover-cause" style="width: 100%" ng-if="cause.cover != ''"> 
+                </div>
+                <img ng-src="{{ cause.logo }}" class="logo-cause" ng-if="cause.logo != ''">
+                <div class="logo-cause" ng-if="cause.logo == ''">
+                    <div class="initiales">
+                        {{ cause.initiales }}
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="title">
+                    <h4 class="oneLine" style="margin: 0;">{{ cause.brandname }}</h4>
+                    <small class="oneLine" style="margin: 0;">{{ cause.slogan }}</small>
+                    <div style="height: 15px"></div>
+                    <p>{{ 'detail_cause.donations_received_with_pim_since' | translate }} {{ cause.year }}: <strong>{{ cause.yeardonations }}{{ devise }} </strong> </p> 
+                    <p>{{ 'detail_cause.number_of_donors' | translate }} : <strong>{{ cause.nbrdonors*1 }}</strong> </p> 
+                    <p ng-if="!isCurrentCause">{{ 'detail_cause.my_purchases' | translate }} : <strong>{{ cause.userdonations }}{{ devise }} </strong> </p> 
+                    <div style="height: 15px"></div>
+                </div>
+
+                <strong class="category">{{ 'detail_cause.category' | translate }} : {{ cause.assoccatlabel }}</strong>
+                <p class="description">{{ cause.desc }}</p>
+
+                <div class="actionBtn" style="text-align: right;" ng-if="!isCurrentCause && !isCause">
+                    <button class="button button-large button-positive" ng-if="selectedAssocID != cause.id" ng-click="selectCause( cause.id )">{{ 'detail_cause.select' | translate }}</button>
+                    <button class="button button-large button-positive selected"  ng-if="selectedAssocID == cause.id"  >{{ 'detail_cause.selected' | translate }}</button>
+                </div>
+
+
+
+                <div class="missions" ng-if="cause.assocmission != ''">
+                    <strong>
+                        {{ 'detail_cause.our_missions' | translate }}
+                    </strong>
+                    <div>
+                        <p>
+                            {{ cause.assocmission }}
+                        </p>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="personalInfos">
+                    <strong class="padding">{{ 'detail_cause.contact_information' | translate }}</strong>
+                    <ion-list>
+                      <ion-item ng-if="cause.fulladdress != ''" class="item item-icon-left" ng-click="actionBtn( 'geo', cause.lat, cause.lng, cause.name )"> 
+                        <i class="icon ion-ios-location"></i> 
+                        {{ cause.fullAddress }} 
+                      </ion-item>
+
+                      <ion-item ng-if="cause.fulladdress == ''"  class="item item-icon-left" ng-click="actionBtn( 'geo', cause.lat, cause.lng, currentShop.brandname )"> 
+                        <i class="icon ion-ios-location"></i>
+                        {{ cause.line1 }}, {{ cause.city }}, {{ cause.country }} 
+                      </ion-item>
+
+                      <ion-item class="item item-icon-left" ng-click="actionBtn('tel',cause.phone, 'null', 'null')"> 
+                        <i class="icon ion-ios-telephone"></i>
+                        {{ cause.phone }} 
+                      </ion-item> 
+
+                      <ion-item class="item item-icon-left" ng-click="actionBtn('mailto', cause.contactmail, 'null', 'null')"  style="text-transform: lowercase;"> 
+                        <i class="icon ion-email" ></i>
+                        {{ cause.contactmail }} 
+                      </ion-item>
+
+                      <ion-item ng-if="cause.siteweb != ''" class="item item-icon-left" ng-click="actionBtn('http', cause.siteweb, 'null', 'null')" style="text-transform: lowercase;"> 
+                        <i class="icon ion-ios-world"></i>
+                        {{ cause.siteweb }} 
+                      </ion-item> 
+                      <ion-item ng-if="cause.socialNetworks.facebook.registred != ''" class="item item-icon-left" ng-click="actionBtn('http', 'https://facebook.com/'+cause.socialNetworks.facebook.data.uid, 'null', 'null')"> 
+                        <i class="icon ion-social-facebook"></i>
+                        Facebook
+                      </ion-item> 
+                      <ion-item ng-if="cause.socialNetworks.twitter.registred != ''" class="item item-icon-left" ng-click="actionBtn('http', 'https://facebook.com/'+cause.socialNetworks.twitter.data.uid.split('|')[0], 'null', 'null')"> 
+                        <i class="icon ion-social-twitter"></i>
+                        Twitter
+                      </ion-item> 
+                    </ion-list>   
+                </div>
+        </div> 
+
+        
+    </ion-content>  
+
+</ion-view>

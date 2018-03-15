@@ -1,0 +1,33 @@
+<ion-view title="Full Name" id="page5" class="" can-swipe-back="false">
+   <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+        <p class="NotMessage">Please fill the fields below with your first and last name. You should specify your password so the changes can be made. Once done, you should update your ID photo to be verified.</p>
+        <div class="list card ">
+            <form class="list">
+                <div class="list list-inset">
+                    <label class="item item-input  item-floating-label">
+                        <span class="input-label">First Name</span>
+                          <input type="text" placeholder="First Name" ng-model="dataCN.fname">
+                        </label>
+                    <label class="item item-input  item-floating-label"> 
+                        <span class="input-label">Last Name</span>
+                          <input type="text" placeholder="Last Name" ng-model="dataCN.lname">
+                      </label>
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                </div>
+                <div ng-if="validation" style="margin:0 auto;width:90%;">
+                    <button ng-click="ChangeName(false)" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-compose " style="display: inline-block;width: 49%;"> Update</button>
+                    <button ng-click="ValidateName()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-android-done" style="display: inline-block;width: 49%;"> Validate</button>
+                </div>
+                <button ng-if="!validation" data-tap-disabled="true" ng-click="ChangeName(false)" id="fullName-button1" class=" button button-small button-positive  button-block icon ion-compose "> Update</button>
+            </form>
+            <p style="text-align:center;" ng-if="!validate" ng-bind-html="ValidateMSG"></p>
+            <p style="text-align:center;" ng-if="validate"><span class='DocumentValid' ng-click="ValidateName()"><i class='icon ion-android-checkmark-circle'></i> Your document was verified. Do you want to upload another document ?</span></p>
+        </div>
+    </ion-content>
+</ion-view>

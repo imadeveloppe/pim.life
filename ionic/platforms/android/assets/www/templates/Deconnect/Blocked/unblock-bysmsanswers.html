@@ -1,0 +1,42 @@
+<ion-view title="{{ 'unlock_blocked_account_by_sms_answer.title_page' | translate }}" class="" can-swipe-back="false" id="pageUnlockbYsmsAnswer">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+        <p class="NotMessage">{{dataBS.SMStext3}}</p>
+        <div class="list card ">
+            <form class="list unlockbyquestion" style="padding: 10px;">
+                <div class="list list-inset" style="margin: 0; width: 100%;">
+                    <label class="item item-input" style="border-top:none; padding: 0;"> 
+                        <input type="tel" placeholder="{{ 'unlock_blocked_account_by_sms_answer.code' | translate }}" ng-model="dataBS.smscode">
+                    </label>
+                    <label class="item item-input item-stacked-label singup_question">
+                        {{ dataBA.question1 }}
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'unlock_blocked_account_by_sms_answer.answer' | translate }}" ng-model="dataBA.answer1">
+                    </label>
+                    <label class="item item-input item-stacked-label singup_question">
+                        {{ dataBA.question2 }}
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'unlock_blocked_account_by_sms_answer.answer' | translate }}" ng-model="dataBA.answer2">
+                    </label>
+                    <label class="item item-input item-stacked-label singup_question">
+                        {{ dataBA.question3 }}
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'unlock_blocked_account_by_sms_answer.answer' | translate }}" ng-model="dataBA.answer3">
+                    </label>
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                </div>
+                <button ng-click="confirmSMSAnswers()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive"> 
+                {{ 'unlock_blocked_account_by_sms_answer.validate' | translate }}
+                </button>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

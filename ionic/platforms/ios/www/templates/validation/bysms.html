@@ -1,0 +1,29 @@
+
+	<div class="grid grid-pad phonechange2 modelblue list">
+		<div class="congratulation-sheald-block">
+			<div class="container">
+				<img src="style/images/phonechange2.png" alt="congratulation">
+			</div>
+		</div>
+		<div class="col-1-1 mobile-col-1-1">
+				<p ng-bind-html="SMStext1"></p>
+		</div>
+		<form name="foordigit" id="foordigit" class="form " method="POST" accept-charset="utf-8" ng-submit="confirmSMS()">
+		<div class="width100">
+			<div class="with50 mtop21">
+				<div class="pin-4-d">6 PIN DIGIT : </div>
+			</div>
+			<div class="with50 mtop21 ">
+				<div class="pin-input  posr">
+					<input type="tel" name="digit" value="" placeholder="" ng-model="digit" required>
+				</div>
+			</div>
+		</div>
+			<div class="width100">
+					<p class="floatleft padb15" ng-bind-html="SMStext2"></p>
+			</div>
+			<input type="submit" name="" class="btnwhite" value="Confirm">
+						<div class="clearfx"></div>
+		</form>
+
+	</div>

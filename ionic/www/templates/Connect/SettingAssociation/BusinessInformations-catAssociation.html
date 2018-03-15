@@ -1,0 +1,30 @@
+<ion-view title="{{ 'company_category.title_page' | translate }}" id="page5" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding" >
+
+
+    <span class="title">
+        {{ 'company_category.text' | translate }}
+    </span>
+        <div class="list card ">
+            <form class="list" style="padding-top: 10px;">
+                <div class="list list-inset busnissinfo mobiscrollselectSettingsProsContiner">  
+                    <label class="item item-input  item-floating-label" on-tap="showCategories()" >
+                        <span style="text-transform: uppercase;">{{ 'setting_pro.category' | translate }}</span><br>
+                        {{ SelectedCat }}
+                        <div style="height: 20px" ng-if="SelectedCat==''"></div>
+                    </label>  
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="Update()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive icon ion-compose button-block"> 
+                        {{ 'company_category.update' | translate }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

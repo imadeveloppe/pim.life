@@ -1,0 +1,40 @@
+<ion-view title="{{ 'unlock_blocked_account_by_secret_questions.title_page' | translate }}" id="pageUnlockByAnswer" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button data-tap-disabled="true"></ion-nav-back-button>
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs padding2">
+        <p class="NotMessage">{{ 'unlock_blocked_account_by_secret_questions.text' | translate }}</p>
+        <div class="list card ">
+            <form class="list unlockbyquestion" style="padding: 10px;">
+                <div class="list list-inset" style="margin: 0; width: 100%;">
+                    <label class="item item-input item-stacked-label singup_question">
+                        {{ dataBA.question1 }}
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'unlock_blocked_account_by_secret_questions.answer' | translate }}" ng-model="dataBA.answer1">
+                    </label>
+                    <label class="item item-input item-stacked-label singup_question">
+                        {{ dataBA.question2 }}
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'unlock_blocked_account_by_secret_questions.answer' | translate }}" ng-model="dataBA.answer2">
+                    </label>
+                    <label class="item item-input item-stacked-label singup_question">
+                        {{ dataBA.question3 }}
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'unlock_blocked_account_by_secret_questions.answer' | translate }}" ng-model="dataBA.answer3">
+                    </label>
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                </div>
+                <button ng-click="confirmAnswers()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive">
+                    {{ 'unlock_blocked_account_by_secret_questions.validate' | translate }}
+                </button>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

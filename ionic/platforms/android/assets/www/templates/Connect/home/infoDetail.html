@@ -1,0 +1,351 @@
+<ion-view view-title="Detail" can-swipe-back="false" cache-view="false"  hide-back-button='false' hide-nav-bar="true" style="background: #fff;">
+
+<ion-content class=" inHome  trans transDetails transaction-positive" ng-class="{'transaction-negatif':dt.request.amount < 0, 'transaction-positive_':dt.request.amount > 0}" >
+
+<ion-refresher spinner="android" pulling-icon="ion-arrow-down-b" pulling-text="{{ 'transaction_list.pull_to_refresh' | translate }}" on-refresh="DetailRefresh()"></ion-refresher>
+
+
+
+<!-- {{ dt.user1.picto = '' }} -->
+
+<div class="info-detail" ng-show="dt.user1">
+
+    <div class="block-1 padding" style="padding-top: 22px;">
+
+        <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button back-button buttons  button-clear header-item"><i class="icon ion-ios-arrow-back"></i> 
+        {{ 'global_fields.back' | translate }}
+        </button>
+
+        <div class="block-amount align-right">
+
+            <span class="trans-amount">{{dt.request.amount}}</span> 
+
+            <span class="col trans-date">{{ dt.request.date}}</span>
+
+            <span class="col trans-time">{{ dt.request.time}}</span>
+
+        </div>   
+        <div class="block-userInfo">
+
+        <div class="BadgeNotifList" ng-if="dt.user1.picto == '' " >
+            <!-- ng-class="(transaction.isshop=='1')?'CPro':'CPerso'" -->
+            <span class="initialTransfer Raduis"> 
+                {{ dt.user1.initiales}} 
+            </span>
+
+        </div> 
+        <img ng-src="{{ dt.user1.picto }}" ng-if="dt.user1.picto != '' " alt="" class="pecto" >
+        <div class="InfoSender">
+            <span class="userInfo oneLine">{{ dt.user1.fname}} {{ dt.user1.lname}}</span>
+
+            <p>
+
+                <span class="acount-type" ng-if="dt.request.usertype == 'professional'">{{ 'transaction_detail.professional' | translate }}</span>
+
+                <span class="acount-type" ng-if="dt.request.usertype == 'persenal'">{{ 'transaction_detail.personnal' | translate }}</span>
+
+                <span class="acount-type" ng-if="dt.request.usertype == 'bank_account'">{{ 'transaction_detail.bank_account' | translate }}</span>
+
+                <span class="acount-ref align-right">{{ dt.request.ref}}</span>
+
+            </p>
+        </div>
+            
+
+        </div> 
+
+        
+
+    </div>
+
+    <div ng-if="dt.request.statut != ''" class="padding-left" style="color:#ef7f31;font-size: 100%;font-family: 'OpenSansBold';position: relative;top: 91px;"><i class="ion-load-d"></i>
+        {{ 'transaction_list.'+dt.request.statut | translate }}
+    </div>
+
+    <div class="address padding-left" id="div0"  style="margin-top: 92px;border-top: 1px solid rgb(237, 237, 237);">
+
+        <span ng-if="dt.request.transmode != 'iban_transfer'">{{ dt.user1.line1}} {{ dt.user1.zip}} {{ dt.user1.city}} {{ dt.user1.country}}</span>
+        <span ng-if="dt.request.transmode == 'iban_transfer'">{{ dt.user1.line1}} <br>{{ dt.user1.zip}} {{ dt.user1.city}} <br>{{ dt.user1.country}}</span>
+
+        <span ng-if="dt.request.transmode != 'iban_transfer'">{{ 'transaction_detail.tel' | translate }} {{ dt.user1.phone}}</span> 
+        <span ng-if="dt.request.transmode != 'iban_transfer'">{{ 'transaction_detail.email' | translate }} {{ dt.user1.mail}}</span>
+
+    </div>
+
+    <!-- <div class="recieverInfo padding-left" ng-if="dt.account2.nb_shares > 0"> --> 
+    <div class="recieverInfo padding-left" ng-if="dt.request.requestaccepted != 20">
+
+        <span class="oneLine" style="padding-right: 41px;">{{ dt.user2.fname}} {{ dt.user2.lname}}</span>
+
+        <span>{{ 'transaction_detail.email' | translate }} {{ dt.user2.mail}}</span>
+
+        <span>{{ 'transaction_detail.tel' | translate }} {{ dt.user2.phone}} {{s}}</span> 
+
+        
+
+        <div   class="BadgeinfoDetails"> 
+
+            <div class="BadgeinfoDetails"  ng-if="dt.user2.picto == ''">
+
+                <span class="initialBadge CPro">{{ dt.user2.initiales}}</span>
+
+            </div>
+
+            <div ng-if="dt.user2.picto != ''">
+
+                <img ng-src="{{ dt.user2.picto}}" class="pictoInfoDetail">
+
+            </div>
+
+        </div> 
+
+    </div> 
+
+    <div class="paymentMethodContiner padding-left"> 
+
+        <span class="title-block">{{ 'transaction_detail.mode' | translate }}</span>
+
+        <div style="margin: 0;display: inline-flex;width:100%;font-size: 11px;"> 
+            <span class="paymentMethod">{{ 'transaction_detail.'+dt.request.transmode | translate }}</span>
+        </div> 
+
+    </div>
+
+    <div class="paymentMethodContiner padding-left"> 
+
+        <span class="title-block">{{ 'transaction_detail.type' | translate }}</span>
+
+        <div style="margin: 0;display: inline-flex;width:100%;font-size: 11px;">
+
+            <span ng-repeat="(key, type) in ListType" ng-class="(dt.request.transtype.toUpperCase() == type.toUpperCase() )?'paymentMethod':'addMargin'">
+
+                {{ ListTypeTranslated[ key ] }} 
+
+            </span>
+
+        </div>
+ 
+
+    </div>
+
+    
+
+
+
+    <div class="personne padding-left" ng-if="dt.request.reason.length > 0">
+
+        <span class="title-block">{{ 'transaction_detail.reason' | translate }}</span>
+
+        <span>{{ dt.request.reason}}</span>
+
+    </div>
+
+ 
+
+    <div class="blockCategories padding-left" ng-class="(selectedCategories.length > 0)?'feedbackHideCatgs':''" >
+
+         <span class="title-block">{{ 'transaction_detail.category' | translate }}</span>  
+
+<!-- ng-change="changeCategory();" --> 
+        <div class="chipsCat"> 
+            <div class="chipCat" ng-if="!isEmpty(subCategory)">
+
+                {{ subCategory.name }}
+
+                <button class="button button-clear" ng-click="ResetCat()">
+
+                    <i class="ion-ios-close-outline closeChipCat"></i>
+
+                </button>
+
+            </div>  
+
+        </div>
+        <button class="button button-clear addCategorie" ng-if="isEmpty(subCategory)" ng-click="showCategories()"><i class="ion-ios-plus"></i></button>
+
+
+
+    </div>
+
+
+     
+
+    <div class="row comments-Rater" ng-if="dt.user1.rate != -1">
+        <div   class="BadgeinfoDetailsContinner"> 
+
+            <div class="BadgeinfoDetails"  ng-if="dt.user2.picto == ''">
+
+                <span class="initialBadge CPro">{{ dt.user2.initiales}}</span>
+
+            </div>
+
+            <div ng-if="dt.user2.picto != ''">
+
+                <img ng-src="{{ dt.user2.picto}}" class="pictoInfoDetail">
+
+            </div>
+
+        </div> 
+        <div class="name-Rater">
+
+            <span class="oneLine">{{ dt.user2.fname}} {{ dt.user2.lname}}</span> {{ 'transaction_detail.was_rated' | translate }} 
+
+            <ul class="rating ng-valid ng-not-empty ng-dirty ng-valid-parse" >
+
+                <li ng-repeat="(key, value) in [1,2,3,4,5]">
+
+                    <i class="" ng-class="{'ion-ios-star':dt.user1.rate >= value,'ion-ios-star-outline':dt.user1.rate < value }"></i>
+
+                </li> 
+
+            </ul>   
+
+        </div>
+
+        <div>
+
+            <p>{{ dt.user1.comment}}</p>
+            <div  ng-if="dt.user1.img_achat.length > 0" ng-repeat="image in dt.user1.img_achat " ng-click="showImage(image)" style="background:url('{{ image }}');" class="photoFeedbackTrans" ></div>
+
+        </div>
+
+    </div>
+
+    <div class="row comments-Rater" ng-if="dt.user2.rate != -1" style="border-bottom: 0">
+        <div   class="BadgeinfoDetailsContinner"> 
+
+            <div class="BadgeinfoDetails"  ng-if="dt.user1.picto == ''">
+
+                <span class="initialBadge CPro">{{ dt.user1.initiales}}</span>
+
+            </div>
+
+            <div ng-if="dt.user1.picto != ''">
+
+                <img ng-src="{{ dt.user1.picto}}" class="pictoInfoDetail">
+
+            </div>
+
+        </div> 
+        <div class="name-Rater">
+
+            <span class="oneLine">{{ dt.user1.fname}} {{ dt.user1.lname}}</span>{{ 'transaction_detail.was_rated' | translate }} 
+
+            <ul class="rating ng-valid ng-not-empty ng-dirty ng-valid-parse" >
+
+                <li ng-repeat="(key, value) in [1,2,3,4,5]">
+
+                    <i class="" ng-class="{'ion-ios-star':dt.user2.rate >= value,'ion-ios-star-outline':dt.user2.rate < value }"></i> 
+
+                </li> 
+
+            </ul>  
+
+            </div>
+
+        <div>
+
+            <p>{{ dt.user2.comment}}</p>
+            <div ng-if="dt.user2.img_achat.length > 0" ng-repeat="image in dt.user2.img_achat " ng-click="showImage(image)" style="background:url('{{ image }}');" class="photoFeedbackTrans" ></div>
+
+        </div>
+
+    </div>  
+
+   <!--  <div class="title-block" style="padding: 8px 10px;">
+
+        {{ 'transaction_detail.googlemap' | translate }}
+
+    </div> -->
+
+</div>
+
+ 
+
+
+
+
+
+<!-- <ng-map ng-model="map" scrollwheel="false" zoom-to-include-markers="true" default-style="true" disable-default-u-i="true"  ng-style="{'visibility': dt.user1.fname ? 'visible':'hidden'}">
+     
+
+    <custom-marker ng-if="dt.geo2.lat != null" position="{{latlng2}}"  style="z-index: 2;" >
+
+          <div style="display: flex;width: 100%;z-index: 2;">
+
+            <div class="BadgeMap" ng-class="(dt.user2.isshop=='1')?'CPro':'CPerso'" ng-if="dt.user2.picto == '' " style="background-color: #254B78;line-height: 28px;padding: 2px 4px;width: 35px;height:35px;border-radius: 50%;text-align: center;">
+
+                <span class="initialMap"    style="color: #fff;line-height: 28px;border-radius: 50%;font-size: 15px;">{{ dt.user2.initiales}}</span>
+
+            </div>
+
+            <img ng-src="{{ dt.user2.picto  }}" ng-if="dt.user2.picto != '' " alt="" style="height: 30px;width: 30px;">
+
+
+            <div class="oneLine" style="line-height: 30px;padding-right: 5px;max-width:200px;margin-left: 6px;font-size: 12px;font-weight: bold;text-overflow: ellipsis;white-space: nowrap;overflow: hidden !important;">{{ dt.user2.fname}} {{ dt.user2.lname}}</div>
+
+        </div>
+
+    </custom-marker>
+
+     
+
+
+
+    <marker position="{{latlng2}}"  draggable="false"/>
+
+
+
+    <custom-marker ng-if="dt.geo1.lat != null" position="{{latlng1}}" style="z-index: 2;" >
+
+        <div style="display: flex;width: 100%;z-index: 2;"> 
+
+            <div class="BadgeMap" ng-class="(dt.user1.isshop=='1')?'CPro':'CPerso'" ng-if="dt.user1.picto == '' " style="background-color: #254B78;line-height: 28px;padding: 2px 4px;width: 35px;height:35px;border-radius: 50%;text-align: center;">
+
+                <span class="initialMap"    style="color: #fff;line-height: 32px;border-radius: 50%;font-size: 15px;">{{ dt.user1.initiales}}</span>
+
+            </div>
+
+            <img ng-src="{{ dt.user1.picto  }}" ng-if="dt.user1.picto != '' " alt="" style="height: 30px;width: 30px;"> 
+
+
+
+            <div class="oneLine" style="line-height: 30px;padding-right: 5px;max-width:200px;margin-left: 6px;font-size: 12px;font-weight: bold;text-overflow: ellipsis;white-space: nowrap;overflow: hidden !important;">{{ dt.user1.fname}} {{ dt.user1.lname}}</div>
+
+        </div>
+
+    </custom-marker> 
+
+  <marker position="{{latlng1}}"  draggable="false"/>
+
+ 
+
+
+
+</ng-map> -->
+
+
+
+
+
+
+<script id="image-modal.html" type="text/ng-template">
+      <div class="modal image-modal transparent" ng-click="closeModal()">
+          <ion-pane class="transparent">
+             <img ng-src="{{imageSrc}}" on-hold="onHold( '{{imageSrc}}' )" class="fullscreen-image"/>
+          </ion-pane>
+      </div>
+</script>
+
+
+
+
+
+<!--<ion-infinite-scroll on-infinite="loadMore()" distance="1%"></ion-infinite-scroll>-->
+
+<!--</ion-infinite-scroll>-->
+
+</ion-content> 
+
+
+</ion-view>

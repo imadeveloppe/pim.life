@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta content="telephone=no" name="format-detection">
+    <title></title>
+
+
+    <!-- compiled css output -->
+    <link href="lib/ionic-rating-master/ionic-rating.css" rel="stylesheet">
+    <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="lib/sweetalert2/dist/sweetalert2.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyACunnNRX8tSlQkdgC6AJRlPL5WhRQxjL0"></script>
+    <!--navigateur-->
+    <!--AIzaSyBPAmpKyZb0KiI1sCVuPMycILSi-22DIJQ-->
+
+    <!--android-->
+    <!--AIzaSyACunnNRX8tSlQkdgC6AJRlPL5WhRQxjL0-->
+
+    <!--ios-->
+    <!--AIzaSyBtiLhULiA9o4ce3pHOcnKi87w5WXafW50-->
+
+
+
+
+    <!-- ionic/angularjs js -->
+    <!--<script src="lib/ionic/js/ionic.bundle.js"></script>-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>-->
+
+
+    <!--<script src="lib/ionic/js/ionic.js"></script>-->
+
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <script src="lib/sweetalert2/dist/sweetalert2.js"></script>
+    <script src="lib/ng-cordova.min.js"></script>
+    <!-- <script src="lib/angular-websocket/dist/angular-websocket.js"></script> -->
+    <!--<script src="lib/ngCordova/dist/ng-cordova.js"></script>-->
+    <!--     <script src="lib/ionic-service-core/ionic-core.js"></script>
+    <script src="lib/ionic-service-push/ionic-push.js"></script> -->
+    <script src="lib/ionic-rating-master/ionic-rating.min.js"></script>
+    <script src="lib/ng-map.js"></script>
+    <script src="lib/jquery-1.12.3.min.js"></script>
+    <script src="lib/crypt/sha1.js"></script>
+    <script src="lib/crypt/sha256.js"></script>
+
+    <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.js"></script>
+    <!--<script src="lib/ionic/ionic.bundle.js"></script>-->
+    <!--<script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.js"></script>-->
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+
+    <script src="js/controllers.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/constant.js"></script>
+    <script src="js/app.js"></script>
+</head>
+
+<body ng-app="pim" ng-controller="AppCtrl">
+    <!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--
+    <button class="button button-block button-dark" ng-click="identifyUser()">
+        Identify a user
+      </button>
+
+    <button class="button button-block button-positive" ng-click="pushRegister()">
+        Register for Push
+      </button>-->
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+
+
+    <script id="templates/sign-in.html" type="text/ng-template">
+        <ion-view class="signin" title="Sign In" hide-nav-bar="true" id="page6">
+            <ion-content padding="true" class="manual-ios-statusbar-padding">
+                <div class="spacer" style="width: 300px; height: 50px;"></div>
+                <form id="signin-form5" class="list " style="text-align:center;">
+                    <div class="margin4">
+                        <img src="img/g_logo.png" width="100%" height="auto" style="display: block; margin: auto;margin-top:10%;margin-bottom:10%;">
+                    </div>
+                    <div class="list list-inset padding" style="margin-top:10%;width:80%; margin:auto">
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">Email</span>
+                          <input type="text" placeholder="Email" ng-model="datalogin.username">
+                      </label>
+                        <label class="item item-input item-floating-label">
+                          <span class="input-label">Password</span>  
+                          <input type="password" placeholder="Password" ng-model="datalogin.password">
+                      </label>
+                    </div>
+
+                    <button class="button button-block button-positive" ng-click="login()" data-tap-disabled="true">Sign in</button>
+                    <div class="spacer" style="width: 20%; height: 10px;"></div>
+                    <a ui-sref="signup" class="signup" style="width: 100%;display: block;margin: auto;">Sign up for free</a>
+                </form>
+
+            </ion-content>
+            <a id="signin-markdown3" style="color:#F1F1F1;text-align:right;" class="signup tobuttomright" ui-sref="forgotpassword">Forgot your Password?</a>
+        </ion-view>
+    </script>
+    <script type="text/ng-template" id="bottom-sheet-grid-template.html">
+        <md-bottom-sheet class="md-grid" layout="column" ng-cloak>
+            <div layout="row" layout-align="center center">
+                <h4>Since <code>clickOutsideToClose = false</code>, drag down or press ESC to close</h4>
+            </div>
+            <div>
+                <md-list flex layout="row" layout-align="center center">
+                    <md-list-item ng-repeat="item in items">
+                        <div>
+                            <md-button class="md-grid-item-content" ng-click="listItemClick($index)">
+                                <md-icon md-svg-src="{{item.icon}}"></md-icon>
+                                <div class="md-grid-text"> {{ item.name }} </div>
+                            </md-button>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-bottom-sheet>
+    </script>
+</body>
+
+</html>

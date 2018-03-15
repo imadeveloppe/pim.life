@@ -1,0 +1,33 @@
+<ion-modal-view style="background: rgba(0, 0, 0, 0.8);"> 	 
+	<ion-content class="padding modalSelected" scroll="false"> 
+		 	
+		 	<div class="swal2-icon swal2-success animate" style="display: block;"><span class="line tip animate-success-tip"></span> <span class="line long animate-success-long"></span><div class="placeholder"></div> <div class="fix"></div></div>
+
+		 	<center>{{ 'detail_cause_popup_selected.text1' | translate }}</center><!-- Thank you for choosing us -->
+
+		 	<div ng-if="cause.socialNetworks.facebook.registred == 1 || cause.socialNetworks.twitter.registred == 1">
+		 		<center>{{ 'detail_cause_popup_selected.text2' | translate }}</center> <!-- Let your friends know about our cause -->
+
+			 	<center>
+			 		<md-icon md-svg-src="icons/facebook.svg"  
+	                         class="socialLinks facebook" 
+	                         ng-if="cause.socialNetworks.facebook.registred == 1"
+	                         ng-click="actionBtn('http', 'https://facebook.com/'+cause.socialNetworks.facebook.data.uid, 'null', 'null')"> 
+	                </md-icon>
+	                <md-icon 
+	                         md-svg-src="icons/twitter.svg"  
+	                         class="socialLinks twitter" 
+	                         ng-if="cause.socialNetworks.twitter.registred == 1"
+	                         ng-click="actionBtn('http', 'https://twitter.com/intent/user?user_id='+cause.socialNetworks.twitter.data.uid.split('|')[0], 'null', 'null')"> 
+	                </md-icon> 
+			 	</center>
+		 	</div>
+		 	
+
+		 	<center class="actionBtn">
+		 		<button class="button button-large button-positive" ng-click="gotoHome()">{{ 'detail_cause_popup_selected.home' | translate }}</button> <!-- Home -->
+		 		<button class="button button-large button-positive close" ng-click="ModalSelected.hide()">{{ 'detail_cause_popup_selected.close' | translate }}</button> <!-- Close -->
+		 	</center>
+
+	</ion-content> 
+</ion-modal-view>

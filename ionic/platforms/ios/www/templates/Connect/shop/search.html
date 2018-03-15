@@ -1,0 +1,69 @@
+<ion-view view-title="Shop" can-swipe-back="false"  hide-nav-bar="true"  hide-back-button="true" id="shop-search">  
+
+    <ion-content scroll="false">  
+        <div class="page-search-shop">
+            <div class="block-search hide-map padding">    
+
+                <div class="bar-search">
+                    <div class="bar item-input-inset"> 
+                      <label class="item-input-wrapper"> 
+                        <input type="search" placeholder="{{ 'shop_search.search' | translate }}" name="searchInput" id="searchInputShop" ng-model="data.searchInput" ng-change="search()" >
+                        <ion-spinner ng-show="searchProgress" icon="ios-small"></ion-spinner>
+                      </label>
+                      <button class="button button-clear icon-loop" ng-click="search()">
+                        <i class="ion-android-search dark" ></i>
+                      </button>
+                    </div> 
+                </div> 
+                <div class="BarFixedTopResult">
+                  <ion-scroll direction="x" scrollbar-x="false" class="ion-scroll-Cat">
+                      <div class="chipsCat" ng-if="chipCats.length > 0" style="height: 33px;">
+                          <div class="chipCat" ng-repeat="cat in chipCats">
+                              {{ cat }}
+                              <button class="button button-clear" ng-click="RemoveCategory(cat)">
+                                  <i class="ion-ios-close-outline closeChipCat"></i>
+                              </button> 
+                          </div>  
+                      </div>
+                    </ion-scroll> 
+                    
+
+                </div>
+                <ion-scroll on-scroll="OnscrollingResult()" delegate-handle="result" direction="y" class="result">
+ 
+                    <div class="list padding" style="padding-bottom: 57px;padding-top: 1px;"> 
+                      
+                        <div ng-repeat="(key, item) in results.shops" ui-sref="tab.profile-shop({idShop : item.objectID})" class="item item-avatar">
+                          <img ng-src="{{ item.logo }}" ng-if="item.logo != ''">
+                          <div class="initiales"  ng-if="item.logo == ''">
+                              {{ item.initiales }}
+                          </div>
+                          <h2>{{ item.brandname }}</h2> 
+                          <ul  ng-if="item.stars != null" class="rating ng-valid ng-not-empty ng-dirty ng-valid-parse" > 
+                              <li ng-repeat="(key, value) in [1,2,3,4,5]"> 
+                                  <i class="" ng-class="{'ion-ios-star':item.stars >= value,'ion-ios-star-outline':item.stars  < value }"></i> 
+                              </li>  
+                          </ul>
+                          <span class="distanse" ng-if="item._rankingInfo.matchedGeoLocation.distance < 1000">
+                              {{ twoDigitAfterCama(item._rankingInfo.matchedGeoLocation.distance) }}m
+                          </span>
+                          <span class="distanse" ng-if="item._rankingInfo.matchedGeoLocation.distance >= 1000">
+                              {{ twoDigitAfterCama(item._rankingInfo.matchedGeoLocation.distance / 1000) }}Km
+                          </span>
+                        </div>  
+
+
+                        <div class="LoadingMoreShops" ng-hide="!LoadingMoreShops">
+                          <ion-spinner icon="ios-small"></ion-spinner> 
+                        </div> 
+                        
+                    </div> 
+
+                </ion-scroll> 
+
+            </div> 
+        </div>
+           
+    </ion-content>  
+    <button class="button filter-list" ng-click="showCategories()"> <i class="icon ion-android-options"></i></button>
+</ion-view>  

@@ -1,0 +1,37 @@
+<ion-view view-title="Notifications"  hide-nav-bar="true" hide-back-button='false' can-swipe-back="false" id="pageNotifications" style="background: #fff;">
+     
+    <ion-content class="inHome page-notification">
+
+
+        <ion-refresher spinner="android" pulling-icon="ion-arrow-down-b" pulling-text="{{ 'transaction_list.pull_to_refresh' | translate }}" on-refresh="RefreshNotifs()"></ion-refresher>
+        <div class="list shopping" >
+ 
+            <ion-list> 
+              <ion-item ng-repeat="(key, notif) in notifsList"  ng-click="OpenNotif(notif)"  class="item item-avatar" ng-class="(notif.statut=='0' || notif.statut=='1')?'NotifNonLu':''">
+                <div class="BadgeNotifList" ng-if="notif.picto == ''"  style="left: 13px;">
+                    <span class="initialTransfer Raduis"  style="background-color:{{ notif.color }};" >
+                        {{ notif.initiales}}
+                    </span>
+                    <!-- ng-class="(notif.isshop=='1')?'CPro':'CPerso'" -->
+                </div>
+                <img ng-src="{{ notif.picto }}"  ng-if="notif.picto != '' ">
+                <h2>{{ notif.title }}</h2>
+                <p>{{ notif.text }}</p>
+                <span class="notifDate">{{ notif.date }}</span>
+                <span ng-class="((notif.option | num) < 0)?'sub-sold':''" class="notifOption">{{ notif.option }} </span>
+
+                <ion-option-button class="button-assertive" ng-click="DeleteNotification(key)" >
+                {{ 'notification_list.delete' | translate }}
+                </ion-option-button>
+              </ion-item> 
+
+            </ion-list> 
+
+            <p ng-if="notifsList.length ==  0" class="list card border-rounded" style="text-align: center;padding: 20px;background: #ffc602;box-shadow: none;">
+                {{ 'notification_list.no_notification_found' | translate }}
+            </p> 
+            
+        </div>
+        <ion-infinite-scroll ng-if="canLoadMore() && notifsList.length >  0" spinner="android" distance="5%" on-infinite="loadMore()"></ion-infinite-scroll>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,130 @@
+
+
+<ion-view title="Settings" id="pageSetting"  hide-nav-bar="true" hide-back-button='true' ng-controller="SettingsCtrl as vm" can-swipe-back="false">
+    <ion-content padding="false" class="settings">
+        <form id="settings-form1" class="list inSettigs">
+            <ion-list id="settings-list1" class=" ">
+                <ion-item class="item-divider " id="FirstItemInsetting">{{ 'settings.personal_informations' | translate }}</ion-item>
+                <div id="progressdiv" style="width: 100%;display: inline-flex;background-color: white;">
+                    <!-- <progress id="progressbar" max="100" value="{{ progressval }}" style="width: 80%;"> </progress> -->
+                    <div id="progressbar" style="width: 80%;margin: 12px 8px 12px 14px;background: #264f7c;border-radius: 10px;overflow: hidden;">
+                        <div style="width: {{ progressval }}%;height: 20px;background: rgb(239, 127, 49);"></div>
+                    </div>
+                    <div id="progressbarlabel" style="width: 15%;margin: 12px auto;color: #254e7b;">{{ progressval }} %</div>
+                </div>
+                <ion-item class="profile item-avatar item-icon-right item item-complex" type="item-text-wrap" ui-sref="tab.PesonnalInformation" style="padding:0;">
+                    <!-- <img image-lazy-src="{{  data.picto_small }}" class="setting" image-lazy-loader="android" > -->
+                    <!-- <img image-lazy-src="{{  data.picto_50  }}" class="setting" image-lazy-loader="android" image-lazy-distance-from-bottom-to-load="-200"> -->
+                    <div class="BadgeSettings"  ng-if="data.picto_small == ''">
+                        <span class="initialBadgeSettings">{{ data.initiales }}</span>
+                    </div>
+                    <img ng-src="{{ data.picto_small }}" ng-if="data.picto_small != ''" style="box-shadow: 0 0 3px #ddd;">
+                    <h2 class="">{{ data.sexe }}. {{ data.fname }} {{ data.lname }}</h2>
+                    <p class="ng-binding" ng-if="selectedLang == 'fr'">{{ data.birth | date:"dd/MM/yyyy" }}</p>
+                    <p class="ng-binding" ng-if="selectedLang == 'en'">{{ data.birth | date:"MM/dd/yyyy" }}</p>
+                    <i ng-if="UserDetails.logsPhoto.userlname.confirmed == -1 || UserDetails.logsPhoto.userlname.confirmed == 2" class="icon ion-alert documentRequired assertive"></i>
+                    <i ng-if="UserDetails.logsPhoto.userlname.confirmed == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+                    <i ng-if="UserDetails.logsPhoto.userlname.confirmed == 1" class="icon ion-android-checkmark-circle positive"></i>
+                </ion-item> 
+                <ion-item ng-repeat="l in listSettings.PersonalInfos | startFrom : 1" class="item-icon-left item-icon-right" ui-sref="{{ l.state }}">
+                    <i class="icon {{ l.icon }}"></i>{{ l.text }}
+                    <i ng-if="l.valid == -1 || l.valid == 2" class="icon ion-alert documentRequired assertive"></i>
+                    <i ng-if="l.valid == 0" class="icon ion-load-d documentRequired assertive" style="font-size: 34px;"></i> 
+                    <i ng-if="l.valid == 1" class="icon ion-android-checkmark-circle positive"></i>  
+                </ion-item>
+                <ion-item class="item-icon-left item-icon-right">
+                    <i class="icon ion-android-checkbox-outline"></i>{{ 'settings.final_validation' | translate }}
+                    <i ng-if="treezorid == 1" class="icon ion-android-checkmark-circle positive"></i>
+                    <i ng-if="treezorid != 1" class="icon ion-alert documentRequired assertive"></i>
+                </ion-item>
+            </ion-list>
+            <ion-list id="settings-list9" class=" ">
+                <ion-item class="item-divider " id="settings-list-item-divider4">{{ 'settings.security' | translate }}</ion-item>
+                <ion-item ng-repeat="l in listSettings.Security" class="item-icon-left" ui-sref="{{ l.state }}">
+                    <i class="icon {{ l.icon }}"></i>{{ 'settings.'+l.slug | translate }}  
+                </ion-item>
+
+                <ion-item class="item-icon-left" ui-sref="tab.changeLockCode">
+                    <i class="icon ion-lock-combination"></i>{{ 'settings.lock_code' | translate }}
+                </ion-item>
+
+                <ion-item class="item-icon-left item-toggle" ng-if="CheckedTouchID">
+                    <img src="img/touch-id-icon.jpeg" class="toucheId">
+                      {{ 'settings.touch_id' | translate }}
+                    <label class="toggle toggle-positive">
+                       <input type="checkbox" ng-model="touchID.value"  ng-change="stateTouchID()" ng-checked="touchID.value">
+                       <div class="track">
+                         <div class="handle"></div>
+                       </div>
+                    </label>
+                </ion-item>
+            </ion-list>
+            <ion-list>
+                <ion-item class="item-divider " id="settings-list-item-divider3">{{ 'settings.social_networks' | translate }}</ion-item>
+                <ion-item class="item-icon-left" ng-class="{'item-icon-right':UserDetails.socialNetworks.facebook.registred == 1}" ui-sref="tab.facebook"> 
+                    <i class="icon ion-social-facebook"></i>{{ 'settings.facebook' | translate }}
+                    <i ng-if="UserDetails.socialNetworks.facebook.registred == 1" class="icon ion-android-checkmark-circle positive"></i>
+                </ion-item>
+                <ion-item class="item-icon-left" ng-class="{'item-icon-right':UserDetails.socialNetworks.twitter.registred == 1}" ui-sref="tab.twitter">
+                    <i class="icon ion-social-twitter"></i>{{ 'settings.twitter' | translate }}
+                    <i ng-if="UserDetails.socialNetworks.twitter.registred == 1" class="icon ion-android-checkmark-circle positive"></i>
+                </ion-item>
+            </ion-list>
+            <ion-list>
+                <ion-item class="item-divider " id="settings-list-item-divider3">{{ 'settings.payment' | translate }}</ion-item> 
+                <ion-item class="item-icon-left " ui-sref="tab.bankStatement">
+                    <img src="img/new-home/icon-bankstatment.png" class="bankStatementIcon">
+                    {{ 'settings.bank_statement' | translate }}
+                </ion-item>
+                <ion-item class="item-icon-left" ui-sref="tab.cgv_perso({isshop: 0})">
+                    <i class="icon ion-document-text"></i>{{ 'settings.cgv' | translate }}
+                </ion-item>
+            </ion-list>
+
+            <ion-list ng-if="langs.length > 1">
+                <ion-item class="item-divider " id="settings-list-item-divider3">{{ 'settings.languages' | translate }}</ion-item> 
+                <ion-item  ng-repeat="lang in langs" ng-if=" lang.key == selectedLang " class="item-icon-left " ui-sref="tab.language">
+                    <i class="icon flag  flag-icon-{{ lang.key }}"></i>  {{ lang.label }}
+                </ion-item>
+            </ion-list>
+
+            <ion-list id="myAccounts"> 
+                <ion-item class="item-divider" id="settings-list-item-divider3">{{ 'settings.my_profiles' | translate }}</ion-item>
+
+                <ion-item ng-click="switch(user.id, user.isshop)" ng-if=" userInfos.id != user.id || userInfos.isshop != user.isshop " ng-repeat="user in connectedUsers"  class="item-icon-left item-icon-right connectedUsers" data-tap-disabled="true">
+                    <img ng-src="{{ user.picto }}" ng-if=" user.picto != '' ">
+                    <span ng-if=" user.picto == '' " class="initiales" ng-class="{'isshop': user.isshop >= 1}">{{ user.initiales }}</span>
+                    {{ user.name }}
+                    <p>{{ user.email }}</p>
+                    <span ng-if="user.NbrNotifNonVu > 0" class="badge badge-assertive">{{ user.NbrNotifNonVu }}</span>
+                    <ion-option-button class="button-assertive" ng-click="unlink(user.id, user.isshop)" >
+                        {{ 'settings.unlink' | translate }}
+                    </ion-option-button>
+                </ion-item>  
+
+                <ion-item class="item-icon-left" id="settings-list-item19" ui-sref="tab.addprofile" data-tap-disabled="true">
+                    <i class="icon ion-android-person-add"></i> {{ 'settings.link_another_profil_to_my_phone' | translate }}
+                </ion-item> 
+                 
+            </ion-list>
+
+            <ion-list id="settings-list10" class=" ">
+                <ion-item class="item-divider" id="settings-list-item-divider3">{{ 'settings.account' | translate }}</ion-item>
+                
+                <ion-item class="item-icon-left  " id="settings-list-item19" ng-click="GoLogout()" data-tap-disabled="true">
+                    <i class="icon ion-power"></i>{{ 'settings.log_out' | translate }}
+                </ion-item> 
+                <ion-item class="item-icon-left  " id="settings-list-item19" ui-sref="tab.DeleteProfil" style="color:red;">
+                    <i class="icon ion-ios-trash-outline"></i>{{ 'settings.delete_profile' | translate }}
+                </ion-item>
+            </ion-list>
+            <ion-list ng-if="Appinfo.version != '' ">
+                <ion-item class="item-divider" id="settings-list-item-divider3">Application</ion-item>   
+                <ion-item class="item-icon-left">
+                    <img ng-src="{{ Appinfo.logo }}" style="position: absolute;left: 10px;top: 10px;width: 30px;"> Version: {{ Appinfo.version }}
+                </ion-item>
+            </ion-list>
+        </form>
+    </ion-content>
+</ion-view>
+

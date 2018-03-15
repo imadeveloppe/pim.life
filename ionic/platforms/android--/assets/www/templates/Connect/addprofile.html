@@ -1,0 +1,39 @@
+<ion-view title="{{ 'setting_pro.link_another_profil_to_my_phone' | translate }}" hide-nav-bar="false" hide-back-button="false" id="page-login" class="page-addprofile" can-swipe-back="false" style="background: #254e7b"> 
+        
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+
+    <ion-content padding="true" class="manual-ios-statusbar-padding bord" > 
+        <img src="img/g_logo.png" style="margin-top: 60px;"> 
+        <div class="block2">
+            <form class="formAddprofile" style="background: rgb(255, 255, 255); border-radius: 10px; padding: 8px 0 0; margin-top: 20px;">
+                 
+                <div style="width: 90%;"> 
+                    <span class="icon"><i class="icon ion-ios-email"></i></span>
+                    <span ng-if="datalogin.username.length != ''" ng-click="datalogin.username=''" class="button-clear emptyInput">
+                        <i class="icon ion-ios-close"></i>
+                    </span> 
+                    <input type="email" placeholder="{{ 'sign_in.email' | translate }}" class="changeEmail" ng-model="datalogin.username" ng-focus="cordova.plugins.Keyboard.close();"  />
+                    
+                </div>
+                <div style="width: 90%;margin-top: 20px;">
+                    <span class="icon"><i class="icon ion-ios-locked"></i></span>
+                    <span ng-if="datalogin.password.length != ''" ng-click="datalogin.password=''" class="button-clear emptyInput">
+                        <i class="icon ion-ios-close"></i>
+                    </span> 
+                    <input type="password" placeholder="{{ 'sign_in.pwd' | translate }}" ng-model="datalogin.password" /> 
+                    
+                </div>
+                <button ng-click="login()" class="login-btn" style="margin-top: 32px;">{{ 'sign_in.ConnectButton' | translate }}</button>
+            </form>
+             
+              
+        </div>  
+
+    </ion-content>
+
+</ion-view>

@@ -1,0 +1,39 @@
+<ion-view title="{{ Title }}" id="page5" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inSettigs" ng-show="loader" ng-class="{'uploadCover':pageCover}">
+
+
+            <p class="NotMessage">{{Message}}</p> 
+
+            <div class="list card profileCard">
+                <div class="continnerPhotoUploaded">
+                    <img  ng-if="imgURI!=''" ng-src="{{imgURI}}" >
+                    <img  ng-if="imgURI==''" ng-src="img/nophoto.png" >
+                </div>  
+                 
+                <div class="profileCardButtons">
+
+                    <button ng-if="imgURI!=''"  ng-click="removePhoto()" class="button button-assertive removeBTN">
+                        <i class="icon ion-trash-a"></i>
+                    </button>
+                    <button ng-if="imgURI!='' && !isOldImage" ng-click="send()" class="button button-positive saveBTN">
+                       {{ 'upload_profile_photo.save' | translate }}
+                    </button>
+                    <button ng-if="imgURI!=''"  ng-click="other()" class="button button-energized editBTN">
+                        <i class="icon ion-edit"></i>
+                    </button>
+
+                    <button ng-if="imgURI=='' && showtake" ng-click="choseAction()" class="button button-positive addBTN">
+                        <i class="icon ion-plus-round"></i>
+                    </button>
+
+                </div> 
+            </div> 
+   
+    </ion-content>
+</ion-view>

@@ -1,0 +1,193 @@
+<ion-view view-title="{{ 'settings.bank_statement' | translate }}" can-swipe-back="false" id="pageBankStatement">  
+
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    
+    <ion-content class="trans ContentStats"> 
+        <div style="width:100%;">
+            <ion-slide-box on-slide-changed="trans.selectedAccount = ($index);accountChange()" active-slide="trans.selectedAccount">
+                <ion-slide ng-repeat="account in accounts">
+                    <div class="list card border-rounded homev2 {{ account.cssClass }}"  style="margin-top:11px;">
+                        <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
+                            <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
+                            <h2positive  class="oneLine">{{ account.name }}</h2positive>
+                            <p style="white-space:normal;">{{ ibanMask(account.number) }}</p>
+                        </ion-item>
+                        <div class="item item-body " id="home-list-item-container2">
+                            <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;" class=" ">
+                                <strong>{{ account.solde }}</strong> {{devise}}</p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+             
+            <div class="list padding" ng-if="list.length > 0" padding-top: 0;> 
+                <a class="item item-icon-left" ng-click="ShooseAction( item.month, item.year )" ng-repeat="item in list"> 
+                    <i class="icon ion-document-text"></i>
+                    {{ 'bank_statement.bank_statement_list' | translate }} {{ item.title }}
+                </a>   
+            </div>
+            <p ng-if="list.length == 0" class="list card border-rounded" style="text-align: center; padding: 20px; background: rgb(255, 198, 2) none repeat scroll 0% 0%; box-shadow: none;"> 
+               {{ 'bank_statement.no_data' | translate }}
+
+            </p>
+        </div>   
+        <div id="pdfpagestatement" style="background: #fff; display: none;" >  
+            <!-- <html>
+            <head> -->
+              <meta charset="utf-8">
+              <meta name="format-detection" content="telephone=no" /> 
+              <!-- <title></title>
+            </head>
+            <body> -->
+                <div class="pdfwrapper" id="pdfwrapper" style="width: 1000px;margin: 0 auto; padding: 20px; font-family: arial">
+                  <div class="pdfhead" style="font-size: 18px;line-height: 30px">
+                    <div class="pdflogo">
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    <img ng-src="{{ BASE64_LOGOS.pim }}" style="width: 100px; margin-bottom: 30px;">
+                                </td> 
+                            </tr>
+                        </table> 
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div style="width: 600px; float:left;margin-top: 0;">
+                      <h1 style="margin: 0;  font-size: 25px; font-weight: bold">
+                        {{ 'bank_statement_pdf.your_bank_statement' | translate }}
+                      </h1>
+                      <table>
+                        <tr>
+                          <td style="height: 45px"></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>{{ 'bank_statement_pdf.account_n' | translate }}</td>
+                          <td>{{ principalAccount.number }}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">{{ 'bank_statement_pdf.bic' | translate }} : {{ principalAccount.bic }}</td> 
+                        </tr>
+                        <tr>
+                          <td>{{ 'bank_statement_pdf.porte_monnaie' | translate }}</td>
+                          <td>{{accounts[trans.selectedAccount].name}}</td>
+                          <!-- <td>{{ principalAccount.name }}<span ng-if="principalAccount.id != accounts[trans.selectedAccount].id" > # {{accounts[trans.selectedAccount].name}}</span></td> -->
+                        </tr>
+                        <tr>
+                          <td style="height: 45px"></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>{{ 'bank_statement_pdf.releve_n' | translate }}</td>
+                          <td>{{ thisMonth }}-{{ thisYear }}</td>
+                        </tr>
+                        <tr>
+                          <td style="width: 200px">{{ 'bank_statement_pdf.period' | translate }}</td>
+                          <td ng-if="currentLang == 'en'" style="white-space: pre-wrap;">{{ 'bank_statement_pdf.from_to' | translate:{dateStart:thisMonth+'.01.'+thisYear ,dateEnd: thisMonth+'.'+EndDay+'.'+thisYear} }}</td>
+                          <td ng-if="currentLang == 'fr'" style="white-space: pre-wrap;">{{ 'bank_statement_pdf.from_to' | translate:{dateStart:'01.'+thisMonth+'.'+thisYear ,dateEnd: EndDay+'.'+thisMonth+'.'+thisYear} }}</td>
+                        </tr>
+                      </table> 
+                    </div>
+                    <div class="pdfInfoClient" style="width: 250px;float: right;margin-top: 60px;" >
+                       {{ user }} <br>
+                       {{ adress }}<br>
+                       {{ zipcode }} {{ city }} - {{ country }}
+                    </div>
+                    <div style="clear:both;"></div> 
+                  </div>
+                  <div class="pdfcontent" style="min-height: 1060px; margin-top: 50px;">  
+
+                    <p style="margin-top: 40px">
+                       <strong>  </strong>
+                    </p>
+
+                    <table style="width: 100%; margin-top: 15px;" cellpadding="0" cellspacing="0">
+                        <thead>
+                          <tr>
+                            <th style="text-align: left;font-size: 20px;font-weight: bold; border-bottom: 2px solid #000; padding-left: 10px">
+                                {{ 'bank_statement_pdf.date' | translate }}
+                            </th>
+                            <th style="text-align: left;font-size: 20px;font-weight: bold; border-bottom: 2px solid #000">
+                                {{ 'bank_statement_pdf.ref' | translate }}
+                            </th>
+                            <th style="text-align: left;font-size: 20px;font-weight: bold; border-bottom: 2px solid #000">
+                                {{ 'bank_statement_pdf.fromto' | translate }}
+                            </th>
+                            <th style="text-align: left;font-size: 20px;font-weight: bold; border-bottom: 2px solid #000">
+                                {{ 'bank_statement_pdf.reason' | translate }}
+                            </th>
+                            <th style="text-align: right;font-size: 20px;font-weight: bold; border-bottom: 2px solid #000">
+                                {{ 'bank_statement_pdf.debit' | translate }} ({{ devis }})
+                            </th>
+                            <th style="text-align: right;font-size: 20px;font-weight: bold; border-bottom: 2px solid #000; padding-right: 10px">
+                                {{ 'bank_statement_pdf.credit' | translate }} ({{ devis }})
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody style="font-size: 17px;line-height: 20px;">
+                            <tr style="background: #e8e8e8;">
+                              <td style="padding: 5px 0;border-bottom: 2px solid #000;font-size: 20px; text-align: right;font-weight: bold" colspan="5">{{ 'bank_statement_pdf.beginning_balance' | translate }}</td> 
+                              <td style="padding: 5px 0;border-bottom: 2px solid #000;font-size: 20px; text-align: right; padding-right: 10px"><strong>{{ SoldeDepartPeriod }}</strong></td>
+                            </tr> 
+                            <tr ng-repeat="(index, Trans) in Transactions" style="{{ (index % 2 == 1) ? 'background:#e8e8e8' : ''}}">
+                              <td style="padding: 5px 0;padding-left: 10px">{{ Trans.date }}</td>
+                              <td style="padding: 5px 0;">{{ Trans.ref }}</td>
+                              <td style="padding: 5px 0;">{{ Trans.user }}</td>
+                              <td style="padding: 5px 0;">{{ Trans.raison }}</td>
+                              <td style="padding: 5px 0;text-align: right;">{{ Trans.debit }}</td>
+                              <td style="padding: 5px 0;text-align: right; padding-right: 10px">{{ Trans.credit }}</td>
+                            </tr> 
+                            <tr ng-if="Transactions.length % 2 == 0">
+                                <td colspan="6">&nbsp;</td>
+                            </tr>
+                            <tr style="background: #e8e8e8;">
+                                <td colspan="6">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">&nbsp;</td>
+                            </tr> 
+                            <tr style="background: #e8e8e8;">
+                                <td colspan="6">&nbsp;</td>
+                            </tr> 
+                            <tr> 
+                              <td colspan="4" style="padding: 5px 0;text-align: right;border-bottom: 2px solid #000; border-top: 2px solid #000;">
+                                {{ 'bank_statement_pdf.total' | translate }}
+                              </td>
+                              <td style="padding: 5px 0; text-align: right;border-bottom: 2px solid #000; border-top: 2px solid #000;">{{ Debit }}</td>
+                              <td style="padding: 5px 0; text-align: right; padding-right: 10px;border-bottom: 2px solid #000; border-top: 2px solid #000;">{{ Credit }}</td>
+                            </tr> 
+                            <tr style="background: #e8e8e8"> 
+                              <td colspan="5" style="padding: 5px 0; text-align: right;border-bottom: 2px solid #000;">
+                                <strong>{{ 'bank_statement_pdf.total_end_of_period' | translate }}</strong>
+                              </td>
+                              <td style="padding: 5px 0;text-align: right; padding-right: 10px;border-bottom: 2px solid #000;"><strong>{{ SoldeEndPeriod }}</strong></td> 
+                            </tr> 
+                        </tbody>
+                      </table> 
+                      <div ng-if="commissions.length > 0">
+                        <div style="height: 50px;"></div>
+                        <div style="display: inline-block;border:2px solid #000;padding: 5px 10px;font-weight:bold; font-size: 18px">{{ 'bank_statement_pdf.commissions' | translate }} xx.xx {{devise}}</div>
+                      </div>
+                  </div>
+                  <div class="pdffooter" style="text-align: center; margin-top: 40px">
+                    <p style="font-size: 15px;">{{ 'bank_statement_pdf.info_pim' | translate }}</p> 
+                    <table style="text-align: left;">
+                        <tr>
+                            <td style="width: 100px;vertical-align: middle;"">
+                                <img ng-src="{{ BASE64_LOGOS.treezor }}" width="90">
+                            </td>
+                            <td style="line-height: 15px;font-size: 10px;vertical-align: middle;">{{ 'bank_statement_pdf.footer_page' | translate }}</td>
+                        </tr>
+                    </table>
+                  </div>
+                </div>
+              </div> 
+            <!-- </body>
+            </html> -->
+        </div>
+    </ion-content>
+</ion-view>  

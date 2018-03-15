@@ -1,0 +1,49 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="{{chat.name}}">
+    <ion-content class="padding">
+        <!--<img ng-src="{{chat.face}}" style="width: 64px; height: 64px">
+        <p>
+            {{chat.lastText}}
+        </p>-->
+
+        <div class="list card">
+
+            <div class="item item-avatar">
+                <img ng-src="{{chat.face}}">
+                <h2>{{chat.name}}</h2>
+                <p>{{chat.lastText}}</p>
+            </div>
+
+            <div class="item item-body">
+                <div class="list">
+                    <label class="item item-input">
+                      <span class="input-label" style="width: 20%;">Name :</span>
+                      <input type="text" value="kkjhkjhk" style="background-color:#fff;" disabled>
+                    </label>
+                    <label class="item item-input">
+                      <span class="input-label" style="width: 20%;">Name :</span>
+                      <input type="text" value="kkjhkjhk" style="background-color:#fff;" disabled>
+                    </label>
+                    <label class="item item-input">
+                      <span class="input-label" style="width: 20%;">Name :</span>
+                      <input type="text" value="kkjhkjhk" style="background-color:#fff;" disabled>
+                    </label>
+                    <label class="item item-input">
+                      <span class="input-label" style="width: 20%;">Name :</span>
+                      <input type="text" value="kkjhkjhk" style="background-color:#fff;" disabled>
+                    </label>
+                </div>
+                <p>
+                    <a href="#" class="subdued">1 some text</a>
+                    <a href="#" class="subdued">5 todo some link</a>
+                </p>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

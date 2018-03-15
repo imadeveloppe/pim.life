@@ -1,0 +1,29 @@
+<ion-modal-view style="background: rgba(0, 0, 0, 0.8);"> 	 
+	<ion-content class="modalSelect" scroll="false"> 
+		<div class="buttonClose" ng-click="ModalSelect.hide()">
+			<button class="button button-clear" style="position: relative;top: 8px;"><i class="icon ion-ios-close-empty"></i></button>
+		</div>
+
+		<center class="idea">
+			<img src="img/idea.png">
+		</center>
+
+		<center>
+			<p>
+				{{ 'detail_cause_popup_info.info' | translate }}
+			</p>
+		</center>
+
+		<div class="padding flech" style="text-align: right;">
+			<img src="img/flech-detail-cause.png">
+		</div>
+		
+
+		<div class="padding dontShow" ng-click="dontShow()">
+			<i class="icon ion-android-checkbox-outline-blank" ng-if="!dontShowPopupCause"></i> 
+			<i class="icon ion-android-checkbox-outline" ng-if="dontShowPopupCause"></i> 
+			{{ 'detail_cause_popup_info.do_not_show' | translate }}
+		</div>
+
+	</ion-content> 
+</ion-modal-view>

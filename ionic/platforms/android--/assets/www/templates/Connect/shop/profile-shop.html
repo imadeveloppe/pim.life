@@ -1,0 +1,171 @@
+<ion-view view-title="Profile Shop" can-swipe-back="false"   hide-back-button="true" id="profile-shop" hide-nav-bar="true" > 
+    
+<ion-content on-scroll="scrolingOnPage()"  delegate-handle="mainScroll" class="profile-shop">
+
+        <div class="block-info" ng-class="{'hasRating':currentShop.stars > 0}"> 
+
+            <div class="cover"> 
+            <div style="max-height: 170px;overflow: hidden;">
+                <img ng-src="{{currentShop.cover}}" class="img-cover" ng-if="currentShop.cover != ''">
+                <img ng-src="img/default-cover.png" class="img-cover" ng-if="currentShop.cover == ''">
+            </div>
+                
+                
+                <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button custom-back-button back-button buttons  button-clear header-item" style="position: absolute;"><i class="icon ion-ios-arrow-left"></i> {{ 'global_fields.back' | translate }}</button> 
+
+                <div class="info-shop">
+                    <div class="logo-shop">
+                        <img ng-if="currentShop.logo != '' " ng-src="{{ currentShop.logo }}">
+                        <div ng-if="currentShop.logo == '' " class="initiales">
+                            {{ currentShop.initiales }}
+                        </div>
+                    </div>
+                    <h3 class="oneLine">{{ currentShop.brandname }}</h3> 
+                    <!-- <img ng-if="currentShop.stars > 0" src="img/star{{ currentShop.stars }}.png" class="img-starts"> -->
+                    <ul ng-if="currentShop.stars > 0" class="rating ng-valid ng-not-empty ng-dirty ng-valid-parse" > 
+                        <li ng-repeat="(key, value) in [1,2,3,4,5]"> 
+                            <i class="" ng-class="{'ion-ios-star':currentShop.stars >= value,'ion-ios-star-outline':currentShop.stars  < value }"></i> 
+                        </li>  
+                    </ul>
+                </div>  
+                <strong class="distanse" ng-if="currentShop._rankingInfo.matchedGeoLocation.distance < 1000">
+                    {{ twoDigitAfterCama(currentShop._rankingInfo.matchedGeoLocation.distance) }}m
+                </strong>
+                <strong class="distanse" ng-if="currentShop._rankingInfo.matchedGeoLocation.distance >= 1000">
+                    {{ twoDigitAfterCama(currentShop._rankingInfo.matchedGeoLocation.distance / 1000) }}Km
+                </strong>
+            </div>
+            <div ng-show="LoadingMoreInfo" style="position: absolute;width: 100%;top: 257px;text-align: center;">
+                <ion-spinner icon="ios-small"></ion-spinner> 
+            </div>
+            <div class="description-shop" ng-show="!LoadingMoreInfo">
+                <p>
+                <!-- <p class="animate-show" ng-if="!Onscrolling"> -->
+                {{ data.infos.desc }}
+                </p>
+                <div class="btns-shop">
+                    <button ng-click="choseMapsService( currentShop._geoloc.lat, currentShop._geoloc.lng, currentShop.brandname )" class="button button-large button-energized">
+                      {{ 'shop_detail.show_itinerary' | translate }}
+                    </button>
+                    <div ng-if="data.comments.length > 0">
+                        <strong ng-if="!showFullinfo"  ng-click="showMoreInfo(showFullinfo)"> 
+                        {{ 'shop_detail.show_full_info' | translate }}
+                        </strong>
+                        <strong ng-if="showFullinfo" ng-click="showMoreInfo(showFullinfo)">
+                            {{ 'shop_detail.hide_info' | translate }}
+                        </strong>
+                    </div>
+                    
+                </div>
+            </div> 
+            <div class="info-magazin" ng-show="showFullinfo">
+                <div class="magazin-categories" ng-if="currentShop.scatname != ''">
+                    <h3>{{ 'shop_detail.category' | translate }}</h3>
+                    <div class="liste-categories">
+                        <span class="item-categorie">{{ currentShop.catname }} - {{ currentShop.scatname }}</span>
+                    </div>
+                </div>
+
+                <ion-list show-delete="shouldShowDelete">
+                  <ion-item ng-if="data.infos.shopfullAddress != ''" class="item item-icon-left" ng-click="actionBtn( 'geo', currentShop._geoloc.lat, currentShop._geoloc.lng, currentShop.brandname )"> 
+                    <i class="icon ion-ios-location"></i>
+                    {{ data.infos.shopfullAddress }}
+                    <!-- <ion-option-button class="button-calm" ng-click="actionBtn( 'geo', currentShop._geoloc.lat, currentShop._geoloc.lng, currentShop.brandname )" >
+                        View on map
+                    </ion-option-button> -->
+                  </ion-item>
+
+                  <ion-item ng-if="data.infos.shopfullAddress == ''"  class="item item-icon-left" ng-click="actionBtn( 'geo', currentShop._geoloc.lat, currentShop._geoloc.lng, currentShop.brandname )"> 
+                    <i class="icon ion-ios-location"></i>
+                    {{ data.infos.shopline1 }}, {{ data.infos.shopcity }}, {{ data.infos.shopcountry }}
+                    <!-- <ion-option-button class="button-calm" ng-click="actionBtn( 'geo', currentShop._geoloc.lat, currentShop._geoloc.lng, currentShop.brandname )" >
+                        View on map
+                    </ion-option-button> -->
+                  </ion-item>
+
+                  <ion-item class="item item-icon-left" ng-click="actionBtn('tel', data.infos.shopIndicatif+data.infos.shopphone, 'null', 'null')"> 
+                    <i class="icon ion-ios-telephone"></i>
+                    ({{ data.infos.shopIndicatif }}) {{ data.infos.shopphone }}
+                    <!-- <ion-option-button class="button-balanced" ng-click="actionBtn('tel', data.infos.shopIndicatif+data.infos.shopphone, 'null', 'null')" >
+                        Call
+                    </ion-option-button> -->
+                  </ion-item>
+
+                 <!--  <ion-item class="item item-icon-left" ng-click="actionBtn('tel', data.infos.hqIndicatif+data.infos.hqphone)"> 
+                    <i class="icon ion-ios-telephone"></i>
+                    {{ data.infos.hqIndicatif }}{{ data.infos.hqphone }}
+                    <ion-option-button class="button-balanced" ng-click="actionBtn('tel', data.infos.hqIndicatif+data.infos.hqphone)" >
+                        Call
+                    </ion-option-button>
+                  </ion-item> -->
+
+                  <ion-item class="item item-icon-left" ng-click="actionBtn('mailto', data.infos.contactmail, 'null', 'null')"  style="text-transform: lowercase;"> 
+                    <i class="icon ion-email" ></i>
+                    {{ data.infos.contactmail }}
+                    <!-- <ion-option-button class="button-positive" ng-click="actionBtn('mailto', data.infos.contactmail, 'null', 'null')" >
+                        Send Email
+                    </ion-option-button> -->
+                  </ion-item>
+
+                  <ion-item ng-if="data.infos.siteweb != ''" class="item item-icon-left" ng-click="actionBtn('http', data.infos.siteweb, 'null', 'null')" style="text-transform: lowercase;"> 
+                    <i class="icon ion-ios-world"></i>
+                    {{ data.infos.siteweb }}
+                    <!-- <ion-option-button class="button-energized" ng-click="actionBtn('http', data.infos.siteweb, 'null', 'null')">
+                        Visit website
+                    </ion-option-button> -->
+                  </ion-item>
+
+                  <ion-item ng-if="data.socialNetworks.facebook.registred != ''" class="item item-icon-left" ng-click="actionBtn('http', 'https://facebook.com/'+data.socialNetworks.facebook.data.uid, 'null', 'null')"> 
+                    <i class="icon ion-social-facebook"></i>
+                    Facebook
+                  </ion-item> 
+
+                  <ion-item ng-if="data.socialNetworks.twitter.registred != ''" class="item item-icon-left" ng-click="actionBtn('http', 'https://twitter.com/intent/user?user_id='+data.socialNetworks.twitter.data.uid.split('|')[0], 'null', 'null')"> 
+                    <i class="icon ion-social-twitter"></i>
+                    Twitter
+                  </ion-item> 
+
+
+                </ion-list>  
+            </div>
+            <div class="users-comments" ng-hide="showFullinfo" ng-if="data.comments.length > 0 && !LoadingMoreInfo">
+                <h2>{{ 'shop_detail.users_comments' | translate }}</h2> 
+                <ion-scroll direction="y" id="shopCommentsZone" style="height: 200px">
+                    <div ng-repeat="item in data.comments" class="item-comment">
+                        <div class="infoSender">
+                            <div class="pictoContiner">
+                                <img class="picto" ng-if="item.picto != '' " ng-src="{{ item.picto }}">
+                                <div class="initiales" ng-if="item.picto == '' ">
+                                    {{ item.initiales }}
+                                </div>
+                            </div>
+                            <h4 class="oneLine">{{ item.name }}</h4>
+                            <!-- <img ng-if="item.stars > 0" src="img/star{{ item.stars }}.png"> -->
+                            <ul ng-if="item.stars" class="rating ng-valid ng-not-empty ng-dirty ng-valid-parse" > 
+                                <li ng-repeat="(key, value) in [1,2,3,4,5]"> 
+                                    <i class="" ng-class="{'ion-ios-star':item.stars >= value,'ion-ios-star-outline':item.stars < value }"></i> 
+                                </li>  
+                            </ul>
+                            <span ng-if="item.date" class="date" style="font-size: 12px;color: #919392;position: absolute;right: 2px;top: 17px;font-style: italic;font-weight: bold;">{{ item.date }}</span>
+                        </div>
+                        <p>
+                            {{ item.comment }} 
+                            <div style="padding-left: 55px;"> 
+                                <div ng-if="item.img.length > 0" ng-repeat="image in item.img" ng-click="showImage(image)" style="background:url('{{ image }}');" class="photoFeedbackTrans" ></div>
+                            </div>
+                        </p>
+                    </div>
+                </ion-scroll>
+            </div>
+
+        </div>   
+
+        <script id="image-modal-comment-shop.html" type="text/ng-template">
+              <div class="modal image-modal transparent" ng-click="closeModal()">
+                  <ion-pane class="transparent">
+                     <img ng-src="{{imageSrc}}" on-hold="onHold( '{{imageSrc}}' )" class="fullscreen-image"/>
+                  </ion-pane>
+              </div>
+        </script>
+    </ion-content>
+</ion-view>  

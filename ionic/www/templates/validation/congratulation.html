@@ -1,0 +1,29 @@
+<ion-view id="page5" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inCongratulation padding">
+        <div class="list card ">
+            <div class="list list-inset congratulation" id="popup" style="padding-top: 40px;">
+                <iframe src="templates/validation/null.html" class="congratulation-animation" frameborder="0">
+                <img src="style/images/congratulation-sheald.png" alt="congratulation">
+                </iframe>
+                <div class="congratulation-text-block">
+                    <div class="container">
+                        <div class="congratulation-main">
+                            <div class="congratulation-title">
+                                <h1>Congratulation!</h1>
+                            </div>
+                            <div class="congratulation-content congratulationin">
+                                <p ng-bind-html="MessageCongratulation" style="padding-top: 10px;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
