@@ -37,17 +37,17 @@ angular.module('pim.constant', [])
 
 
 // ///////////////////// OVH PROD //////////////////////////////////
-.constant('API', {
-    url: "https://dev.pim.life/api/index.php",
-    server: "https://dev.pim.life/",
-    devise: "€",
-    minAmount: 0.1
+// .constant('API', {
+//     url: "https://dev.pim.life/api/index.php",
+//     server: "https://dev.pim.life/",
+//     devise: "€",
+//     minAmount: 0.1
 
-})
-.constant('ALGOLIA', {
-    APPLICATION_ID: '5QS4R9I04P',
-    SEARCH_ONLY_API_KEY: 'b9c5aaa7ac32c5508c3e74802fbc45ff'
-})
+// })
+// .constant('ALGOLIA', {
+//     APPLICATION_ID: '5QS4R9I04P',
+//     SEARCH_ONLY_API_KEY: 'b9c5aaa7ac32c5508c3e74802fbc45ff'
+// })
 // //////////////////////////////////////////////////////////////// 
 
 
@@ -67,16 +67,16 @@ angular.module('pim.constant', [])
 
 
 // ///////////////////// AWS - Prod ////////////////////////////
-    // .constant('API', {
-    //     url: "http://prod.pim.life/api/index.php",
-    //     server: "http://prod.pim.life/",
-    //     devise: "€",
-    //     minAmount: 0.1
-    // })
-    // .constant('ALGOLIA', {
-    //     APPLICATION_ID: 'KCB10XUJYG',
-    //     SEARCH_ONLY_API_KEY: 'cfd04cb2f5f50f8daf0c7881c338f25b'
-    // })
+    .constant('API', {
+        url: "http://prod.pim.life/api/index.php",
+        server: "http://prod.pim.life/",
+        devise: "€",
+        minAmount: 0.1
+    })
+    .constant('ALGOLIA', {
+        APPLICATION_ID: 'KCB10XUJYG',
+        SEARCH_ONLY_API_KEY: 'cfd04cb2f5f50f8daf0c7881c338f25b'
+    })
 // ////////////////////////////////////////////////////////////////
  
 .constant('AUTH_EVENTS', {

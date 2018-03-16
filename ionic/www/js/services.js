@@ -490,7 +490,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         authToken = token;
         role = USER_ROLES.public;
         // Set the token as header for your requests!
-        $http.defaults.headers.common['X_AUTHENTICATION_TOKEN'] = token; 
+        $http.defaults.headers.common['Authorization'] = token; 
     }
 
     function destroyUserCredentials() {
@@ -498,7 +498,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         // Accounts.destoryAll();
         authToken = undefined;
         isAuthenticated = false;
-        $http.defaults.headers.common['X_AUTHENTICATION_TOKEN'] = undefined; 
+        $http.defaults.headers.common['Authorization'] = undefined; 
         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
