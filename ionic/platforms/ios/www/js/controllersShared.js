@@ -76,10 +76,10 @@ angular.module('pim.controllersShared', [])
         }else if(Go.is("/home") &&  parseInt($scope.SelectedAssocID) == 0 ){
             $scope.loaded = true; 
             if( $scope.isPro != 2 ){
-                setTimeout(function () {
-                    var heightVide = $('#homePage ion-content').height() - $('#homePage ion-content > div').height(); 
-                    $('#homePage .noCauseSelected').css('height', $('#homePage .noCauseSelected').height()+heightVide);
-                })
+                // setTimeout(function () {
+                //     var heightVide = $('#homePage ion-content').height() - $('#homePage ion-content > div').height(); 
+                //     $('#homePage .noCauseSelected').css('height', $('#homePage .noCauseSelected').height()+heightVide);
+                // })
             }   
         } 
 
@@ -1870,7 +1870,7 @@ angular.module('pim.controllersShared', [])
                                 "task": "PaymentSendToFriend",
                                 "recipient": $scope.trans.users[0].objectID.substr(2),
                                 "requesttoshop": $scope.trans.users[0].isshop,
-                                "amount": $scope.trans.amount,
+                                "amount": total,
                                 "accountId": $scope.accounts[$scope.trans.selectedAccount].id,
                                 "reason": $scope.trans.reson,
                                 "sharedreason": 1
@@ -4948,7 +4948,7 @@ angular.module('pim.controllersShared', [])
             };
             Go.post(postData).then(function(datas) {
                 if (datas.success == 1) {
-                    AuthService.storeUserCredentials(datas.userToken);
+                    //AuthService.storeUserCredentials(datas.userToken);
                     User.SetDetails(datas.UserDetails);
                     $scope.data = datas.UserDetails.user;
                     $state.go('forgotpassword-step2');

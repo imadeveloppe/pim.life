@@ -469,7 +469,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
         $rootScope.acceptedCGV = function (data) { 
             // ******************************************************************************************************************************
-                AuthService.storeUserCredentials(data.userToken);
+                //AuthService.storeUserCredentials(data.userToken);
                                          
                 User.lat = data.position.lat;
                 User.lng = data.position.lng;

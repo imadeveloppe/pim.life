@@ -459,7 +459,7 @@ angular.module('pim.controllersPro', [])
                 Go.post(postData).then(function(data) {
                     Alert.loader(false);
                     if (data.success == 1) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                         User.SetDetails(data.UserDetails);
                         User.IsNew = true;
                         
@@ -654,7 +654,7 @@ angular.module('pim.controllersPro', [])
 
     $scope.acceptedCGV = function (data) { 
         // ******************************************************************************************************************************
-        AuthService.storeUserCredentials(data.userToken);
+        //AuthService.storeUserCredentials(data.userToken);
         
 
         User.lat = data.position.lat;

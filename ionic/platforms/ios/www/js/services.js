@@ -554,7 +554,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         Alert.loader(true)
                         // Geo.getPosition().then(function(position) {
                         User.lat = position.lat;
@@ -843,7 +843,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         } 
                     }else if (data.success == -1) { // deja suspendu
                         $ionicLoading.hide();
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         $location.path('/blocked');
                     }else if (data.success == -2) { // bloque par l'admin
                         // deleted by admin
@@ -857,7 +857,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }
                     else if (data.success == -3) { // email pas encore valide
                         ////console.log(data) 
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         $ionicLoading.hide();
                         if( $location.path() == "/sign-in" ){
                             $state.go('emailNotValidated');
@@ -2074,7 +2074,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 
                 if (data.success == 1) {
                     if (NoToken) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                     }
                     deferred.resolve(data);
                 }   
@@ -2087,7 +2087,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
                 }else if (data.success == -1) { // deja suspendu 
                     $ionicLoading.hide();
-                    storeUserCredentials(data.userToken);
+                    //storeUserCredentials(data.userToken);
                     $location.path('/blocked');
                 }else if (data.success == -2) { // bloque par l'admin
                     // deleted by admin
@@ -2100,7 +2100,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 }
                 else if (data.success == -3) { // email pas encore valide
                     ////console.log(data)
-                    storeUserCredentials(data.userToken);
+                    //storeUserCredentials(data.userToken);
                     $location.path('/email-not-validated');
                     $ionicLoading.hide();
                 }
@@ -2257,6 +2257,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     enableHighAccuracy: false
                 };
                 if(window.cordova){
+                // if( 1){
                     $cordovaGeolocation
                     .getCurrentPosition(posOptions)
                     .then(function(position) {  

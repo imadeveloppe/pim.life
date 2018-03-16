@@ -423,6 +423,8 @@ angular.module('pim.controllers', [])
             Go.post(postData).then(function(data) {
                 if (data.success == 1) {
                      window.localStorage.setItem('sessionID_a0f55e81c4455f584a9421', data.id);
+                     AuthService.storeUserCredentials( data.id )
+
                 } 
             })
             $rootScope.newSignup = true; 
@@ -1076,7 +1078,7 @@ angular.module('pim.controllers', [])
                             })
                         }else{
 
-                            AuthService.storeUserCredentials(data.userToken);
+                            //AuthService.storeUserCredentials(data.userToken);
                             User.SetDetails(data.UserDetails);
                             User.IsNew = true;
                             // congratulation_msg = "You have subscribed to PIM, the first free banking global network! In order to activate your account and access our network; access your mailbox and <b>click on the link</b>";
@@ -2135,7 +2137,7 @@ angular.module('pim.controllers', [])
 
     $scope.acceptedCGV = function (data) { 
         // ******************************************************************************************************************************
-        AuthService.storeUserCredentials(data.userToken);
+        //AuthService.storeUserCredentials(data.userToken);
         
 
         User.lat = data.position.lat;
@@ -2873,7 +2875,7 @@ angular.module('pim.controllers', [])
                 postData.long = pos.lng;
                 Go.post(postData).then(function(data) {
                     if (data.success == 1) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                         User.SetDetails(data.UserDetails);
                         swal({
                             title: "Confirmation",
@@ -2934,7 +2936,7 @@ angular.module('pim.controllers', [])
                 postData.long = pos.lng;
                 Go.post(postData).then(function(data) {
                     if (data.success == 1) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                         User.SetDetails(data.UserDetails);
                         $state.go('unblock-byanswers');
                         resolve();
@@ -2988,7 +2990,7 @@ angular.module('pim.controllers', [])
                 postData.long = pos.lng;
                 Go.post(postData).then(function(data) {
                     if (data.success == 1) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                         User.SetDetails(data.UserDetails);
                         
                         Alert.success( MessageCongratulation );

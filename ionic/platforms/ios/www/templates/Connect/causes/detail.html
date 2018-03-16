@@ -27,7 +27,7 @@
             </div>
             <div class="content">
                 <div class="title">
-                    <h4 class="oneLine" style="margin: 0;">{{ cause.brandname }}</h4>
+                    <h4 style="margin: 0;">{{ cause.brandname }}</h4>
                     <small class="oneLine" style="margin: 0;">{{ cause.slogan }}</small>
                     <div style="height: 15px"></div>
                     <p>{{ 'detail_cause.donations_received_with_pim_since' | translate }} {{ cause.year }}: <strong>{{ cause.yeardonations }}{{ devise }} </strong> </p> 
@@ -36,7 +36,8 @@
                     <div style="height: 15px"></div>
                 </div>
 
-                <strong class="category">{{ 'detail_cause.category' | translate }} : {{ cause.assoccatlabel }}</strong>
+                <strong class="category">{{ 'detail_cause.category' | translate }} :</strong>
+                <div class="item-category">{{ cause.assoccatlabel }}</div>
                 <p class="description">{{ cause.desc }}</p>
 
                 <div class="actionBtn" style="text-align: right;" ng-if="!isCurrentCause && !isCause">

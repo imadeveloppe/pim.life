@@ -16,7 +16,7 @@ angular.module('pim.constant', [])
 //
 // })
 // .constant('ALGOLIA', {
-//     APPLICATION_ID: '5QS4R9I04P',
+//     APPLICATION_ID: 'KCB10XUJYG',
 //     SEARCH_ONLY_API_KEY: 'b9c5aaa7ac32c5508c3e74802fbc45ff'
 // })
 // ////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ angular.module('pim.constant', [])
 //     minAmount: 0.1
 // })
 // .constant('ALGOLIA', {
-//     APPLICATION_ID: '5QS4R9I04P',
+//     APPLICATION_ID: 'KCB10XUJYG',
 //     SEARCH_ONLY_API_KEY: 'b9c5aaa7ac32c5508c3e74802fbc45ff'
 // })
 // ////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ angular.module('pim.constant', [])
 
     // })
     // .constant('ALGOLIA', {
-    //     APPLICATION_ID: '5QS4R9I04P',
+    //     APPLICATION_ID: 'KCB10XUJYG',
     //     SEARCH_ONLY_API_KEY: 'b9c5aaa7ac32c5508c3e74802fbc45ff'
     // })
 // ////////////////////////////////////////////////////////////////
