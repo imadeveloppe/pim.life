@@ -6132,7 +6132,7 @@ angular.module('pim.controllersShared', [])
 })
 
 
-.controller('causesCtrl', function($scope, $rootScope, $state, $ionicModal, Catgs, ALGOLIA, Go, Geo, User) {  
+.controller('causesCtrl', function($scope, $rootScope, $state, $ionicModal, Catgs, ALGOLIA, Go, Geo, User, Alert) {  
     
 
     var userDetails;
@@ -6232,6 +6232,7 @@ angular.module('pim.controllersShared', [])
                     $scope.$apply(function () { 
                         $scope.searchProgress = false;
                         $scope.causes = results.hits; 
+                        Alert.loader(false)
                     })
                 });
                 

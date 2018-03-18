@@ -2,7 +2,7 @@
     
     <ion-content padding="false" class="manual-ios-statusbar-padding hasCause" id="homePage" on-scroll-complete="gotoBottom()" ng-class="{'noCause': !isCause, 'assocAccount' : isPro == 2}">
         
-        <!-- <div class="cause"  ng-if="SelectedAssocID > 0 || isPro == 2"> 
+        <div class="cause"  ng-if="SelectedAssocID > 0 || isPro == 2"> 
             <div class="header">
                 <div class="cover-continer" style="background: #254f7b">
                     <img ng-src="{{ cause.cover }}" class="cover-cause" style="width: 100%" ng-if="cause.cover != ''">
@@ -39,8 +39,7 @@
             </div>
         </div> 
 
-        <div class="cause noCauseSelected" ng-if="isPro != 2 && !isCause && loaded"> -->
-        <div class="cause noCauseSelected">
+        <div class="cause noCauseSelected" ng-if="isPro != 2 && !isCause && loaded">
             <div class="content">
                  <h2>{{ 'home.no_cause_title' | translate }}</h2>
                  <p>

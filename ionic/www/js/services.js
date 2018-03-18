@@ -916,8 +916,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
             Alert.loader(false);
             $rootScope.isLogin = false;
-            User.destroyAccount();
-            destroyUserCredentials();
+            User.destroyAccount(); 
             isLogout = true; 
             $('.wrapper.page').addClass('isLogout');
             $ionicHistory.clearHistory();
@@ -951,8 +950,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     $('.wrapper.page').addClass('isLogout');
                     window.localStorage.setItem('loged', '0');  
                     var userInfos = User.GetDetails().userInfos;
-                    $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop); 
-                    destroyUserCredentials();
+                    $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop);  
                     $rootScope.isLogin = false;
                     User.destroyAccount(); 
                     isLogout = true;
@@ -2966,7 +2964,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     } 
                     $window.CordovaHttpPlugin.post( url, postData, headers, function( res ) { 
                         Alert.loader(false);
-                        //console.log("res", JSON.parse(res.data))
+                        console.log("res", JSON.parse(res.data))
                         // resolve( res.data );
                         resolve( JSON.parse(res.data) );
                     }, function(err) {
@@ -3047,7 +3045,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         return promise; 
     }
     this.post = function ( postData ) { 
-        if( ionic.Platform.isIOS() && $window.CordovaHttpPlugin ){
+        if( ionic.Platform.isIOS() && $window.CordovaHttpPlugin && false ){
             var req = $.when( this.ipv6( 'post', API.url, postData ) )
             var promise = new Promise(function(resolve, reject) {
                 req.then(function (data) {

@@ -414,7 +414,8 @@ angular.module('pim.controllers', [])
         
 
         ////// get session ID when app is started and app is Loged
-        if (!Go.is('addprofile')) { 
+
+        if (!Go.is('addprofile') && window.localStorage.getItem('sessionID_a0f55e81c4455f584a9421') == null ) { 
             console.log("is page Signin")
             var postData = {
                 task: "getSessionID",
