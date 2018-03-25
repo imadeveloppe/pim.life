@@ -47140,11 +47140,13 @@ ion-content.listCauses.hasCategory {
     background-color: #0c60ee
 }
 
-#profile-shop .magazin-categories h3 {
+#profile-shop .magazin-categories h3,
+#profile-shop .contact-infos h3 {
     font-size: 16px;
     color: #254e7b;
     font-weight: 700;
-    margin-bottom: 5px
+    margin-bottom: 5px;
+    text-transform:uppercase;
 }
 
 #profile-shop .liste-categories span {
@@ -49880,6 +49882,16 @@ form.questionsSignin input.mbsc-control{
     padding-bottom: 5px;
 }
 
+ion-modal-view.modalCGV section.acceptCGV{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
+ion-modal-view.modalCGV ion-content{
+    bottom: 52px;
+}
 
 
 @media (max-height:736px) { /* iphone 6+, 7+ */

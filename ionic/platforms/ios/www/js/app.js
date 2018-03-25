@@ -46,8 +46,8 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
         }) 
         setTimeout(function () {
             window.localStorage.setItem('langs', JSON.stringify(langs) ); 
-            $.getJSON(API.server+'admin/public/multilingue/api/?task=getLangs', function(data) { 
-            // $.getJSON('https://dev.pim.life/admin/public/multilingue/api/?task=getLangs', function(data) {  
+            // $.getJSON(API.server+'admin/public/multilingue/api/?task=getLangs', function(data) { 
+            $.getJSON('https://dev.pim.life/admin/public/multilingue/api/?task=getLangs', function(data) {  
                 var langs = [];
                 angular.forEach(data, function (value, key) {  
                     $translateProvider.translations(key, value); 

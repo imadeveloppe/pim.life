@@ -3170,6 +3170,16 @@ angular.module('pim.controllersShared', [])
                                         $ionicScrollDelegate.resize();
                                     })
                                 },1000)
+                            }
+
+                            hasWWW = $scope.data.infos.siteweb.toLowerCase().search('www.');
+                            hashttp = $scope.data.infos.siteweb.toLowerCase().search('http://');
+
+                            if( hasWWW < 0 ){
+                                $scope.data.infos.siteweb = "www."+$scope.data.infos.siteweb.toLowerCase();
+                            }
+                            if( hashttp < 0 ){
+                                $scope.data.infos.siteweb = "http://"+$scope.data.infos.siteweb;
                             } 
                         } 
                     })
@@ -6307,6 +6317,16 @@ angular.module('pim.controllersShared', [])
             if( data.success == 1 ){
                 $scope.cause = data.association;
                 $scope.loadedInfos = true;
+
+                hasWWW = $scope.cause.siteweb.toLowerCase().search('www.');
+                hashttp = $scope.cause.siteweb.toLowerCase().search('http://');
+
+                if( hasWWW < 0 ){
+                    $scope.cause.siteweb = "www."+$scope.cause.siteweb.toLowerCase();
+                }
+                if( hashttp < 0 ){
+                    $scope.cause.siteweb = "http://"+$scope.cause.siteweb;
+                }
             } 
         }) 
 

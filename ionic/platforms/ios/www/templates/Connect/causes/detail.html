@@ -57,12 +57,11 @@
                         </p>
                     </div>
                 </div> 
-            </div> 
-
+            </div>  
             <div class="personalInfos">
                     <strong class="padding">{{ 'detail_cause.contact_information' | translate }}</strong>
                     <ion-list>
-                      <ion-item ng-if="cause.fulladdress != ''" class="item item-icon-left" ng-click="actionBtn( 'geo', cause.lat, cause.lng, cause.name )"> 
+                      <ion-item ng-if="cause.fulladdress != ''" class="item item-icon-left" ng-click="actionBtn( 'geo', cause.lat, cause.lng, cause.brandname )"> 
                         <i class="icon ion-ios-location"></i> 
                         {{ cause.fullAddress }} 
                       </ion-item>
