@@ -89,7 +89,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
     };
 })
 
-.run(function($ionicPlatform,$sce, $ionicModal, $cordovaBadge,$storage, $rootScope, API, DATA, Alert, AuthService, User, $window, $interval,  Accounts, $state, $location, $translate, LockScreen, $filter, Go, Geo, $ionicHistory, User) {  
+.run(function($ionicPlatform,$sce, $ionicModal, $cordovaBadge,$storage, $rootScope, API, DATA, Alert, AuthService, User, $window, $interval,  Accounts, $state, $location, $translate, LockScreen, $filter, Go, Geo, $ionicHistory, User, AppServices) {  
 
     $ionicPlatform.ready(function() {  
          
@@ -113,111 +113,23 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                 } 
 
                                 if( ionic.Platform.isIOS() ){
-                                    if( data.iosversion != AppVersion ){
-                                        swal({
-                                            title: $filter('translate')('global_fields.update_app'),
-                                            text: $filter('translate')('global_fields.update_app_texte'),
-                                            type: "info",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#254e7b",
-                                            confirmButtonText: $filter('translate')('global_fields.update_app'), 
-                                            showLoaderOnConfirm: true,  
-                                            allowOutsideClick: false
-                                        }).then(function (confirm) {
-                                            if( confirm ){
-                                               window.open("itms-apps://itunes.apple.com/app/"+data.iosappid, '_system')
-                                            }
-                                        }, function () {})
-                                    }else{
-                                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                                            if( !available ){
-                                                swal({
-                                                    title: $filter('translate')('global_fields.gps'),
-                                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                                    type: "info",
-                                                    showCancelButton: false,
-                                                    confirmButtonColor: "#254e7b",
-                                                    confirmButtonText: $filter('translate')('global_fields.goto_settings'),
-                                                    showLoaderOnConfirm: true,  
-                                                    allowOutsideClick: false
-                                                }).then(function (confirm) {
-                                                    if( confirm ){
-                                                       window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
-                                                    }
-                                                }, function () {})
-                                            }
-                                            
-                                        }, function(error){
-                                            console.error("The following error occurred: "+error);
-                                        });
+                                    if( data.iosversion != AppVersion ){ 
+                                        AppServices.updateApp(data);
+                                    }else{ 
+                                        Geo.isLocationAvailable() 
                                     }
                                 }else{
                                     if( data.andriodversion != AppVersion ){
-                                        swal({
-                                            title: $filter('translate')('global_fields.update_app'),
-                                            text: $filter('translate')('global_fields.update_app_texte'),
-                                            type: "info",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#254e7b",
-                                            confirmButtonText: $filter('translate')('global_fields.update_app'), 
-                                            showLoaderOnConfirm: true,  
-                                            allowOutsideClick: false
-                                        }).then(function (confirm) {
-                                            if( confirm ){
-                                               window.open("https://play.google.com/store/apps/details?id="+data.andriodappid, '_system')
-                                            }
-                                        }, function () {})
-                                    }else{
-                                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                                            if( !available ){
-                                                swal({
-                                                    title: $filter('translate')('global_fields.gps'),
-                                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                                    type: "info",
-                                                    showCancelButton: false,
-                                                    confirmButtonColor: "#254e7b",
-                                                    confirmButtonText: $filter('translate')('global_fields.goto_settings'), 
-                                                    showLoaderOnConfirm: true,  
-                                                    allowOutsideClick: false
-                                                }).then(function (confirm) {
-                                                    if( confirm ){
-                                                       cordova.plugins.diagnostic.switchToLocationSettings();
-                                                    }
-                                                }, function () {})
-                                            }
-                                            
-                                        }, function(error){
-                                            console.error("The following error occurred: "+error);
-                                        });
+                                         AppServices.updateApp(data);
+                                    }else{ 
+                                        Geo.isLocationAvailable() 
                                     }
                                 }
                             }
                                 
                         })
                     }, function (callback) {
-                        console.log("GPS false")
-
-                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                            if( !available ){
-                                swal({
-                                    title: "GPS",
-                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                    type: "info",
-                                    showCancelButton: false,
-                                    confirmButtonColor: "#254e7b",
-                                    confirmButtonText: "Aller au paramètres", 
-                                    showLoaderOnConfirm: true,  
-                                    allowOutsideClick: false
-                                }).then(function (confirm) {
-                                    if( confirm ){
-                                       window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
-                                    }
-                                }, function () {})
-                            }
-                            
-                        }, function(error){
-                            console.error("The following error occurred: "+error);
-                        });
+                        Geo.isLocationAvailable() 
                     }) 
 
                 }); 
@@ -469,7 +381,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
         $rootScope.acceptedCGV = function (data) { 
             // ******************************************************************************************************************************
-                AuthService.storeUserCredentials(data.userToken);
+                //AuthService.storeUserCredentials(data.userToken);
                                          
                 User.lat = data.position.lat;
                 User.lng = data.position.lng;

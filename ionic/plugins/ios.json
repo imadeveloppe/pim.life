@@ -43,9 +43,6 @@
         "cordova-plugin-app-launcher": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-app-version": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-badge": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
@@ -89,9 +86,6 @@
         "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova.plugins.diagnostic": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "com.cesidiodibenedetto.filechooser": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
@@ -113,6 +107,12 @@
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-app-version": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         }
     },

@@ -160,7 +160,7 @@ angular.module('pim.controllersAssociation', [])
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     })
                 })
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }    

@@ -377,7 +377,7 @@ angular.module('pim.controllers', [])
                 $scope.cgvModal.show();
                 $scope.loadCGV(dataUser)
             }else{ 
-                if( parseInt(dataUser.UserDetails.user.blocedcode) == 1 ){ 
+                if( parseInt(dataUser.user.blocedcode) == 1 ){ 
                     $location.path('/resetlockcode');  
                 }else{ 
                     $location.path('/tab/home');
@@ -470,7 +470,7 @@ angular.module('pim.controllers', [])
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     })
                 })
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }    
@@ -613,6 +613,7 @@ angular.module('pim.controllers', [])
             showDelay: 0
         });
         AuthService.login($scope.datalogin.username, crypt.sha256($scope.datalogin.password), 0).then(function(dataUser) {
+
             window.localStorage.setItem('username_a0f55e81c44553384a9421', $scope.datalogin.username);
             $scope.datalogin = {
                 username: $scope.datalogin.username,
@@ -745,7 +746,7 @@ angular.module('pim.controllers', [])
                 setTimeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 },1000)
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }    
@@ -900,7 +901,7 @@ angular.module('pim.controllers', [])
         } 
 
         var postData = {
-            "task": "InscriptionAllPersonalInfos",
+            "task": "InscriptionPersonalInfos",
             "sexe": $scope.data.sexe,
             "firstname": $scope.data.fname,
             "lastname": $scope.data.lname,
@@ -917,8 +918,8 @@ angular.module('pim.controllers', [])
             "password": crypt.sha256($scope.data.password),
             "confirmpassword": crypt.sha256($scope.data.confirmpassword),
             "lang": $translate.use(),
-            "code" : $scope.data.code,
-            "confirmcode" : $scope.data.confirmcode
+            "code" : crypt.sha256($scope.data.code),
+            "confirmcode" : crypt.sha256($scope.data.confirmcode)
         };
         Go.post(postData).then(function(data) {
             Alert.loader(false);
@@ -2225,7 +2226,7 @@ angular.module('pim.controllers', [])
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     })
                 })
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }    

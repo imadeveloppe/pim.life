@@ -168,18 +168,18 @@
                         <form>
                             <div>
                                 <span class="icon"><i class="icon ion-ios-email"></i></span>
-                                <span ng-if="datalogin.username.length != ''" ng-click="datalogin.username=''" class="button-clear emptyInput">
+                                <span ng-if="datalogin.username.length > 1 && focusMail" ng-click="datalogin.username=''" class="button-clear emptyInput">
                                     <i class="icon ion-ios-close"></i>
                                 </span> 
-                                <input type="email" placeholder="{{ 'sign_in.email' | translate }}" class="changeEmail" ng-model="datalogin.username" ng-focus="cordova.plugins.Keyboard.close();"  />
+                                <input type="email" ng-focus="focusMail=true; cordova.plugins.Keyboard.close();" ng-blur="focusMail=false" placeholder="{{ 'sign_in.email' | translate }}" class="changeEmail" ng-model="datalogin.username"/>
                                 
                             </div>
                             <div>
                                 <span class="icon"><i class="icon ion-ios-locked"></i></span>
-                                <span ng-if="datalogin.password.length != ''" ng-click="datalogin.password=''" class="button-clear emptyInput">
+                                <span ng-if="datalogin.password.length > 1 && focusPwd" ng-click="datalogin.password=''" class="button-clear emptyInput">
                                     <i class="icon ion-ios-close"></i>
                                 </span> 
-                                <input type="password" placeholder="{{ 'sign_in.pwd' | translate }}" ng-model="datalogin.password" /> 
+                                <input type="password" ng-focus="focusPwd=true" ng-blur="focusPwd=false" placeholder="{{ 'sign_in.pwd' | translate }}" ng-model="datalogin.password" /> 
                                 
                             </div>
                             <button ng-click="login()" class="login-btn" />{{ 'sign_in.ConnectButton' | translate }}</button>

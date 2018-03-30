@@ -11,8 +11,9 @@
     <ion-content class="padding" style="background: #fff">
         
         <div data-ng-bind-html="trustAsHtml(content)" style="padding-bottom: 5px;">
-          
-        </div>  
+                <!-- Here is reserved for content -->
+        </div>
+        <ion-infinite-scroll immediate-check="false" ng-if="canLoadMore" spinner="android" distance="1px" on-infinite="loadContents()"></ion-infinite-scroll> 
       
     </ion-content>
 </ion-view>

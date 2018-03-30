@@ -512,10 +512,10 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     function destroyUserCredentials() {
         User.destroyUserData();
         // Accounts.destoryAll();
-        authToken = undefined;
-        isAuthenticated = false;
-        $http.defaults.headers.common['Authorization'] = undefined; 
-        window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        // authToken = undefined;
+        // isAuthenticated = false;
+        // $http.defaults.headers.common['Authorization'] = undefined; 
+        // window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
     var login = function(name, pw, touchid) {
@@ -2360,8 +2360,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
             return deferred.promise;
         },
         isLocationAvailable: function () {
-            // cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                available = 0
+            cordova.plugins.diagnostic.isLocationAvailable(function(available){ 
+
                 if( !available ){
                     swal({
                         title: $filter('translate')('global_fields.gps'),
@@ -2383,9 +2383,9 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }, function () {})
                 }
                 
-            // }, function(error){
-            //     console.error("The following error occurred: "+error);
-            // });
+            }, function(error){
+                console.error("The following error occurred: "+error);
+            });
         }
     };
 

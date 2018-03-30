@@ -44,7 +44,7 @@ angular.module('pim.controllersPro', [])
                 setTimeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 },1000)
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }    
@@ -517,8 +517,7 @@ angular.module('pim.controllersPro', [])
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
-        $scope.modal = modal;
-        $scope.modal.show();
+        $scope.modal = modal; 
     });
     $scope.openModal = function() {
         $scope.modal.show();
@@ -692,7 +691,7 @@ angular.module('pim.controllersPro', [])
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     })
                 })
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }    

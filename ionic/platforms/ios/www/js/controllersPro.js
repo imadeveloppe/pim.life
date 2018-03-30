@@ -30,6 +30,27 @@ angular.module('pim.controllersPro', [])
         defaultIndex: 7
     }];
 
+
+    $scope.loadCGV = function () {
+        Go.post({
+            task: "getcgv",
+            isshop: 1,
+            NoLoader: true,
+            page  : $scope.cgvpage
+        }).then(function (data) { 
+            if(data.success == 1){
+                $scope.cgvpage++;
+                $scope.cgv += data.cgv;
+                setTimeout(function () {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },1000)
+                if(data.success == 1){ 
+                    $scope.canLoadMore = true; 
+                } 
+            }    
+        }) 
+    }
+
     if( $state.current.name == 'signuppro'){
         Go.post({
             "task": "SHOP_getTypes"
@@ -38,19 +59,16 @@ angular.module('pim.controllersPro', [])
                 $scope.dataTypes = data.businessType;
                 $scope.data.shoptypeid = -1;
             }             
-        });
+        }); 
 
-        Go.post({
-            task: "getcgv",
-            isshop: 1,
-            hideLoader: true
-        }).then(function (data) {
-            if(data.success == 1){
-                 $scope.cgv = data.cgv;
-            }   
-        }) 
+
+        $scope.cgv = "";
+        $scope.cgvpage= 0;
+        $scope.loadCGV()
+
     }
 
+    
     
     $scope.openPickerBusinessType = function() {  
         var objlist1 = [{
@@ -499,7 +517,7 @@ angular.module('pim.controllersPro', [])
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
-        $scope.modal = modal;
+        $scope.modal = modal; 
     });
     $scope.openModal = function() {
         $scope.modal.show();
@@ -615,7 +633,9 @@ angular.module('pim.controllersPro', [])
 
                     if( parseInt( data.UserDetails.user.cgvvalid ) == 0 ){ 
                         $scope.cgv = data.UserDetails.cgv;
+                        $scope.UserData = data;
                         $scope.cgvModal.show();
+                        $scope.loadCGV();
                         
                     }else{
                         $scope.acceptedCGV( $scope.connexionDATA )
@@ -651,6 +671,32 @@ angular.module('pim.controllersPro', [])
     }).then(function(modal) {
         $scope.cgvModal = modal;
     });
+
+    $scope.cgv = "";
+    $scope.canLoadMore = true; 
+    $scope.cgvpage= 0;
+    
+    $scope.loadCGV = function () { 
+        Go.post({
+            task: "getcgv",
+            isshop: $scope.UserData.userInfos.isshop,
+            NoLoader: true,
+            page  : $scope.cgvpage
+        }).then(function (data) { 
+            if(data.success == 1){
+                $scope.cgvpage++;
+                $scope.cgv += data.cgv;
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    })
+                })
+                if(data.success == 1){ 
+                    $scope.canLoadMore = true; 
+                } 
+            }    
+        }) 
+    }
 
     $scope.acceptedCGV = function (data) { 
         // ******************************************************************************************************************************

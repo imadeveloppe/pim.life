@@ -49882,6 +49882,16 @@ form.questionsSignin input.mbsc-control{
     padding-bottom: 5px;
 }
 
+ion-modal-view.modalCGV section.acceptCGV{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
+ion-modal-view.modalCGV ion-content{
+    bottom: 52px;
+}
 
 
 @media (max-height:736px) { /* iphone 6+, 7+ */

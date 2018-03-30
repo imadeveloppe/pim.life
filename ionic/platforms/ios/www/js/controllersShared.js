@@ -3572,7 +3572,58 @@ angular.module('pim.controllersShared', [])
             
             $state.go("tab.causes");
             
-        } else if (
+        }
+        else if (
+                    notif.type == 'deselectassocbyblockassoc' ||
+                    notif.type == 'add_doc_pi_signatory' ||
+                    notif.type == 'add_doc_persenal_address_signatory' ||
+                    notif.type == 'add_doc_pi_rep' ||
+                    notif.type == 'add_doc_persenal_address_rep' ||
+                    notif.type == 'add_doc_pi_shareholder' ||
+                    notif.type == 'add_doc_persenal_address_shareholder' ||
+                    notif.type == 'profil_blocked_signatory' ||
+                    notif.type == 'profil_blocked_rep' ||
+                    notif.type == 'profil_blocked_shareholder' ||
+                    notif.type == 'doc_identity_confirmed_signatory' ||
+                    notif.type == 'doc_identity_refused_signatory' ||
+                    notif.type == 'doc_identity_confirmed_rep' ||
+                    notif.type == 'doc_identity_refused_rep' ||
+                    notif.type == 'doc_identity_confirmed_shareholder' ||
+                    notif.type == 'doc_identity_refused_shareholder' ||
+                    notif.type == 'doc_address_confirmed_signatory' ||
+                    notif.type == 'doc_address_refused_signatory' ||
+                    notif.type == 'doc_address_confirmed_rep' ||
+                    notif.type == 'doc_address_refused_rep' ||
+                    notif.type == 'doc_address_confirmed_shareholder' ||
+                    notif.type == 'doc_address_refused_shareholder' ||
+                    notif.type == 'updatepibyadmin_signatory' ||
+                    notif.type == 'updatepibyadmin_rep' ||
+                    notif.type == 'updatepibyadmin_shareholder' ||
+                    notif.type == 'updatephonebyadmin_signatory' ||
+                    notif.type == 'updatephonebyadmin_rep' ||
+                    notif.type == 'updatephonebyadmin_shareholder' ||
+                    notif.type == 'updateemailbyadmin_signatory' ||
+                    notif.type == 'updateemailbyadmin_rep' ||
+                    notif.type == 'updateemailbyadmin_shareholder' ||
+                    notif.type == 'updateaddressbyadmin_signatory' ||
+                    notif.type == 'updateaddressbyadmin_rep' ||
+                    notif.type == 'updateaddressbyadmin_shareholder' ||
+                    notif.type == 'treezorvaldation_confirmed' ||
+                    notif.type == 'treezorvaldation_confirmed_signatory' ||
+                    notif.type == 'treezorvaldation_confirmed_rep' ||
+                    notif.type == 'treezorvaldation_confirmed_shareholder' ||
+                    notif.type == 'treezorvaldation_refused' ||
+                    notif.type == 'treezorvaldation_refused_signatory' ||
+                    notif.type == 'treezorvaldation_refused_rep' ||
+                    notif.type == 'treezorvaldation_refused_shareholder'
+        ) {
+            $rootScope.$emit('GetShareCapitalData');
+            $state.go('tab.settings');
+            setTimeout(function() {
+                $state.go('tab.capital-social') ;
+            },500)
+            
+        }else if (
                     notif.type == 'doc_address_confirmed' || 
                     notif.type == 'doc_address_refused' ||
  
@@ -3633,6 +3684,7 @@ angular.module('pim.controllersShared', [])
                     notif.type == 'annulupdatemailbyadmin' ||
                     notif.type == 'updatepimcommision' ||
                     notif.type == 'updateassoccommision'
+
 
                     )
             {
@@ -6022,7 +6074,7 @@ angular.module('pim.controllersShared', [])
     };
 })
 
-.controller('changeLockCodeCtrl', function($scope, $rootScope, $translate, Alert,Go, $filter, SharedService, crypt) { 
+.controller('changeLockCodeCtrl', function($scope, $rootScope, $translate, Alert, crypt, Go, $filter, SharedService, crypt) { 
 
     $scope.$on('$ionicView.beforeEnter', function() { 
         $scope.data = {}
@@ -6042,9 +6094,9 @@ angular.module('pim.controllersShared', [])
         if (SharedService.Validation(validationList)) {
             var postData = {
                 "task": "SettingsChangecode",
-                "actualcode": $scope.data.currentcode,
-                "code": $scope.data.newcode,
-                "confirmcode": $scope.data.confirmcode
+                "actualcode": crypt.sha256($scope.data.currentcode),
+                "code": crypt.sha256($scope.data.newcode),
+                "confirmcode": crypt.sha256($scope.data.confirmcode)
             };
             Alert.loader(true);
             Go.post(postData).then(function(data) {
@@ -6069,7 +6121,7 @@ angular.module('pim.controllersShared', [])
     } 
 })
 
-.controller('resetLockCodeCtrl', function($scope, $state, $location, $filter,SharedService, Alert, Go,crypt) {  
+.controller('resetLockCodeCtrl', function($scope, $state, $location, crypt, $filter,SharedService, Alert, Go,crypt) {  
 
     $scope.$on('$ionicView.beforeEnter', function() { 
         $scope.data = {}
@@ -6086,8 +6138,8 @@ angular.module('pim.controllersShared', [])
         if (SharedService.Validation(validationList)) {
             var postData = {
                 "task": "DeblocChangecode", 
-                "code": $scope.data.newcode,
-                "confirmcode": $scope.data.confirmcode
+                "code": crypt.sha256($scope.data.newcode),
+                "confirmcode": crypt.sha256($scope.data.confirmcode)
             };
             Alert.loader(true);
             Go.post(postData).then(function(data) {
@@ -6114,16 +6166,35 @@ angular.module('pim.controllersShared', [])
     $scope.content = "";
 
     $scope.$on('$ionicView.beforeEnter', function() { 
+        
+        $scope.canLoadMore = false;
+        $scope.content = '';
+        $scope.page = 0;
 
+        $scope.loadContents();
+    })
+
+
+    $scope.loadContents = function () {
+        
         Go.post({
             task: "getcgv",
-            isshop: $stateParams.isshop
+            NoLoader: true,
+            isshop  : $stateParams.isshop,
+            page  : $scope.page
         }).then(function (data) {
             if(data.success == 1){
-                 $scope.content = data.cgv;
+                $scope.page++;
+                $scope.content += data.cgv;
+                setTimeout(function () {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },1000)
+                if(data.success == 1){ 
+                    $scope.canLoadMore = true; 
+                } 
             }   
         })
-    })
+    }
     
     $scope.download = function ( type ) {  
 

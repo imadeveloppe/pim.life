@@ -102,7 +102,9 @@ angular.module('pim.controllersAssociation', [])
 
                     if( parseInt( data.UserDetails.user.cgvvalid ) == 0 ){ 
                         $scope.cgv = data.UserDetails.cgv;
+                        $scope.UserData = data;
                         $scope.cgvModal.show();
+                        $scope.loadCGV();
                         
                     }else{
                         $scope.acceptedCGV( $scope.connexionDATA )
@@ -139,9 +141,35 @@ angular.module('pim.controllersAssociation', [])
         $scope.cgvModal = modal;
     });
 
+    $scope.cgv = "";
+    $scope.canLoadMore = true; 
+    $scope.cgvpage= 0;
+    
+    $scope.loadCGV = function () { 
+        Go.post({
+            task: "getcgv",
+            isshop: $scope.UserData.userInfos.isshop,
+            NoLoader: true,
+            page  : $scope.cgvpage
+        }).then(function (data) { 
+            if(data.success == 1){
+                $scope.cgvpage++;
+                $scope.cgv += data.cgv;
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    })
+                })
+                if(data.success == 1){ 
+                    $scope.canLoadMore = true; 
+                } 
+            }    
+        }) 
+    }
+
     $scope.acceptedCGV = function (data) { 
         // ******************************************************************************************************************************
-        AuthService.storeUserCredentials(data.userToken);
+        //AuthService.storeUserCredentials(data.userToken);
         
 
         User.lat = data.position.lat;

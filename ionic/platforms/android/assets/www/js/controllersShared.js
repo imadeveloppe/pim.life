@@ -76,10 +76,10 @@ angular.module('pim.controllersShared', [])
         }else if(Go.is("/home") &&  parseInt($scope.SelectedAssocID) == 0 ){
             $scope.loaded = true; 
             if( $scope.isPro != 2 ){
-                setTimeout(function () {
-                    var heightVide = $('#homePage ion-content').height() - $('#homePage ion-content > div').height(); 
-                    $('#homePage .noCauseSelected').css('height', $('#homePage .noCauseSelected').height()+heightVide);
-                })
+                // setTimeout(function () {
+                //     var heightVide = $('#homePage ion-content').height() - $('#homePage ion-content > div').height(); 
+                //     $('#homePage .noCauseSelected').css('height', $('#homePage .noCauseSelected').height()+heightVide);
+                // })
             }   
         } 
 
@@ -3170,6 +3170,16 @@ angular.module('pim.controllersShared', [])
                                         $ionicScrollDelegate.resize();
                                     })
                                 },1000)
+                            }
+
+                            hasWWW = $scope.data.infos.siteweb.toLowerCase().search('www.');
+                            hashttp = $scope.data.infos.siteweb.toLowerCase().search('http://');
+
+                            if( hasWWW < 0 ){
+                                $scope.data.infos.siteweb = "www."+$scope.data.infos.siteweb.toLowerCase();
+                            }
+                            if( hashttp < 0 ){
+                                $scope.data.infos.siteweb = "http://"+$scope.data.infos.siteweb;
                             } 
                         } 
                     })
@@ -4948,7 +4958,7 @@ angular.module('pim.controllersShared', [])
             };
             Go.post(postData).then(function(datas) {
                 if (datas.success == 1) {
-                    AuthService.storeUserCredentials(datas.userToken);
+                    //AuthService.storeUserCredentials(datas.userToken);
                     User.SetDetails(datas.UserDetails);
                     $scope.data = datas.UserDetails.user;
                     $state.go('forgotpassword-step2');
@@ -6104,16 +6114,35 @@ angular.module('pim.controllersShared', [])
     $scope.content = "";
 
     $scope.$on('$ionicView.beforeEnter', function() { 
+        
+        $scope.canLoadMore = false;
+        $scope.content = '';
+        $scope.page = 0;
 
+        $scope.loadContents();
+    })
+
+
+    $scope.loadContents = function () {
+        
         Go.post({
             task: "getcgv",
-            isshop: $stateParams.isshop
+            NoLoader: true,
+            isshop  : $stateParams.isshop,
+            page  : $scope.page
         }).then(function (data) {
             if(data.success == 1){
-                 $scope.content = data.cgv;
+                $scope.page++;
+                $scope.content += data.cgv;
+                setTimeout(function () {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },1000)
+                if(data.success == 1){ 
+                    $scope.canLoadMore = true; 
+                } 
             }   
         })
-    })
+    }
     
     $scope.download = function ( type ) {  
 
@@ -6132,7 +6161,7 @@ angular.module('pim.controllersShared', [])
 })
 
 
-.controller('causesCtrl', function($scope, $rootScope, $state, $ionicModal, Catgs, ALGOLIA, Go, Geo, User) {  
+.controller('causesCtrl', function($scope, $rootScope, $state, $ionicModal, Catgs, ALGOLIA, Go, Geo, User, Alert) {  
     
 
     var userDetails;
@@ -6232,6 +6261,7 @@ angular.module('pim.controllersShared', [])
                     $scope.$apply(function () { 
                         $scope.searchProgress = false;
                         $scope.causes = results.hits; 
+                        Alert.loader(false)
                     })
                 });
                 
@@ -6306,6 +6336,16 @@ angular.module('pim.controllersShared', [])
             if( data.success == 1 ){
                 $scope.cause = data.association;
                 $scope.loadedInfos = true;
+
+                hasWWW = $scope.cause.siteweb.toLowerCase().search('www.');
+                hashttp = $scope.cause.siteweb.toLowerCase().search('http://');
+
+                if( hasWWW < 0 ){
+                    $scope.cause.siteweb = "www."+$scope.cause.siteweb.toLowerCase();
+                }
+                if( hashttp < 0 ){
+                    $scope.cause.siteweb = "http://"+$scope.cause.siteweb;
+                }
             } 
         }) 
 

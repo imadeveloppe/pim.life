@@ -414,6 +414,22 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     };
 })
 
+.directive('textarea', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, element, attr){
+        var update = function(){
+            element.css("height", "auto");
+            var height = element[0].scrollHeight; 
+            element.css("height", element[0].scrollHeight + "px");
+        };
+        scope.$watch(attr.ngModel, function(){
+            update();
+        });
+    }
+  };
+})
+
 .service('Badges', function(DATA, $rootScope, $cordovaBadge) {
     var UserMail = window.localStorage.getItem('username_a0f55e81c44553384a9421');
     var keybadge = '1550ca98761550c76bb2da133bb2988uueda133' + UserMail;
@@ -490,7 +506,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         authToken = token;
         role = USER_ROLES.public;
         // Set the token as header for your requests!
-        $http.defaults.headers.common['X_AUTHENTICATION_TOKEN'] = token; 
+        $http.defaults.headers.common['Authorization'] = token; 
     }
 
     function destroyUserCredentials() {
@@ -498,7 +514,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         // Accounts.destoryAll();
         authToken = undefined;
         isAuthenticated = false;
-        $http.defaults.headers.common['X_AUTHENTICATION_TOKEN'] = undefined; 
+        $http.defaults.headers.common['Authorization'] = undefined; 
         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
@@ -528,14 +544,16 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
 
                     if (data.success == 1) {  
+
+                         resolve( data.UserDetails );
+
                         $storage.setObject('capitalSocial', {});
                         userInfos = data.userInfos;
                         ////////////////////////////////////////////////// add User connected ///////////////////////////////////////////////
                          
                         var connectedUsers = $storage.getArrayOfObjects("connectedUsers");
                         var finded = false; 
-
-                        console.log("connectedUsers", connectedUsers)
+ 
                         angular.forEach(connectedUsers, function (object, index) {
                             if( userInfos.id == object.id && userInfos.isshop == object.isshop ){
                                 finded = true;
@@ -546,15 +564,14 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         setTimeout(function () {
                             if( !finded ) {
                                 connectedUsers.push( userInfos ); 
-                            }
-                            console.log("connectedUsers", connectedUsers)
+                            } 
                             $storage.setArrayOfObjects("connectedUsers", connectedUsers);
                         }) 
 
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         Alert.loader(true)
                         // Geo.getPosition().then(function(position) {
                         User.lat = position.lat;
@@ -599,16 +616,14 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         window.localStorage.setItem('lockCode', data.UserDetails.user.code)
  
 
-                        if( parseInt(data.UserDetails.user.blocedcode) == 1 ){ 
-                            $location.path('/resetlockcode'); 
-                            console.log("asdasdsad asdasd ad resetlockcode")
-                        }else{ 
-                            $location.path('/tab/home');
-                            window.localStorage.setItem('loged', '1');
-                            console.log("asdasdsad asdasd ad Home")
-                        }
-
-                        resolve( data.UserDetails );
+                        // if( parseInt(data.UserDetails.user.blocedcode) == 1 ){ 
+                        //     $location.path('/resetlockcode'); 
+                        //     console.log("asdasdsad asdasd ad resetlockcode")
+                        // }else{ 
+                        //     $location.path('/tab/home');
+                        //     window.localStorage.setItem('loged', '1');
+                        //     console.log("asdasdsad asdasd ad Home")
+                        // } 
 
 
                         if( ionic.Platform.isIOS() ){
@@ -841,9 +856,11 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         if (!Go.is('addprofile')) { 
                             Directlogout()
                         } 
+                    }else if(data.success == 2 && data.errorCode ==  1022){  /// probleme de geolocalisation
+                        Geo.isLocationAvailable();
                     }else if (data.success == -1) { // deja suspendu
                         $ionicLoading.hide();
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         $location.path('/blocked');
                     }else if (data.success == -2) { // bloque par l'admin
                         // deleted by admin
@@ -857,7 +874,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }
                     else if (data.success == -3) { // email pas encore valide
                         ////console.log(data) 
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         $ionicLoading.hide();
                         if( $location.path() == "/sign-in" ){
                             $state.go('emailNotValidated');
@@ -916,8 +933,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
             Alert.loader(false);
             $rootScope.isLogin = false;
-            User.destroyAccount();
-            destroyUserCredentials();
+            User.destroyAccount(); 
             isLogout = true; 
             $('.wrapper.page').addClass('isLogout');
             $ionicHistory.clearHistory();
@@ -951,8 +967,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     $('.wrapper.page').addClass('isLogout');
                     window.localStorage.setItem('loged', '0');  
                     var userInfos = User.GetDetails().userInfos;
-                    $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop); 
-                    destroyUserCredentials();
+                    $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop);  
                     $rootScope.isLogin = false;
                     User.destroyAccount(); 
                     isLogout = true;
@@ -2036,7 +2051,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 hideLoader = true;
             }
         }
-        if( !postData.NoLoader ){
+        if( !postData.NoLoader || postData.hideLoader ){
             Alert.loader(true);
         } 
 
@@ -2074,7 +2089,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 
                 if (data.success == 1) {
                     if (NoToken) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                     }
                     deferred.resolve(data);
                 }   
@@ -2087,7 +2102,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
                 }else if (data.success == -1) { // deja suspendu 
                     $ionicLoading.hide();
-                    storeUserCredentials(data.userToken);
+                    //storeUserCredentials(data.userToken);
                     $location.path('/blocked');
                 }else if (data.success == -2) { // bloque par l'admin
                     // deleted by admin
@@ -2100,7 +2115,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 }
                 else if (data.success == -3) { // email pas encore valide
                     ////console.log(data)
-                    storeUserCredentials(data.userToken);
+                    //storeUserCredentials(data.userToken);
                     $location.path('/email-not-validated');
                     $ionicLoading.hide();
                 }
@@ -2256,8 +2271,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     timeout: 10000,
                     enableHighAccuracy: false
                 };
-                // if(window.cordova){
-                if(1){
+                if(window.cordova){
+                // if( 1){
                     $cordovaGeolocation
                     .getCurrentPosition(posOptions)
                     .then(function(position) {  
@@ -2343,6 +2358,34 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 });
             });
             return deferred.promise;
+        },
+        isLocationAvailable: function () {
+            // cordova.plugins.diagnostic.isLocationAvailable(function(available){
+                available = 0
+                if( !available ){
+                    swal({
+                        title: $filter('translate')('global_fields.gps'),
+                        text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonColor: "#254e7b",
+                        confirmButtonText: $filter('translate')('global_fields.goto_settings'),
+                        showLoaderOnConfirm: true,  
+                        allowOutsideClick: false
+                    }).then(function (confirm) {
+                        if( confirm ){
+                            if( ionic.Platform.isIOS() ){
+                                window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
+                            }else{ 
+                                cordova.plugins.diagnostic.switchToLocationSettings();
+                            }
+                        }
+                    }, function () {})
+                }
+                
+            // }, function(error){
+            //     console.error("The following error occurred: "+error);
+            // });
         }
     };
 
@@ -2966,7 +3009,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     } 
                     $window.CordovaHttpPlugin.post( url, postData, headers, function( res ) { 
                         Alert.loader(false);
-                        //console.log("res", JSON.parse(res.data))
+                        console.log("res", JSON.parse(res.data))
                         // resolve( res.data );
                         resolve( JSON.parse(res.data) );
                     }, function(err) {
@@ -3047,7 +3090,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         return promise; 
     }
     this.post = function ( postData ) { 
-        if( ionic.Platform.isIOS() && $window.CordovaHttpPlugin ){
+        if( ionic.Platform.isIOS() && $window.CordovaHttpPlugin && false ){
             var req = $.when( this.ipv6( 'post', API.url, postData ) )
             var promise = new Promise(function(resolve, reject) {
                 req.then(function (data) {
@@ -3197,3 +3240,32 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         }
     return thiservice;
 })
+
+.service('AppServices', function($filter) {
+    return {
+        updateApp: function (data) {
+            swal({
+                title: $filter('translate')('global_fields.update_app'),
+                text: $filter('translate')('global_fields.update_app_texte'),
+                type: "info",
+                showCancelButton: false,
+                confirmButtonColor: "#254e7b",
+                confirmButtonText: $filter('translate')('global_fields.update_app'), 
+                showLoaderOnConfirm: true,  
+                allowOutsideClick: false
+            }).then(function (confirm) {
+                if( confirm ){
+                    if( ionic.Platform.isIOS() ){
+                        window.open("itms-apps://itunes.apple.com/app/"+data.iosappid, '_system')
+                    }else{
+                        window.open("https://play.google.com/store/apps/details?id="+data.andriodappid, '_system')
+                    }
+                }
+            }, function () {})
+        }
+    }
+})
+
+
+
+

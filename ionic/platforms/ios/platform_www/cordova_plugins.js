@@ -90,14 +90,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
-        "id": "cordova-plugin-app-version.AppVersionPlugin",
-        "pluginId": "cordova-plugin-app-version",
-        "clobbers": [
-            "cordova.getAppVersion"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-badge/www/badge.js",
         "id": "cordova-plugin-badge.Badge",
         "pluginId": "cordova-plugin-badge",
@@ -422,14 +414,6 @@ module.exports = [
         "pluginId": "cordova-plugin-x-toast"
     },
     {
-        "file": "plugins/cordova.plugins.diagnostic/www/ios/diagnostic.js",
-        "id": "cordova.plugins.diagnostic.Diagnostic",
-        "pluginId": "cordova.plugins.diagnostic",
-        "clobbers": [
-            "cordova.plugins.diagnostic"
-        ]
-    },
-    {
         "file": "plugins/com.cesidiodibenedetto.filechooser/www/filechooser.js",
         "id": "com.cesidiodibenedetto.filechooser.FileChooser",
         "pluginId": "com.cesidiodibenedetto.filechooser",
@@ -493,6 +477,22 @@ module.exports = [
             "navigator.notification",
             "navigator"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+        "id": "cordova-plugin-app-version.AppVersionPlugin",
+        "pluginId": "cordova-plugin-app-version",
+        "clobbers": [
+            "cordova.getAppVersion"
+        ]
+    },
+    {
+        "file": "plugins/cordova.plugins.diagnostic/www/ios/diagnostic.js",
+        "id": "cordova.plugins.diagnostic.Diagnostic",
+        "pluginId": "cordova.plugins.diagnostic",
+        "clobbers": [
+            "cordova.plugins.diagnostic"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -510,7 +510,6 @@ module.exports.metadata =
     "com.verso.cordova.clipboard": "0.1.0",
     "cordova-open-native-settings": "1.4.1",
     "cordova-plugin-app-launcher": "0.4.0",
-    "cordova-plugin-app-version": "0.1.9",
     "cordova-plugin-badge": "0.8.7",
     "cordova-plugin-camera": "4.0.1",
     "cordova-plugin-compat": "1.2.0",
@@ -525,14 +524,15 @@ module.exports.metadata =
     "cordova-plugin-lock-info": "0.0.1",
     "cordova-plugin-touchid": "0.4.0",
     "cordova-plugin-x-toast": "2.6.0",
-    "cordova.plugins.diagnostic": "3.9.1",
     "com.cesidiodibenedetto.filechooser": "1.0.4",
     "phonegap-plugin-barcodescanner": "7.0.2",
     "cordova-plugin-http": "1.2.0",
     "cordova-plugin-file-transfer": "1.7.0",
     "cordova-plugin-urlhandler": "0.7.0",
     "cordova-plugin-dialogs": "2.0.1",
-    "cordova-plugin-vibration": "3.0.1"
+    "cordova-plugin-vibration": "3.0.1",
+    "cordova-plugin-app-version": "0.1.9",
+    "cordova.plugins.diagnostic": "3.9.2"
 }
 // BOTTOM OF METADATA
 });

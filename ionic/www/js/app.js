@@ -102,7 +102,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                     
                     Geo.getPosition().then(function(position) {
                         Go.post({ 
-                            task:"getParamAppli", 
+                            "task":"getParamAppli", 
                             "NoLoader": true
                         }).then(function(data) {
                             if( data.success == 1 ){
@@ -746,7 +746,53 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                         break;
 
                                     //Blocked profil from Admin
-                                    
+
+
+                                    /////////////////////// CapitalSocial ////////////////////////////
+                                    case "add_doc_pi_signatory": 
+                                    case "add_doc_persenal_address_signatory":
+                                    case "add_doc_pi_rep":
+                                    case "add_doc_persenal_address_rep":
+                                    case "add_doc_pi_shareholder":
+                                    case "add_doc_persenal_address_shareholder":
+                                    case "profil_blocked_signatory":
+                                    case "profil_blocked_rep":
+                                    case "profil_blocked_shareholder":
+                                    case "doc_identity_confirmed_signatory":
+                                    case "doc_identity_refused_signatory":
+                                    case "doc_identity_confirmed_rep":
+                                    case "doc_identity_refused_rep":
+                                    case "doc_identity_confirmed_shareholder":
+                                    case "doc_identity_refused_shareholder":
+                                    case "doc_address_confirmed_signatory":
+                                    case "doc_address_refused_signatory":
+                                    case "doc_address_confirmed_rep":
+                                    case "doc_address_refused_rep":
+                                    case "doc_address_confirmed_shareholder":
+                                    case "doc_address_refused_shareholder":
+                                    case "updatepibyadmin_signatory":
+                                    case "updatepibyadmin_rep":
+                                    case "updatepibyadmin_shareholder":
+                                    case "updatephonebyadmin_signatory":
+                                    case "updatephonebyadmin_rep":
+                                    case "updatephonebyadmin_shareholder":
+                                    case "updateemailbyadmin_signatory":
+                                    case "updateemailbyadmin_rep":
+                                    case "updateemailbyadmin_shareholder":
+                                    case "updateaddressbyadmin_signatory":
+                                    case "updateaddressbyadmin_rep":
+                                    case "updateaddressbyadmin_shareholder":
+                                    case "treezorvaldation_confirmed":
+                                    case "treezorvaldation_confirmed_signatory":
+                                    case "treezorvaldation_confirmed_rep":
+                                    case "treezorvaldation_confirmed_shareholder":
+                                    case "treezorvaldation_refused":
+                                    case "treezorvaldation_refused_signatory":
+                                    case "treezorvaldation_refused_rep":
+                                    case "treezorvaldation_refused_shareholder":
+                                        $rootScope.$emit('GetShareCapitalData');
+                                        break;
+
 
                                     
 

@@ -95,14 +95,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-app-version": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-app-version"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-badge": {
         "source": {
             "type": "registry",
@@ -215,14 +207,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova.plugins.diagnostic": {
-        "source": {
-            "type": "registry",
-            "id": "cordova.plugins.diagnostic"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "com.cesidiodibenedetto.filechooser": {
         "source": {
             "type": "registry",
@@ -277,6 +261,22 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-vibration"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-app-version": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-app-version@^0.1.9"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova.plugins.diagnostic": {
+        "source": {
+            "type": "registry",
+            "id": "cordova.plugins.diagnostic@^3.9.1"
         },
         "is_top_level": true,
         "variables": {}

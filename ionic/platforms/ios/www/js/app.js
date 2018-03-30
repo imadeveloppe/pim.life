@@ -46,8 +46,8 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
         }) 
         setTimeout(function () {
             window.localStorage.setItem('langs', JSON.stringify(langs) ); 
-            // $.getJSON(API.server+'admin/public/multilingue/api/?task=getLangs', function(data) { 
-            $.getJSON('https://dev.pim.life/admin/public/multilingue/api/?task=getLangs', function(data) {  
+            $.getJSON(API.server+'admin/public/multilingue/api/?task=getLangs', function(data) { 
+            // $.getJSON('https://dev.pim.life/admin/public/multilingue/api/?task=getLangs', function(data) {  
                 var langs = [];
                 angular.forEach(data, function (value, key) {  
                     $translateProvider.translations(key, value); 
@@ -89,7 +89,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
     };
 })
 
-.run(function($ionicPlatform,$sce, $ionicModal, $cordovaBadge,$storage, $rootScope, API, DATA, Alert, AuthService, User, $window, $interval,  Accounts, $state, $location, $translate, LockScreen, $filter, Go, Geo, $ionicHistory, User) {  
+.run(function($ionicPlatform,$sce, $ionicModal, $cordovaBadge,$storage, $rootScope, API, DATA, Alert, AuthService, User, $window, $interval,  Accounts, $state, $location, $translate, LockScreen, $filter, Go, Geo, $ionicHistory, User, AppServices) {  
 
     $ionicPlatform.ready(function() {  
          
@@ -102,7 +102,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                     
                     Geo.getPosition().then(function(position) {
                         Go.post({ 
-                            task:"getParamAppli", 
+                            "task":"getParamAppli", 
                             "NoLoader": true
                         }).then(function(data) {
                             if( data.success == 1 ){
@@ -113,111 +113,23 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                 } 
 
                                 if( ionic.Platform.isIOS() ){
-                                    if( data.iosversion != AppVersion ){
-                                        swal({
-                                            title: $filter('translate')('global_fields.update_app'),
-                                            text: $filter('translate')('global_fields.update_app_texte'),
-                                            type: "info",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#254e7b",
-                                            confirmButtonText: $filter('translate')('global_fields.update_app'), 
-                                            showLoaderOnConfirm: true,  
-                                            allowOutsideClick: false
-                                        }).then(function (confirm) {
-                                            if( confirm ){
-                                               window.open("itms-apps://itunes.apple.com/app/"+data.iosappid, '_system')
-                                            }
-                                        }, function () {})
-                                    }else{
-                                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                                            if( !available ){
-                                                swal({
-                                                    title: $filter('translate')('global_fields.gps'),
-                                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                                    type: "info",
-                                                    showCancelButton: false,
-                                                    confirmButtonColor: "#254e7b",
-                                                    confirmButtonText: $filter('translate')('global_fields.goto_settings'),
-                                                    showLoaderOnConfirm: true,  
-                                                    allowOutsideClick: false
-                                                }).then(function (confirm) {
-                                                    if( confirm ){
-                                                       window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
-                                                    }
-                                                }, function () {})
-                                            }
-                                            
-                                        }, function(error){
-                                            console.error("The following error occurred: "+error);
-                                        });
+                                    if( data.iosversion != AppVersion ){ 
+                                        AppServices.updateApp(data);
+                                    }else{ 
+                                        Geo.isLocationAvailable() 
                                     }
                                 }else{
                                     if( data.andriodversion != AppVersion ){
-                                        swal({
-                                            title: $filter('translate')('global_fields.update_app'),
-                                            text: $filter('translate')('global_fields.update_app_texte'),
-                                            type: "info",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#254e7b",
-                                            confirmButtonText: $filter('translate')('global_fields.update_app'), 
-                                            showLoaderOnConfirm: true,  
-                                            allowOutsideClick: false
-                                        }).then(function (confirm) {
-                                            if( confirm ){
-                                               window.open("https://play.google.com/store/apps/details?id="+data.andriodappid, '_system')
-                                            }
-                                        }, function () {})
-                                    }else{
-                                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                                            if( !available ){
-                                                swal({
-                                                    title: $filter('translate')('global_fields.gps'),
-                                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                                    type: "info",
-                                                    showCancelButton: false,
-                                                    confirmButtonColor: "#254e7b",
-                                                    confirmButtonText: $filter('translate')('global_fields.goto_settings'), 
-                                                    showLoaderOnConfirm: true,  
-                                                    allowOutsideClick: false
-                                                }).then(function (confirm) {
-                                                    if( confirm ){
-                                                       cordova.plugins.diagnostic.switchToLocationSettings();
-                                                    }
-                                                }, function () {})
-                                            }
-                                            
-                                        }, function(error){
-                                            console.error("The following error occurred: "+error);
-                                        });
+                                         AppServices.updateApp(data);
+                                    }else{ 
+                                        Geo.isLocationAvailable() 
                                     }
                                 }
                             }
                                 
                         })
                     }, function (callback) {
-                        console.log("GPS false")
-
-                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                            if( !available ){
-                                swal({
-                                    title: "GPS",
-                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                    type: "info",
-                                    showCancelButton: false,
-                                    confirmButtonColor: "#254e7b",
-                                    confirmButtonText: "Aller au paramètres", 
-                                    showLoaderOnConfirm: true,  
-                                    allowOutsideClick: false
-                                }).then(function (confirm) {
-                                    if( confirm ){
-                                       window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
-                                    }
-                                }, function () {})
-                            }
-                            
-                        }, function(error){
-                            console.error("The following error occurred: "+error);
-                        });
+                        Geo.isLocationAvailable() 
                     }) 
 
                 }); 
@@ -834,7 +746,53 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                         break;
 
                                     //Blocked profil from Admin
-                                    
+
+
+                                    /////////////////////// CapitalSocial ////////////////////////////
+                                    case "add_doc_pi_signatory": 
+                                    case "add_doc_persenal_address_signatory":
+                                    case "add_doc_pi_rep":
+                                    case "add_doc_persenal_address_rep":
+                                    case "add_doc_pi_shareholder":
+                                    case "add_doc_persenal_address_shareholder":
+                                    case "profil_blocked_signatory":
+                                    case "profil_blocked_rep":
+                                    case "profil_blocked_shareholder":
+                                    case "doc_identity_confirmed_signatory":
+                                    case "doc_identity_refused_signatory":
+                                    case "doc_identity_confirmed_rep":
+                                    case "doc_identity_refused_rep":
+                                    case "doc_identity_confirmed_shareholder":
+                                    case "doc_identity_refused_shareholder":
+                                    case "doc_address_confirmed_signatory":
+                                    case "doc_address_refused_signatory":
+                                    case "doc_address_confirmed_rep":
+                                    case "doc_address_refused_rep":
+                                    case "doc_address_confirmed_shareholder":
+                                    case "doc_address_refused_shareholder":
+                                    case "updatepibyadmin_signatory":
+                                    case "updatepibyadmin_rep":
+                                    case "updatepibyadmin_shareholder":
+                                    case "updatephonebyadmin_signatory":
+                                    case "updatephonebyadmin_rep":
+                                    case "updatephonebyadmin_shareholder":
+                                    case "updateemailbyadmin_signatory":
+                                    case "updateemailbyadmin_rep":
+                                    case "updateemailbyadmin_shareholder":
+                                    case "updateaddressbyadmin_signatory":
+                                    case "updateaddressbyadmin_rep":
+                                    case "updateaddressbyadmin_shareholder":
+                                    case "treezorvaldation_confirmed":
+                                    case "treezorvaldation_confirmed_signatory":
+                                    case "treezorvaldation_confirmed_rep":
+                                    case "treezorvaldation_confirmed_shareholder":
+                                    case "treezorvaldation_refused":
+                                    case "treezorvaldation_refused_signatory":
+                                    case "treezorvaldation_refused_rep":
+                                    case "treezorvaldation_refused_shareholder":
+                                        $rootScope.$emit('GetShareCapitalData');
+                                        break;
+
 
                                     
 

@@ -44,9 +44,6 @@
     <feature name="Launcher">
         <param name="ios-package" value="Launcher" />
     </feature>
-    <feature name="AppVersion">
-        <param name="ios-package" value="AppVersion" />
-    </feature>
     <feature name="Badge">
         <param name="ios-package" value="APPBadge" />
     </feature>
@@ -86,9 +83,6 @@
     <feature name="Toast">
         <param name="ios-package" value="Toast" />
     </feature>
-    <feature name="Diagnostic">
-        <param name="ios-package" value="Diagnostic" />
-    </feature>
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
     </feature>
@@ -103,6 +97,13 @@
     </feature>
     <feature name="Vibration">
         <param name="ios-package" value="CDVVibration" />
+    </feature>
+    <feature name="AppVersion">
+        <param name="ios-package" value="AppVersion" />
+    </feature>
+    <feature name="Diagnostic">
+        <param name="ios-package" value="Diagnostic" />
+        <param name="onload" value="true" />
     </feature>
     <name>PIM</name>
     <description>

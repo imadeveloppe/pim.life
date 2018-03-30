@@ -47140,11 +47140,13 @@ ion-content.listCauses.hasCategory {
     background-color: #0c60ee
 }
 
-#profile-shop .magazin-categories h3 {
+#profile-shop .magazin-categories h3,
+#profile-shop .contact-infos h3 {
     font-size: 16px;
     color: #254e7b;
     font-weight: 700;
-    margin-bottom: 5px
+    margin-bottom: 5px;
+    text-transform:uppercase;
 }
 
 #profile-shop .liste-categories span {
@@ -49033,7 +49035,28 @@ body.lockScreen .appArea {
 }
 .hasCause .cause.noCauseSelected {
     padding-top: 15px;
-    min-height: 120px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.hasCause .cause.noCauseSelected h2 {
+    color: #ef7f31;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 19px;
+}
+.hasCause .cause.noCauseSelected p{
+    color: #355c86;
+    margin-bottom: 20px;
+}   
+.hasCause .cause.noCauseSelected p strong{
+     display: block;
+}
+.hasCause .cause.noCauseSelected button{
+    background: #ef7f31;
+    border: none;
+    color: #fff;
+    padding: 7px 40px;
+    border-radius: 20px;
 }
 .hasCause .cause .header img.cover-cause{
     width: 100%; 
@@ -49859,6 +49882,16 @@ form.questionsSignin input.mbsc-control{
     padding-bottom: 5px;
 }
 
+ion-modal-view.modalCGV section.acceptCGV{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
+ion-modal-view.modalCGV ion-content{
+    bottom: 52px;
+}
 
 
 @media (max-height:736px) { /* iphone 6+, 7+ */
@@ -49899,6 +49932,14 @@ form.questionsSignin input.mbsc-control{
         height: 80px;
     }
 
+}
+
+@media (min-width:400px) { /* iphone 6/78/ plus */ 
+    .hasCause .cause.noCauseSelected {
+        padding-top: 10%;
+        text-align: center;
+        padding-bottom: 10%;
+    }
 }
 
 @media (max-height:480px) { /* iphone 4 */ 
@@ -49962,6 +50003,23 @@ form.questionsSignin input.mbsc-control{
     }
     .liste-transaction .liste-shopping h2 {
         font-size: 12px; 
+    }
+
+    .hasCause .cause.noCauseSelected {
+        padding-top: 13px;
+        padding-bottom: 0;
+    }
+    .hasCause .cause.noCauseSelected h2 { 
+        font-size: 16px;
+    }
+    .hasCause .cause.noCauseSelected p {
+        margin-bottom: 10px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .block-notifs-continner{
+        height: 25px!important;
+        margin-top: 5px!important;
     }
 }
 

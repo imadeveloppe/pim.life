@@ -37,17 +37,20 @@
                     <a class="positive" ui-sref="tab.detailCause({idCause: cause.id})">{{ 'home.more_infos' | translate }}</a>
                 </div>
             </div>
-        </div>  
-        <div class="cause noCauseSelected" ng-if="isPro != 2 && !isCause && loaded">   
+        </div> 
+
+        <div class="cause noCauseSelected" ng-if="isPro != 2 && !isCause && loaded">
             <div class="content">
-                {{ 'home.no_cause_selected' | translate }}
-                <div class="more-info" style="padding-top: 10px;">
-                    <a class="positive" ui-sref="tab.causes({idCause: cause.id})">{{ 'home.select_a_cause' | translate }}</a>
-                </div>
+                 <h2>{{ 'home.no_cause_title' | translate }}</h2>
+                 <p>
+                     {{ 'home.no_cause_texte_1' | translate }}
+                     <strong>{{ 'home.no_cause_texte_2' | translate }}</strong> 
+                 </p>
+                 <button  ui-sref="tab.causes">{{ 'home.select_a_cause' | translate }}</button>
             </div>
         </div>
 
-        <div style="height: 30px;margin-top: 10px;"> 
+        <div style="height: 30px;margin-top: 10px;" class="block-notifs-continner"> 
             <div ng-if="NotifHome.nbr > 0" ng-click="pendingNotifHome( NotifHome.type )" class="block padding notifs"> 
 
                 <div ng-if=" NotifHome.type == 'paiement' " style="margin-top: 0px;">

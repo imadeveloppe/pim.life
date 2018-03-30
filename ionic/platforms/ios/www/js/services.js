@@ -414,6 +414,22 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     };
 })
 
+.directive('textarea', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, element, attr){
+        var update = function(){
+            element.css("height", "auto");
+            var height = element[0].scrollHeight; 
+            element.css("height", element[0].scrollHeight + "px");
+        };
+        scope.$watch(attr.ngModel, function(){
+            update();
+        });
+    }
+  };
+})
+
 .service('Badges', function(DATA, $rootScope, $cordovaBadge) {
     var UserMail = window.localStorage.getItem('username_a0f55e81c44553384a9421');
     var keybadge = '1550ca98761550c76bb2da133bb2988uueda133' + UserMail;
@@ -496,10 +512,10 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     function destroyUserCredentials() {
         User.destroyUserData();
         // Accounts.destoryAll();
-        authToken = undefined;
-        isAuthenticated = false;
-        $http.defaults.headers.common['Authorization'] = undefined; 
-        window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        // authToken = undefined;
+        // isAuthenticated = false;
+        // $http.defaults.headers.common['Authorization'] = undefined; 
+        // window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
     var login = function(name, pw, touchid) {
@@ -528,14 +544,16 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
 
                     if (data.success == 1) {  
+
+                         resolve( data.UserDetails );
+
                         $storage.setObject('capitalSocial', {});
                         userInfos = data.userInfos;
                         ////////////////////////////////////////////////// add User connected ///////////////////////////////////////////////
                          
                         var connectedUsers = $storage.getArrayOfObjects("connectedUsers");
                         var finded = false; 
-
-                        console.log("connectedUsers", connectedUsers)
+ 
                         angular.forEach(connectedUsers, function (object, index) {
                             if( userInfos.id == object.id && userInfos.isshop == object.isshop ){
                                 finded = true;
@@ -546,8 +564,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         setTimeout(function () {
                             if( !finded ) {
                                 connectedUsers.push( userInfos ); 
-                            }
-                            console.log("connectedUsers", connectedUsers)
+                            } 
                             $storage.setArrayOfObjects("connectedUsers", connectedUsers);
                         }) 
 
@@ -599,16 +616,14 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         window.localStorage.setItem('lockCode', data.UserDetails.user.code)
  
 
-                        if( parseInt(data.UserDetails.user.blocedcode) == 1 ){ 
-                            $location.path('/resetlockcode'); 
-                            console.log("asdasdsad asdasd ad resetlockcode")
-                        }else{ 
-                            $location.path('/tab/home');
-                            window.localStorage.setItem('loged', '1');
-                            console.log("asdasdsad asdasd ad Home")
-                        }
-
-                        resolve( data.UserDetails );
+                        // if( parseInt(data.UserDetails.user.blocedcode) == 1 ){ 
+                        //     $location.path('/resetlockcode'); 
+                        //     console.log("asdasdsad asdasd ad resetlockcode")
+                        // }else{ 
+                        //     $location.path('/tab/home');
+                        //     window.localStorage.setItem('loged', '1');
+                        //     console.log("asdasdsad asdasd ad Home")
+                        // } 
 
 
                         if( ionic.Platform.isIOS() ){
@@ -841,6 +856,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         if (!Go.is('addprofile')) { 
                             Directlogout()
                         } 
+                    }else if(data.success == 2 && data.errorCode ==  1022){  /// probleme de geolocalisation
+                        Geo.isLocationAvailable();
                     }else if (data.success == -1) { // deja suspendu
                         $ionicLoading.hide();
                         //storeUserCredentials(data.userToken);
@@ -2034,7 +2051,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 hideLoader = true;
             }
         }
-        if( !postData.NoLoader ){
+        if( !postData.NoLoader || postData.hideLoader ){
             Alert.loader(true);
         } 
 
@@ -2341,6 +2358,34 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 });
             });
             return deferred.promise;
+        },
+        isLocationAvailable: function () {
+            cordova.plugins.diagnostic.isLocationAvailable(function(available){ 
+
+                if( !available ){
+                    swal({
+                        title: $filter('translate')('global_fields.gps'),
+                        text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonColor: "#254e7b",
+                        confirmButtonText: $filter('translate')('global_fields.goto_settings'),
+                        showLoaderOnConfirm: true,  
+                        allowOutsideClick: false
+                    }).then(function (confirm) {
+                        if( confirm ){
+                            if( ionic.Platform.isIOS() ){
+                                window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
+                            }else{ 
+                                cordova.plugins.diagnostic.switchToLocationSettings();
+                            }
+                        }
+                    }, function () {})
+                }
+                
+            }, function(error){
+                console.error("The following error occurred: "+error);
+            });
         }
     };
 
@@ -3195,3 +3240,32 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         }
     return thiservice;
 })
+
+.service('AppServices', function($filter) {
+    return {
+        updateApp: function (data) {
+            swal({
+                title: $filter('translate')('global_fields.update_app'),
+                text: $filter('translate')('global_fields.update_app_texte'),
+                type: "info",
+                showCancelButton: false,
+                confirmButtonColor: "#254e7b",
+                confirmButtonText: $filter('translate')('global_fields.update_app'), 
+                showLoaderOnConfirm: true,  
+                allowOutsideClick: false
+            }).then(function (confirm) {
+                if( confirm ){
+                    if( ionic.Platform.isIOS() ){
+                        window.open("itms-apps://itunes.apple.com/app/"+data.iosappid, '_system')
+                    }else{
+                        window.open("https://play.google.com/store/apps/details?id="+data.andriodappid, '_system')
+                    }
+                }
+            }, function () {})
+        }
+    }
+})
+
+
+
+
