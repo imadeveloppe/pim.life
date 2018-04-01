@@ -1478,11 +1478,11 @@ angular.module('pim.controllersShared', [])
             if( data.success == 1){
                 $rootScope.$emit('ClearTrans');
                 $state.go('tab.MarchandDemandPayment');
-            }else if(data.success == 1 && parseInt(data.valid) != 1){
-                Alert.error($filter('translate')('home.accountnotvalidatedyet'))
+                $scope.changeValidationFinalState( 1 );
+            }else{
+                $scope.changeValidationFinalState( 0 );
             } 
-
-            $scope.changeValidationFinalState( parseInt(data.valid) );
+            
         }) 
     }
 
@@ -2140,7 +2140,23 @@ angular.module('pim.controllersShared', [])
         $rootScope.$emit("PaymentDemandePayByQrCode");
     }
 
+    $scope.clearReason = function(){
+        $scope.trans.reson = ''; 
+        console.log('click')
+    }
 
+
+
+    $scope.$on('$ionicView.afterEnter', function() {
+        if( Go.is('MarchandDemandPayment') ){
+            $scope.trans.reson = $filter('translate')('request_payment_using_qr_code.customer_regulation');
+            setTimeout(function () {
+                $('[ng-model=amount]:visible').click()
+            },1000)
+        }
+            
+    });
+    
 
 
 
@@ -5009,23 +5025,15 @@ angular.module('pim.controllersShared', [])
                 "email": $scope.data.email, 
             };
             Go.post(postData).then(function(datas) {
-                if (datas.success == 1) {
-                    //AuthService.storeUserCredentials(datas.userToken);
-                    User.SetDetails(datas.UserDetails);
-                    $scope.data = datas.UserDetails.user;
+                if (datas.success == 1) { 
                     $state.go('forgotpassword-step2');
+                    $rootScope.secretQuestions = datas.questions;
                 }
             });
         }
     };
 
-    if ($location.path() == '/forgot-password-step2') {
-        var Details = User.GetDetails();
-        console.log(Details.user)
-        $scope.data.question1 = Details.user.question1;
-        $scope.data.question2 = Details.user.question2;
-        $scope.data.question3 = Details.user.question3;
-    }
+    
 
     $scope.codequestions = function() {
         Alert.loader(true);
@@ -5046,9 +5054,9 @@ angular.module('pim.controllersShared', [])
             var postData = {
                 "task": "ForgotPasswordCheckAnswers",
                 "codesms": $scope.data.codeSMS,
-                "answer1": $scope.data.answer1,
-                "answer2": $scope.data.answer2,
-                "answer3": $scope.data.answer3
+                "answer1": crypt.sha256($scope.data.answer1),
+                "answer2": crypt.sha256($scope.data.answer2),
+                "answer3": crypt.sha256($scope.data.answer3)
             };
             Go.post(postData).then(function(data) {
                 if (data.success == 1) {
@@ -5066,6 +5074,13 @@ angular.module('pim.controllersShared', [])
         $scope.data.answer2 = '';
         $scope.data.answer3 = ''; 
         $scope.data.Indicatif = '+33';
+
+        if ($location.path() == '/forgot-password-step2' && $rootScope.secretQuestions) { 
+                $scope.data.question1 = $rootScope.secretQuestions.question1;
+                $scope.data.question2 = $rootScope.secretQuestions.question2;
+                $scope.data.question3 = $rootScope.secretQuestions.question3; 
+            
+        }
     });
 
     $scope.enternewpassword = function() {
@@ -5986,42 +6001,42 @@ angular.module('pim.controllersShared', [])
                     }
                 }
             };
-            // pdfMake.createPdf(docDefinition).download();   
-            // $ionicLoading.hide();
-            const pdfDocGenerator = pdfMake.createPdf(docDefinition);  
-            pdfDocGenerator.getBase64((data) => {  
-                $ionicLoading.hide();
-                if( ionic.Platform.isIOS() ){  
-                    $cordovaFile.writeFile( cordova.file.documentsDirectory,'bank-statement-'+Month+"-"+Year+'.pdf' ,base64toBlob(data, "application/pdf"), true)
-                    .then(function (success) { 
-                        $cordovaFileOpener2.open( 
-                            cordova.file.documentsDirectory+'bank-statement-'+Month+"-"+Year+'.pdf',
-                            'application/pdf'
-                        ).then(function() {
-                              //console.log("file opened successfully")
-                        }, function(err) { 
-                              //console.log("An error occurred. Show a message to the user")
-                        });
-                    }, function (error) {
-                        alert('Fails');
-                    });  
-                }else{
-                     $cordovaFile.writeFile( cordova.file.externalApplicationStorageDirectory,'bank-statement-'+Month+"-"+Year+'.pdf' ,base64toBlob(data, "application/pdf"), true)
-                    .then(function (success) { 
-                        $cordovaFileOpener2.open( 
-                            cordova.file.externalApplicationStorageDirectory+'bank-statement-'+Month+"-"+Year+'.pdf',
-                            'application/pdf'
-                        ).then(function() {
-                              //console.log("file opened successfully")
-                        }, function(err) { 
-                              //console.log("An error occurred. Show a message to the user")
-                        });
-                    }, function (error) {
-                        alert('Fails');
-                    });
-                }
+            pdfMake.createPdf(docDefinition).download();   
+            // // $ionicLoading.hide();
+            // const pdfDocGenerator = pdfMake.createPdf(docDefinition);  
+            // pdfDocGenerator.getBase64((data) => {  
+            //     $ionicLoading.hide();
+            //     if( ionic.Platform.isIOS() ){  
+            //         $cordovaFile.writeFile( cordova.file.documentsDirectory,'bank-statement-'+Month+"-"+Year+'.pdf' ,base64toBlob(data, "application/pdf"), true)
+            //         .then(function (success) { 
+            //             $cordovaFileOpener2.open( 
+            //                 cordova.file.documentsDirectory+'bank-statement-'+Month+"-"+Year+'.pdf',
+            //                 'application/pdf'
+            //             ).then(function() {
+            //                   //console.log("file opened successfully")
+            //             }, function(err) { 
+            //                   //console.log("An error occurred. Show a message to the user")
+            //             });
+            //         }, function (error) {
+            //             alert('Fails');
+            //         });  
+            //     }else{
+            //          $cordovaFile.writeFile( cordova.file.externalApplicationStorageDirectory,'bank-statement-'+Month+"-"+Year+'.pdf' ,base64toBlob(data, "application/pdf"), true)
+            //         .then(function (success) { 
+            //             $cordovaFileOpener2.open( 
+            //                 cordova.file.externalApplicationStorageDirectory+'bank-statement-'+Month+"-"+Year+'.pdf',
+            //                 'application/pdf'
+            //             ).then(function() {
+            //                   //console.log("file opened successfully")
+            //             }, function(err) { 
+            //                   //console.log("An error occurred. Show a message to the user")
+            //             });
+            //         }, function (error) {
+            //             alert('Fails');
+            //         });
+            //     }
                 
-            }); 
+            // }); 
          
     }// end 
   
@@ -6189,7 +6204,7 @@ angular.module('pim.controllersShared', [])
                 setTimeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 },1000)
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }   

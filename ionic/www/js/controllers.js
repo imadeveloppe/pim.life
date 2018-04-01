@@ -74,7 +74,7 @@ angular.module('pim.controllers', [])
                     }else{ 
                         switch( isshop ){
                             case '0':
-                                $state.go('signup',{
+                                $state.go('resetQuestionSendResponses',{
                                     code: code
                                 })
                                 break;
@@ -91,6 +91,21 @@ angular.module('pim.controllers', [])
                 } 
             })
             
+        } 
+    }
+
+    $scope.resetQuestionsSecret = function ( url_string) {
+
+        var url = new URL(url_string);
+        var code = url.searchParams.get("code");
+        var usercode = url.searchParams.get("usercode");
+
+        if( User.GetDetails() == false ){ 
+
+            $state.go('resetQuestionSendResponses',{
+                code: code,
+                usercode: usercode
+            })
         } 
     }
 
@@ -221,6 +236,179 @@ angular.module('pim.controllers', [])
         // //console.log('Ionic Push: Got token ', data.token, data.platform);
         $scope.token = data.token;
     });
+})
+
+
+.controller('resetQuestionSendEmail', function($scope,$rootScope,DATA, AuthService, $stateParams, $state, Go, SharedService, $ionicHistory, $filter, $ionicActionSheet ) {
+    $scope.data = {}
+    $scope.firstVisite = true;
+    $scope.$on('$ionicView.beforeEnter', function() { 
+
+        console.log($ionicHistory.viewHistory())
+        if( $ionicHistory.viewHistory().forwardView){
+            $scope.firstVisite = false;
+        }else{
+            $scope.firstVisite = true;
+        }
+        
+        $scope.data.mail = $rootScope.mailFirstStepSignup;
+    });
+
+    $scope.sendEmail = function () {
+        var validationList = [{
+            type: 'email',
+            value: $scope.data.mail
+        }];
+        if (SharedService.Validation(validationList)) {
+            Go.post({
+                task: "QuestionsOublie_Sendmail",
+                mail: $scope.data.mail, 
+                tokendevice: DATA.token
+            }).then(function (data) {
+                if (data.success == 1) {
+                    $rootScope.mailFirstStepSignup = $scope.data.mail;
+                    $state.go('signup-validate-email-sent');    
+                }
+            })
+        }
+    }
+
+    $scope.openMailApp = function () {
+
+
+        if( ionic.Platform.isIOS() ){
+            window.open('message://');
+        }else{
+            
+            window.plugins.launcher.canLaunch({packageName:'com.google.android.gm'}, function(data) {
+                $scope.chooseMailClient();
+            }, function(err) {
+                window.plugins.launcher.launch({packageName:'com.samsung.android.email.ui'})
+            });
+        }
+    }
+
+    $scope.chooseMailClient = function () {  
+ 
+        angular.element(document.querySelector('body')).removeClass('platform-android');
+        $ionicActionSheet.show({
+         buttons: [
+           { text: "Email" },
+           { text: "Gmail" }
+         ], 
+         cancelText: $filter('translate')('feedback.cancel'),
+         cancel: function() {
+              
+        },
+         buttonClicked: function(index) {
+            switch(index) {
+                case 0:
+                     window.plugins.launcher.launch({packageName:'com.samsung.android.email.ui'})
+                    break;
+                case 1:
+                     window.plugins.launcher.launch({packageName:'com.google.android.gm'})
+                    break;  
+            } 
+            return true;
+         }
+       })
+    }
+
+    $scope.dontReceiveMail = function () {
+        $ionicHistory.goBack()
+    }
+})
+
+.controller('resetQuestionSendResponses', function($scope,$rootScope,DATA,LockScreen,Alert, SharedService, AuthService, $stateParams, $state, Go, SharedService, crypt, $ionicHistory, $filter, $ionicActionSheet, $lockScreen ) {
+
+    $scope.$on('$ionicView.beforeEnter', function() { 
+        $scope.data = {
+            code: $stateParams.code,
+            usercode: $stateParams.usercode
+        }
+        console.log(crypt.sha256('1111'));
+        $lockScreen.show({
+            code: $scope.data.usercode, 
+            passcodeLabel:  $filter('translate')('forgot_password_step_2.lock_code'),
+            textLink:  $filter('translate')('passcode.service_client'),
+            touchId: false,
+            cancelBtn: $filter('translate')('global_fields.cancel'),
+            onCorrect: function () {   
+                $('body').removeClass('lockScreen');
+                 Go.post({
+                    task: "QuestionsOublie_Sendsms",
+                    codemail: $scope.data.code
+                }).then(function (data) {
+                    if (data.success == 1) {
+                        Alert.success( $filter('translate')('forgot_password_step_2.smssent') );
+                        $scope.listQuestions1 = data.listQuestions.listQuestions1;
+                        $scope.listQuestions2 = data.listQuestions.listQuestions2;
+                        $scope.listQuestions3 = data.listQuestions.listQuestions3;
+                    }
+                })
+            },
+            onWrong: function (attemptNumber) {
+                
+                  navigator.vibrate(200)
+                  setTimeout(function(){
+                  navigator.vibrate(200)
+                  },500)
+                  if( attemptNumber >= 3 ){  
+                    Alert.error( $filter('translate')('forgot_password_step_2.faild_lockout') );
+                    setTimeout(function () {
+                        $state.go('signin')
+                        $lockScreen.hide(); 
+                    },1000)
+                  }
+            }
+        }); 
+    });
+
+    $scope.questions = function() {
+        //console.log('$scope.data',$scope.data)
+        var validationList = [{
+            type: 'question1',
+            value: $scope.data.idquestion1
+        }, {
+            type: 'answer1',
+            value: $scope.data.answer1
+        }, {
+            type: 'question2',
+            value: $scope.data.idquestion2
+        }, {
+            type: 'answer2',
+            value: $scope.data.answer2
+        }, {
+            type: 'question3',
+            value: $scope.data.idquestion3
+        }, {
+            type: 'answer3',
+            value: $scope.data.answer3
+        }];
+
+        if (SharedService.Validation(validationList)) {
+            var postData = {
+                "task": "QuestionsOublie_update",
+                "codesms":$scope.data.codeSMS,
+                "question1": $scope.data.idquestion1,
+                "question2": $scope.data.idquestion2,
+                "question3": $scope.data.idquestion3,
+                "answer1": crypt.sha256($scope.data.answer1),
+                "answer2": crypt.sha256($scope.data.answer2),
+                "answer3": crypt.sha256($scope.data.answer3)
+            };
+            Alert.loader(true)
+            Go.post(postData).then(function(data) { 
+                if (data.success == 1) {
+                    Alert.success($filter('translate')('forgot_password_step_2.questionsoublie_update'))
+                    setTimeout(function () {
+                        $state.go('signin')
+                    },1000)
+                }
+            }); 
+
+        }
+    };
 })
 
 .controller('BeforeSignUpCtrl', function($scope,$rootScope,DATA, AuthService, $stateParams, $state, Go, SharedService, $ionicHistory, $filter, $ionicActionSheet ) {
@@ -1110,9 +1298,9 @@ angular.module('pim.controllers', [])
                     "question1": $scope.data.idquestion1,
                     "question2": $scope.data.idquestion2,
                     "question3": $scope.data.idquestion3,
-                    "answer1": $scope.data.answer1,
-                    "answer2": $scope.data.answer2,
-                    "answer3": $scope.data.answer3,
+                    "answer1": crypt.sha256($scope.data.answer1),
+                    "answer2": crypt.sha256($scope.data.answer2),
+                    "answer3": crypt.sha256($scope.data.answer3),
                     "lat": pos.lat,
                     "long": pos.lng
                 };
@@ -2705,9 +2893,9 @@ angular.module('pim.controllers', [])
                 "question1": $scope.data.idquestion1,
                 "question2": $scope.data.idquestion2,
                 "question3": $scope.data.idquestion3,
-                "answer1": $scope.data.answer1,
-                "answer2": $scope.data.answer2,
-                "answer3": $scope.data.answer3
+                "answer1": crypt.sha256($scope.data.answer1),
+                "answer2": crypt.sha256($scope.data.answer2),
+                "answer3": crypt.sha256($scope.data.answer3)
             };
             Alert.loader(true)
             Go.post(postData).then(function(data) {
@@ -2969,9 +3157,9 @@ angular.module('pim.controllers', [])
             var postData = { 
                 "action": SMSaction, // Changepassword, UserSuspended, ChangePhone
                 "codesms": $scope.dataBS.smscode,
-                "answer1": $scope.dataBA.answer1,
-                "answer2": $scope.dataBA.answer2,
-                "answer3": $scope.dataBA.answer3
+                "answer1": crypt.sha256($scope.dataBA.answer1),
+                "answer2": crypt.sha256($scope.dataBA.answer2),
+                "answer3": crypt.sha256($scope.dataBA.answer3)
             }; 
 
             if( $scope.isShop == 0 ){
@@ -3086,9 +3274,9 @@ angular.module('pim.controllers', [])
         if (SharedService.Validation(validationList)) {
             var postData = { 
                 "action": SMSaction, // Changepassword, UserSuspended, ChangePhone
-                "answer1": $scope.dataBA.answer1,
-                "answer2": $scope.dataBA.answer2,
-                "answer3": $scope.dataBA.answer3
+                "answer1": crypt.sha256($scope.dataBA.answer1),
+                "answer2": crypt.sha256($scope.dataBA.answer2),
+                "answer3": crypt.sha256($scope.dataBA.answer3)
             };
             if( $scope.isShop == 0 ){
                 postData.task = "AnswersValidation";

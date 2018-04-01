@@ -421,7 +421,11 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         var update = function(){
             element.css("height", "auto");
             var height = element[0].scrollHeight; 
-            element.css("height", element[0].scrollHeight + "px");
+            if( element[0].scrollHeight > 34 ){
+                element.css("height", element[0].scrollHeight + "px");
+            }else{
+                element.css("height", "23px");
+            }
         };
         scope.$watch(attr.ngModel, function(){
             update();
@@ -1021,6 +1025,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     var that = this;
     UserEmail = '';
 
+
+
     var loadUserData = function() {
         // ll = JSON.parse($window.localStorage['12eb088d9afa0f55e81c44553384a9492aa']);
         var data = window.localStorage.getItem(LOCAL_TOKEN_KEY);
@@ -1040,13 +1046,14 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         // $window.localStorage['12eb088d9afa0f55e81c44553384a9492aa'] = JSON.stringify(Lists.Indicatifs);
     }
 
+
     var destroyUserData = function() {
         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
         window.localStorage.setItem(LOCAL_TOKEN_KEY, JSON.stringify([]));
 
         ////console.log(('destroyUserData =====================')
         loadUserData();
-    }
+    } 
 
     var SetDetails = function(data) {
         ////console.log(('go to stor')

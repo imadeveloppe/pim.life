@@ -11,10 +11,18 @@ function handleOpenURL(url) {
     console.log(url);
     console.log("////////////////////////////////////")
 
-    if( url.search("pimlife") >= 0 && url.search("code") >= 0 && url.search("isshop") >= 0){
+    ////// inscription
+    if( url.search("pimlife://signup.pim.life") >= 0 && url.search("code") >= 0 && url.search("isshop") >= 0){
         var body = document.getElementsByTagName("body")[0];
         var appLaunchedController = angular.element(body).scope();
         appLaunchedController.InscriptionVerifEmail(url);
+    }
+
+    ////// questions secrests oublies 
+    if( url.search("pimlife://questionsoublie.pim.life") >= 0 && url.search("code") >= 0 && url.search("usercode") >= 0){ 
+        var body = document.getElementsByTagName("body")[0];
+        var appLaunchedController = angular.element(body).scope();
+        appLaunchedController.resetQuestionsSecret( url );
     }
         
 }
@@ -465,7 +473,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
                     
 
-                if( User.GetDetails() && payload.type != 'validatedsignupemail' ){
+                if( User.GetDetails() && payload.type != 'validatedsignupemail' && payload.type != 'validatedquestionoublieemail' ){
  
                     var postData = {
                         task: "ConnectedRecipientNotif",
@@ -831,8 +839,10 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                     
                     switch( payload.type ){
                         case "validatedsignupemail":
+                        case "validatedquestionoublieemail":
                             handleOpenURL(payload.url)
                             break;
+
                     }
                 }
 

@@ -43,16 +43,14 @@
 
                 </div>
                 <div class="row">
-                    <div class="col sexe-Switch-text" ng-click="PersonaleData.sexe = false" style="text-align:right;">
-                        {{ 'sign_up_perso.male' | translate }}
-                    </div>
+                    <div class="col sexe-Switch-text" ng-if="!showBtns" style="text-align:right;">{{ 'sign_up_perso.male' | translate }} </div>
+                    <div class="col sexe-Switch-text" ng-if="showBtns" ng-click="PersonaleData.sexe = false" style="text-align:right;">{{ 'sign_up_perso.male' | translate }} </div>
                     <div class="col col-20">
                         <md-switch ng-model="PersonaleData.sexe" aria-label="Switch 1" class="sexe-switch md-primary" ng-disabled="!showBtns">
                         </md-switch>
                     </div>
-                    <div class="col sexe-Switch-text" ng-click="PersonaleData.sexe = true">
-                        {{ 'sign_up_perso.female' | translate }}
-                    </div>
+                    <div class="col sexe-Switch-text" ng-if="!showBtns">{{ 'sign_up_perso.female' | translate }}</div>
+                    <div class="col sexe-Switch-text" ng-if="showBtns" ng-click="PersonaleData.sexe = true">{{ 'sign_up_perso.female' | translate }}</div>
                 </div>
 
                 <label class="item item-input  item-floating-label">

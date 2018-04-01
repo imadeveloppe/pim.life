@@ -45827,8 +45827,7 @@ md-fab-speed-dial .md-button.md-fab {
 }
 
 .CostumTextarea {
-    padding-bottom: 0;
-    margin-bottom: -12px;
+    padding-bottom: 0; 
     font-size: 14px;
     padding-left: 0!important
 }
@@ -48441,15 +48440,24 @@ body.platformAndroid.platform-ios.platform-cordova:not(.fullscreen) .bar-header:
 .inDeconnect .title { 
     margin-bottom: 9px;
 }
-#page-login .emptyInput {
+md-switch[disabled=disabled] {
+    opacity: 0.5;
+}
+.emptyInput {
     position: absolute;
     right: -7px;
     top: 8px; 
+    z-index: 999;
 }
-#page-login .emptyInput i{
+.emptyInput i{
 	font-size: 22px; 
 	color: rgb(37, 75, 120);
 }
+#MarchandDemandPayment .emptyInput { 
+    top: 24px; 
+    right: -4px;
+}
+
 #pageSetting .toucheId,
 #pageSettingPro .toucheId {
     position: absolute;

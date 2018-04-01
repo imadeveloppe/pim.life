@@ -160,7 +160,7 @@ angular.module('pim.controllersAssociation', [])
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     })
                 })
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
                 } 
             }    
@@ -401,9 +401,9 @@ angular.module('pim.controllersAssociation', [])
                 "question1": $scope.data.idquestion1,
                 "question2": $scope.data.idquestion2,
                 "question3": $scope.data.idquestion3,
-                "answer1": $scope.data.answer1,
-                "answer2": $scope.data.answer2,
-                "answer3": $scope.data.answer3
+                "answer1": crypt.sha256($scope.data.answer1),
+                "answer2": crypt.sha256($scope.data.answer2),
+                "answer3": crypt.sha256($scope.data.answer3)
             };
             Alert.loader(true)
             Go.SPost(postData).then(function(data) { 
