@@ -421,7 +421,11 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         var update = function(){
             element.css("height", "auto");
             var height = element[0].scrollHeight; 
-            element.css("height", element[0].scrollHeight + "px");
+            if( element[0].scrollHeight > 34 ){
+                element.css("height", element[0].scrollHeight + "px");
+            }else{
+                element.css("height", "23px");
+            }
         };
         scope.$watch(attr.ngModel, function(){
             update();
@@ -512,10 +516,10 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     function destroyUserCredentials() {
         User.destroyUserData();
         // Accounts.destoryAll();
-        authToken = undefined;
-        isAuthenticated = false;
-        $http.defaults.headers.common['Authorization'] = undefined; 
-        window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        // authToken = undefined;
+        // isAuthenticated = false;
+        // $http.defaults.headers.common['Authorization'] = undefined; 
+        // window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
     var login = function(name, pw, touchid) {
@@ -539,9 +543,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 var userInfos;
 
                 var request = Protocole.post( connexion )
-                request.then(function( data ) {
-
-
+                request.then(function( data ) {  
 
                     if (data.success == 1) {  
 
@@ -856,8 +858,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         if (!Go.is('addprofile')) { 
                             Directlogout()
                         } 
-                    }else if(data.success == 2 && data.errorCode ==  1022){  /// probleme de geolocalisation
-                        Geo.isLocationAvailable();
+                    }else if(data.success == 1022){  /// probleme de geolocalisation
+                        Geo.activeGpsPopin();
                     }else if (data.success == -1) { // deja suspendu
                         $ionicLoading.hide();
                         //storeUserCredentials(data.userToken);
@@ -1021,6 +1023,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     var that = this;
     UserEmail = '';
 
+
+
     var loadUserData = function() {
         // ll = JSON.parse($window.localStorage['12eb088d9afa0f55e81c44553384a9492aa']);
         var data = window.localStorage.getItem(LOCAL_TOKEN_KEY);
@@ -1040,13 +1044,14 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         // $window.localStorage['12eb088d9afa0f55e81c44553384a9492aa'] = JSON.stringify(Lists.Indicatifs);
     }
 
+
     var destroyUserData = function() {
         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
         window.localStorage.setItem(LOCAL_TOKEN_KEY, JSON.stringify([]));
 
         ////console.log(('destroyUserData =====================')
         loadUserData();
-    }
+    } 
 
     var SetDetails = function(data) {
         ////console.log(('go to stor')
@@ -2144,6 +2149,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     setTimeout(function () {
                         $location.path('/blocked');
                     },1000)
+                }else if(data.success == 1022){  /// probleme de geolocalisation
+                    Geo.activeGpsPopin();
                 }
                 else {
                     Alert.loader(true);
@@ -2360,8 +2367,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
             return deferred.promise;
         },
         isLocationAvailable: function () {
-            // cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                available = 0
+            cordova.plugins.diagnostic.isLocationAvailable(function(available){ 
+
                 if( !available ){
                     swal({
                         title: $filter('translate')('global_fields.gps'),
@@ -2383,9 +2390,29 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }, function () {})
                 }
                 
-            // }, function(error){
-            //     console.error("The following error occurred: "+error);
-            // });
+            }, function(error){
+                console.error("The following error occurred: "+error);
+            });
+        },
+        activeGpsPopin: function () {
+            swal({
+                title: $filter('translate')('global_fields.gps'),
+                text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
+                type: "info",
+                showCancelButton: false,
+                confirmButtonColor: "#254e7b",
+                confirmButtonText: $filter('translate')('global_fields.goto_settings'),
+                showLoaderOnConfirm: true,  
+                allowOutsideClick: false
+            }).then(function (confirm) {
+                if( confirm ){
+                    if( ionic.Platform.isIOS() ){
+                        window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
+                    }else{ 
+                        cordova.plugins.diagnostic.switchToLocationSettings();
+                    }
+                }
+            }, function () {})
         }
     };
 

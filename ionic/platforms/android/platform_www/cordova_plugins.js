@@ -21,7 +21,8 @@ module.exports.metadata =
 // TOP OF METADATA
 {
     "cordova-plugin-app-version": "0.1.9",
-    "cordova.plugins.diagnostic": "3.9.2"
+    "cordova.plugins.diagnostic": "3.9.2",
+    "cordova-plugin-whitelist": "1.3.1"
 };
 // BOTTOM OF METADATA
 });

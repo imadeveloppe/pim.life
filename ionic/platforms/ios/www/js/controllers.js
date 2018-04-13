@@ -251,7 +251,7 @@ angular.module('pim.controllers', [])
             $scope.firstVisite = true;
         }
         
-        $scope.data.mail = $rootScope.mailFirstStepSignup;
+        $scope.data.mail = $rootScope.mailForgetPassword;
     });
 
     $scope.sendEmail = function () {
@@ -266,7 +266,7 @@ angular.module('pim.controllers', [])
                 tokendevice: DATA.token
             }).then(function (data) {
                 if (data.success == 1) {
-                    $rootScope.mailFirstStepSignup = $scope.data.mail;
+                    $rootScope.mailForgetPassword = $scope.data.mail;
                     $state.go('signup-validate-email-sent');    
                 }
             })
@@ -393,9 +393,9 @@ angular.module('pim.controllers', [])
                 "question1": $scope.data.idquestion1,
                 "question2": $scope.data.idquestion2,
                 "question3": $scope.data.idquestion3,
-                "answer1": crypt.sha256($scope.data.answer1),
-                "answer2": crypt.sha256($scope.data.answer2),
-                "answer3": crypt.sha256($scope.data.answer3)
+                "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.data.answer3.toLowerCase())
             };
             Alert.loader(true)
             Go.post(postData).then(function(data) { 
@@ -565,7 +565,9 @@ angular.module('pim.controllers', [])
                 $scope.cgvModal.show();
                 $scope.loadCGV(dataUser)
             }else{ 
-                if( parseInt(dataUser.user.blocedcode) == 1 ){ 
+                if( parseInt(dataUser.user.firstconnexion) == 1 ){ 
+                    $location.path('/firstConnnectionToPim');  
+                }else if( parseInt(dataUser.user.blocedcode) == 1 ){ 
                     $location.path('/resetlockcode');  
                 }else{ 
                     $location.path('/tab/home');
@@ -617,7 +619,7 @@ angular.module('pim.controllers', [])
 
         ////// get session ID when app is started and app is Loged
 
-        if (!Go.is('addprofile') && window.localStorage.getItem('sessionID_a0f55e81c4455f584a9421') == null ) { 
+        if (!Go.is('addprofile') && !window.localStorage.getItem('sessionID_a0f55e81c4455f584a9421')) { 
             console.log("is page Signin")
             var postData = {
                 task: "getSessionID",
@@ -636,7 +638,7 @@ angular.module('pim.controllers', [])
 
         $scope.cgv = "";
         $scope.canLoadMore = true; 
-        $scope.cgvpage= 0;
+        $scope.cgvpage = 1;
         
     })
 
@@ -660,6 +662,8 @@ angular.module('pim.controllers', [])
                 })
                 if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
+                }else{ 
+                    $scope.canLoadMore = false; 
                 } 
             }    
         }) 
@@ -680,7 +684,7 @@ angular.module('pim.controllers', [])
                 }
             }, function () {}); 
        }else{
-            if( window.SamsungPass ){
+            if( SamsungPass ){
                 SamsungPass.startIdentifyWithDialog(function() {
                    if( $rootScope.availableAccounts.length == 1 ){
                         $scope.AutentificateUser( $rootScope.availableAccounts[0].id )
@@ -820,7 +824,9 @@ angular.module('pim.controllers', [])
                 $scope.cgvModal.show();
                 $scope.loadCGV(dataUser)
             }else{ 
-                if( parseInt(dataUser.user.blocedcode) == 1 ){ 
+                if( parseInt(dataUser.user.firstconnexion) == 1 ){ 
+                    $location.path('/firstConnnectionToPim');  
+                }else if( parseInt(dataUser.user.blocedcode) == 1 ){ 
                     $location.path('/resetlockcode');  
                 }else{ 
                     $location.path('/tab/home');
@@ -936,7 +942,9 @@ angular.module('pim.controllers', [])
                 },1000)
                 if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
-                } 
+                }else{ 
+                    $scope.canLoadMore = false; 
+                }
             }    
         }) 
     }
@@ -1298,9 +1306,9 @@ angular.module('pim.controllers', [])
                     "question1": $scope.data.idquestion1,
                     "question2": $scope.data.idquestion2,
                     "question3": $scope.data.idquestion3,
-                    "answer1": crypt.sha256($scope.data.answer1),
-                    "answer2": crypt.sha256($scope.data.answer2),
-                    "answer3": crypt.sha256($scope.data.answer3),
+                    "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                    "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                    "answer3": crypt.sha256($scope.data.answer3.toLowerCase()),
                     "lat": pos.lat,
                     "long": pos.lng
                 };
@@ -2397,7 +2405,7 @@ angular.module('pim.controllers', [])
     ///
     $scope.cgv = "";
     $scope.canLoadMore = true; 
-    $scope.cgvpage= 0;
+    $scope.cgvpage= 1;
     
     $scope.loadCGV = function () { 
         Go.post({
@@ -2416,6 +2424,8 @@ angular.module('pim.controllers', [])
                 })
                 if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
+                }else{ 
+                    $scope.canLoadMore = false; 
                 } 
             }    
         }) 
@@ -2893,9 +2903,9 @@ angular.module('pim.controllers', [])
                 "question1": $scope.data.idquestion1,
                 "question2": $scope.data.idquestion2,
                 "question3": $scope.data.idquestion3,
-                "answer1": crypt.sha256($scope.data.answer1),
-                "answer2": crypt.sha256($scope.data.answer2),
-                "answer3": crypt.sha256($scope.data.answer3)
+                "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.data.answer3.toLowerCase())
             };
             Alert.loader(true)
             Go.post(postData).then(function(data) {
@@ -3051,7 +3061,7 @@ angular.module('pim.controllers', [])
                 
             }); 
         }else{
-            if( window.SamsungPass ){
+            if( SamsungPass ){
                 SamsungPass.checkForRegisteredFingers(function() {
                     var tookens = JSON.parse( window.localStorage.getItem('TokenTouchIds') ) 
                     if( tookens != '' && tookens != '[]' ){
@@ -3103,7 +3113,7 @@ angular.module('pim.controllers', [])
     ////////////////////////////////
 })
 
-.controller('BlockedCtrl', function($scope, $state, pickerView, User, SharedService, Go, $location, Alert, Geo, AuthService, $filter) {
+.controller('BlockedCtrl', function($scope, $state, pickerView, User, SharedService, Go, $location, Alert, Geo, AuthService, $filter,crypt) {
     SMSaction = "UserSuspended";
     MessageCongratulation = 'You have successfully unlocked your account.';
     $scope.dataBS = {
@@ -3157,9 +3167,9 @@ angular.module('pim.controllers', [])
             var postData = { 
                 "action": SMSaction, // Changepassword, UserSuspended, ChangePhone
                 "codesms": $scope.dataBS.smscode,
-                "answer1": crypt.sha256($scope.dataBA.answer1),
-                "answer2": crypt.sha256($scope.dataBA.answer2),
-                "answer3": crypt.sha256($scope.dataBA.answer3)
+                "answer1": crypt.sha256($scope.dataBA.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.dataBA.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.dataBA.answer3.toLowerCase())
             }; 
 
             if( $scope.isShop == 0 ){
@@ -3274,9 +3284,9 @@ angular.module('pim.controllers', [])
         if (SharedService.Validation(validationList)) {
             var postData = { 
                 "action": SMSaction, // Changepassword, UserSuspended, ChangePhone
-                "answer1": crypt.sha256($scope.dataBA.answer1),
-                "answer2": crypt.sha256($scope.dataBA.answer2),
-                "answer3": crypt.sha256($scope.dataBA.answer3)
+                "answer1": crypt.sha256($scope.dataBA.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.dataBA.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.dataBA.answer3.toLowerCase())
             };
             if( $scope.isShop == 0 ){
                 postData.task = "AnswersValidation";

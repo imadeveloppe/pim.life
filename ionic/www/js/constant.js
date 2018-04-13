@@ -52,8 +52,8 @@ angular.module('pim.constant', [])
 
   // ///////////////////// AWS - Preprod ////////////////////////////
   // .constant('API', {
-  //   url: "https://preprod.pim.life/api/index.php",
-  //   server: "https://preprod.pim.life/",
+  //   url: "http://preprod.pim.life/api/index.php",
+  //   server: "http://preprod.pim.life/",
   //   devise: "€",
   //   minAmount: 0.1
 

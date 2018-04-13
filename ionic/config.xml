@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.pimpushs" version="0.2.22" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.pimpushs" version="0.2.23" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>PIM</name>
     <description>
         Le Paiement Solidaire
@@ -9,8 +9,9 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-navigation href="*" />
-    <allow-navigation href="http://192.168.1.144:8100" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="AndroidExtraFilesystems" value="sdcard,cache" />
     <preference name="webviewbounce" value="false" />

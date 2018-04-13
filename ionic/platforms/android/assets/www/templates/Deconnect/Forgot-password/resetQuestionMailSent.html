@@ -1,0 +1,32 @@
+<ion-view title="{{ 'forgot_password_step_2.forget_secret_questions' | translate }}" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button data-tap-disabled="true"></ion-nav-back-button>
+
+        <ion-nav-back-button class="button-clear">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+        
+    </ion-nav-bar>  
+    <ion-content padding="true" class="has-header inDeconnect"> 
+
+    <span class="title" style="margin-top: 30px;">{{ 'sign_up_first_step.mail_sent' | translate }}</span>
+    <center>
+      <img src="img/Mail-Send-icon.png" style="width: 70px; height: auto;">
+    </center>
+    <p style="padding: 0;">
+      {{ 'sign_up_first_step.text2' | translate }}<br>
+      {{ data.mail }}.<br>
+      {{ 'sign_up_first_step.text3' | translate }}.
+    </p>
+    <div style="height: 30px"></div>
+    <center>
+      <button ng-click="openMailApp()" data-tap-disabled="true" id="fullName-button1" class="button button-small button-light  button-block " style="background: #fff;">
+        {{ 'sign_up_first_step.mailbox' | translate }}.
+      </button> 
+      <button ng-click="dontReceiveMail()" data-tap-disabled="true" id="fullName-button1" class="button button-small button-clear  button-block" style="color: #fff; box-shadow: none;background: none; text-transform: unset;">
+        {{ 'sign_up_first_step.dont_receive_mail' | translate }}
+      </button>
+    </center>
+    </ion-content>
+</ion-view>

@@ -32,6 +32,12 @@ angular.module('pim.routes', [])
             controller: 'resetQuestionSendEmail'
         })
 
+        .state('firstConnnectionToPim', {
+            url: '/firstConnnectionToPim',
+            templateUrl: 'templates/Connect/firstConnnectionToPim.html',
+            controller: 'firstConnnectionToPimCtrl'
+        })
+
         .state('resetQuestionMailSent', {
             url: '/resetQuestionMailSent',
             templateUrl: 'templates/Deconnect/Forgot-password/resetQuestionMailSent.html',
@@ -49,7 +55,18 @@ angular.module('pim.routes', [])
             cache: false,
             templateUrl: 'templates/Connect/customer-service.html',
             controller: 'customerServiceCtrl'
-        }) 
+        })  
+
+        .state('tab.settingsCustomerService', {
+            url: '/settings/settingsCustomerService',
+            cache: false,
+            views: {
+                'tab-settings': {
+                    templateUrl: 'templates/Connect/settings-customer-service.html',
+                    controller: 'settingsCustomerServiceCtrl'
+                }
+            }
+        })
 
         .state('resetLockCode', {
             url: '/resetlockcode',
@@ -721,6 +738,16 @@ angular.module('pim.routes', [])
             views: {
                 'tab-settings': {
                     templateUrl: 'templates/Connect/cgv/assoc.html',
+                    controller: 'cgvCtrl'
+                }
+            }
+        })
+
+         .state('tab.montionslegales', {
+            url: '/montionslegales',
+            views: {
+                'tab-settings': {
+                    templateUrl: 'templates/Connect/settings/montionslegales.html',
                     controller: 'cgvCtrl'
                 }
             }

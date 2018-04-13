@@ -502,7 +502,6 @@ module.exports.metadata =
     "cordova-plugin-device": "1.1.4",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
-    "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
     "com-badrit-base64": "0.2.0",
     "com.cordova.plugin.SamsungPassPlugin": "1.0.0",
@@ -532,7 +531,8 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "2.0.1",
     "cordova-plugin-vibration": "3.0.1",
     "cordova-plugin-app-version": "0.1.9",
-    "cordova.plugins.diagnostic": "3.9.2"
+    "cordova.plugins.diagnostic": "3.9.2",
+    "cordova-plugin-whitelist": "1.3.1"
 }
 // BOTTOM OF METADATA
 });

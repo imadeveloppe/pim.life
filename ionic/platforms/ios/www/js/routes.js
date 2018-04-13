@@ -32,6 +32,12 @@ angular.module('pim.routes', [])
             controller: 'resetQuestionSendEmail'
         })
 
+        .state('firstConnnectionToPim', {
+            url: '/firstConnnectionToPim',
+            templateUrl: 'templates/Connect/firstConnnectionToPim.html',
+            controller: 'firstConnnectionToPimCtrl'
+        })
+
         .state('resetQuestionMailSent', {
             url: '/resetQuestionMailSent',
             templateUrl: 'templates/Deconnect/Forgot-password/resetQuestionMailSent.html',

@@ -46184,7 +46184,7 @@ ion-content.transDetails span.col.trans-time {
 
 .platform-ios:not(.platform-android) .has-ion-numeric-keyboard {
     bottom: 159px!important;
-    top: auto!important
+    /*top: 56px!important;*/
 }
 
 ion-content.transDetails .block-userInfo .acount-ref,
@@ -49324,7 +49324,7 @@ ion-content.modalSelected .socialLinks.twitter  {
      background: #ef7f31; 
      color: #fff;
      text-align: center;
-     padding: 5px;  
+     padding: 5px;   
 }
  
 #homePage ion-content .block .row,
@@ -49763,6 +49763,7 @@ ion-content.filterCatg .button-terminer i:before{
     height: 100%;
 }
 input.mbsc-control,
+.welcomToPim .inDeconnect input.mbsc-control,
 form.questionsSignin input.mbsc-control{
     display: none;
 } 
@@ -49901,10 +49902,27 @@ ion-modal-view.modalCGV ion-content{
     bottom: 52px;
 }
 
+.item-stacked-label.singup_question {
+    margin-top: 20px;
+    border-top: 0;
+}
+.item-stacked-label.singup_question:first-child {
+    margin-top: 0; 
+}
+.item-stacked-label.singup_answer:last-child {
+    border-bottom:1px solid #ddd;
+}
 
+.cvgpage ol, .cvgpage ul {
+    list-style: outside;
+    padding-left: 17px;
+}
+.cvgpage ol li,.cvgpage ul li {
+    margin-bottom: 10px;
+}
 @media (max-height:736px) { /* iphone 6+, 7+ */
     #homePage .cause .header .cover-continer {
-        height: 142px;
+        height: 126px;
         overflow: hidden;
     }
 
@@ -49927,8 +49945,8 @@ ion-modal-view.modalCGV ion-content{
 
 @media (max-height:667px) { /* Samsung s5 */
     #homePage .cause .header .cover-continer {
-        height: 94px;
-    } 
+        height: 80px;
+    }  
 
 }
 
@@ -49937,7 +49955,14 @@ ion-modal-view.modalCGV ion-content{
         display: none;
     }
     #homePage .cause .header .cover-continer {
-        height: 80px;
+        min-height: 65px;
+        height: 65px;
+    }
+    #homePage ion-content .block{ 
+         margin: 6px 10px;
+    }
+    #homePage ion-content .block.links {
+        margin-top: 12px;
     }
 
 }

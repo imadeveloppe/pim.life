@@ -21,9 +21,33 @@ angular.module('pim.routes', [])
         })
 
         .state('signup-validate-email-sent', {
-            url: '/sign-up-validate-email-sent/',
+            url: '/sign-up-validate-email-sent',
             templateUrl: 'templates/Deconnect/Sign-up/sign-up-validate-email-sent.html',
             controller: 'BeforeSignUpCtrl'
+        })
+
+        .state('resetQuestionSendEmail', {
+            url: '/resetQuestionSendEmail',
+            templateUrl: 'templates/Deconnect/Forgot-password/resetQuestionSendEmail.html',
+            controller: 'resetQuestionSendEmail'
+        })
+
+        .state('firstConnnectionToPim', {
+            url: '/firstConnnectionToPim',
+            templateUrl: 'templates/Connect/firstConnnectionToPim.html',
+            controller: 'firstConnnectionToPimCtrl'
+        })
+
+        .state('resetQuestionMailSent', {
+            url: '/resetQuestionMailSent',
+            templateUrl: 'templates/Deconnect/Forgot-password/resetQuestionMailSent.html',
+            controller: 'resetQuestionSendEmail'
+        })
+
+        .state('resetQuestionSendResponses', {
+            url: '/resetQuestionSendResponses/:code/:usercode',
+            templateUrl: 'templates/Deconnect/Forgot-password/questions.html',
+            controller: 'resetQuestionSendResponses'
         })
 
         .state('customerService', {

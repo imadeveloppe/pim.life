@@ -99,6 +99,9 @@
                 <ion-item class="item-icon-left" ui-sref="tab.cgv_pro({isshop: 1})">
                     <i class="icon ion-document-text"></i>{{ 'setting_pro.cgv' | translate }}
                 </ion-item>
+                <ion-item class="item-icon-left" ui-sref="tab.montionslegales">
+                    <i class="icon ion-document-text"></i>{{ 'settings.montionslegales' | translate }}
+                </ion-item>
             </ion-list> 
 
             <ion-list ng-if="langs.length > 1">
@@ -157,6 +160,9 @@
 
             <ion-list id="settings-list10">
                 <ion-item class="item-divider" id="settings-list-item-divider3">{{ 'setting_pro.account' | translate }}</ion-item> 
+                <ion-item class="item-icon-left" ui-sref="tab.settingsCustomerService" data-tap-disabled="true">
+                    <i class="icon ion-headphone"></i>{{ 'customer_service.title_page' | translate }}
+                </ion-item>
                 <ion-item class="item-icon-left  " id="settings-list-item19" ng-click="GoLogout()" data-tap-disabled="true">
                     <i class="icon ion-power"></i>{{ 'setting_pro.log_out' | translate }}
                 </ion-item>

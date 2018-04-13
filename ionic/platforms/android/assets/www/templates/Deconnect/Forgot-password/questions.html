@@ -1,0 +1,59 @@
+<ion-view title="{{ 'forgot_password_step_2.forget_secret_questions' | translate }}" id="" hide-nav-bar="false" class="" can-swipe-back="false">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button data-tap-disabled="true"></ion-nav-back-button>
+        <ion-nav-back-button class="button-clear">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content padding="true" class="has-header inDeconnect padding"  ng-show="loader">
+        <div class="list card ">
+            <form class="list questionsSignin">
+                <div class="list list-inset">
+                    <label class="item item-input item-stacked-label">
+                        <input type="tel" placeholder="{{ 'secret_questions.code' | translate }}" ng-model="data.codeSMS">
+                    </label> 
+
+                    <label class="item item-input item-stacked-label singup_question" >
+                        <select id="q1" ng-model="data.idquestion1" mobiscroll-select="settings" mobiscroll-instance="mobiscrollInstance" style="display: none;">
+                            <option ng-repeat="q in listQuestions1" value="{{ q.id }}">{{ q.view }}</option>
+                        </select>
+                        <span ng-repeat="q in listQuestions1" ng-if="q.id == data.idquestion1">{{ q.view }}</span> 
+                        <span ng-if="!data.idquestion1">{{ 'secret_questions.choose_a_question' | translate }}</span> 
+
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'secret_questions.answer1' | translate }}" ng-model="data.answer1">
+                    </label>
+
+                    <label class="item item-input item-stacked-label singup_question" >
+                        <select id="q2" ng-model="data.idquestion2" mobiscroll-select="settings" mobiscroll-instance="mobiscrollInstance" style="display: none;">
+                            <option ng-repeat="q in listQuestions2" value="{{ q.id }}">{{ q.view }}</option>
+                        </select>
+                        <span ng-repeat="q in listQuestions2" ng-if="q.id == data.idquestion2">{{ q.view }}</span> 
+                        <span ng-if="!data.idquestion2">{{ 'secret_questions.choose_a_question' | translate }}</span> 
+                    </label> 
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'secret_questions.answer2' | translate }}" ng-model="data.answer2">
+                    </label>
+
+                    <label class="item item-input item-stacked-label singup_question">
+                        <select id="q3" ng-model="data.idquestion3" mobiscroll-select="settings" mobiscroll-instance="mobiscrollInstance"  style="display: none;">
+                            <option ng-repeat="q in listQuestions3" value="{{ q.id }}">{{ q.view }}</option>
+                        </select>
+                        <span ng-repeat="q in listQuestions3" ng-if="q.id == data.idquestion3">{{ q.view }}</span> 
+                        <span ng-if="!data.idquestion3">{{ 'secret_questions.choose_a_question' | translate }}</span> 
+                    </label>
+                    <label class="item item-input item-stacked-label singup_answer">
+                        <input type="text" placeholder="{{ 'secret_questions.answer3' | translate }}" ng-model="data.answer3">
+                    </label>
+
+                    <div class="spacer" style="width: 300px; height: 16px;"></div>
+                    <button ng-click="questions()" data-tap-disabled="true" id="fullName-button1" class=" button button-small button-positive  button-block">
+                    {{ 'secret_questions.validate' | translate }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

@@ -44,8 +44,10 @@ angular.module('pim.controllersPro', [])
                 setTimeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 },1000)
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
+                }else{ 
+                    $scope.canLoadMore = false; 
                 } 
             }    
         }) 
@@ -287,8 +289,8 @@ angular.module('pim.controllersPro', [])
              "password": crypt.sha256($scope.data.password),
              "confirmpassword": crypt.sha256($scope.data.confirmpassword),
              "lang": $translate.use(),
-             "code" : $scope.data.code,
-             "confirmcode" : $scope.data.confirmcode
+             "code" : crypt.sha256($scope.data.code),
+             "confirmcode" : crypt.sha256($scope.data.confirmcode)
 
        };
 
@@ -468,9 +470,9 @@ angular.module('pim.controllersPro', [])
                     "question1": $scope.data.idquestion1,
                     "question2": $scope.data.idquestion2,
                     "question3": $scope.data.idquestion3,
-                    "answer1": $scope.data.answer1,
-                    "answer2": $scope.data.answer2,
-                    "answer3": $scope.data.answer3,
+                    "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                    "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                    "answer3": crypt.sha256($scope.data.answer3.toLowerCase()),
                     "lat": pos.lat,
                     "long": pos.lng
                 };
@@ -517,8 +519,7 @@ angular.module('pim.controllersPro', [])
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
-        $scope.modal = modal;
-        $scope.modal.show();
+        $scope.modal = modal; 
     });
     $scope.openModal = function() {
         $scope.modal.show();
@@ -675,7 +676,7 @@ angular.module('pim.controllersPro', [])
 
     $scope.cgv = "";
     $scope.canLoadMore = true; 
-    $scope.cgvpage= 0;
+    $scope.cgvpage= 1;
     
     $scope.loadCGV = function () { 
         Go.post({
@@ -692,9 +693,11 @@ angular.module('pim.controllersPro', [])
                         $scope.$broadcast('scroll.infiniteScrollComplete');
                     })
                 })
-                if(data.success == 1){ 
+                if(data.cgvend == 0){ 
                     $scope.canLoadMore = true; 
-                } 
+                }else{ 
+                    $scope.canLoadMore = false; 
+                }  
             }    
         }) 
     }
@@ -944,9 +947,9 @@ angular.module('pim.controllersPro', [])
                 "question1": $scope.data.idquestion1,
                 "question2": $scope.data.idquestion2,
                 "question3": $scope.data.idquestion3,
-                "answer1": $scope.data.answer1,
-                "answer2": $scope.data.answer2,
-                "answer3": $scope.data.answer3
+                "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.data.answer3.toLowerCase())
             };
             Alert.loader(true)
             Go.post(postData).then(function(data) { 
@@ -1096,7 +1099,7 @@ angular.module('pim.controllersPro', [])
                     
                 
             }); 
-        }else{
+        }else if(SamsungPass){
             SamsungPass.checkForRegisteredFingers(function() {
                 var tookens = JSON.parse( window.localStorage.getItem('TokenTouchIds') ) 
                 if( tookens != '' && tookens != '[]' ){
@@ -3059,11 +3062,11 @@ angular.module('pim.controllersPro', [])
 
         if( ionic.Platform.isIOS() ){
             $cordovaFileOpener2.open( 
-                cordova.file.applicationDirectory+'www/docs/LETTER-OF-AUTHORISATION.pdf',
+                cordova.file.applicationDirectory+'www/docs/Autorisation_de_procuration_bancaire_PIM.pdf',
                 'application/pdf'
             );
         }else{ 
-            window.open(API.server+"docs/LETTER-OF-AUTHORISATION.pdf", '_system');
+            window.open(API.server+"docs/Autorisation_de_procuration_bancaire_PIM.pdf", '_system');
         } 
              
 

@@ -190,8 +190,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                 window.localStorage.getItem('loged', 1);
             }else{
                 window.localStorage.getItem('locked', 0);
-                window.localStorage.getItem('loged', 0);
-                $state.go('signin')
+                window.localStorage.getItem('loged', 0); 
             }
             setTimeout(function () {
                 $rootScope.ionicPlatformResume = false;
@@ -446,7 +445,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
         $rootScope.RefuseCGV = function () { 
             $rootScope.cgvModal.hide()
         }
-       
+
 
         if( window.FirebasePlugin ){ 
 

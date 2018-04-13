@@ -12,6 +12,9 @@
         },
         "cordova.plugins.diagnostic": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
         }
     },
     "dependent_plugins": {}

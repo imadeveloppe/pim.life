@@ -543,9 +543,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 var userInfos;
 
                 var request = Protocole.post( connexion )
-                request.then(function( data ) {
-
-
+                request.then(function( data ) {  
 
                     if (data.success == 1) {  
 
@@ -860,8 +858,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         if (!Go.is('addprofile')) { 
                             Directlogout()
                         } 
-                    }else if(data.success == 2 && data.errorCode ==  1022){  /// probleme de geolocalisation
-                        Geo.isLocationAvailable();
+                    }else if(data.success == 1022){  /// probleme de geolocalisation
+                        Geo.activeGpsPopin();
                     }else if (data.success == -1) { // deja suspendu
                         $ionicLoading.hide();
                         //storeUserCredentials(data.userToken);
@@ -2151,6 +2149,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     setTimeout(function () {
                         $location.path('/blocked');
                     },1000)
+                }else if(data.success == 1022){  /// probleme de geolocalisation
+                    Geo.activeGpsPopin();
                 }
                 else {
                     Alert.loader(true);
@@ -2393,6 +2393,26 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
             }, function(error){
                 console.error("The following error occurred: "+error);
             });
+        },
+        activeGpsPopin: function () {
+            swal({
+                title: $filter('translate')('global_fields.gps'),
+                text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
+                type: "info",
+                showCancelButton: false,
+                confirmButtonColor: "#254e7b",
+                confirmButtonText: $filter('translate')('global_fields.goto_settings'),
+                showLoaderOnConfirm: true,  
+                allowOutsideClick: false
+            }).then(function (confirm) {
+                if( confirm ){
+                    if( ionic.Platform.isIOS() ){
+                        window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
+                    }else{ 
+                        cordova.plugins.diagnostic.switchToLocationSettings();
+                    }
+                }
+            }, function () {})
         }
     };
 
@@ -3097,7 +3117,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         return promise; 
     }
     this.post = function ( postData ) { 
-        if( ionic.Platform.isIOS() && $window.CordovaHttpPlugin && false ){
+        if( ionic.Platform.isIOS() && $window.CordovaHttpPlugin ){
             var req = $.when( this.ipv6( 'post', API.url, postData ) )
             var promise = new Promise(function(resolve, reject) {
                 req.then(function (data) {
