@@ -6,7 +6,7 @@
                 {{ 'customer_service.title_page' | translate }}
             </h2>
         </center>
-         <p  style="white-space: pre-wrap;">{{ 'customer_service.text' | translate }}</p> 
+         <p  style="white-space: pre-wrap;" data-ng-bind-html="trustAsHtml(content)"></p>  
           
          <div style="height: 25px">
              <button class="button button-clear button-positive" style="float: left;padding: 0" ui-sref="tab.home" ng-click="backToCode()">

@@ -53,10 +53,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Badge\"><param name=\"ios-package\" value=\"APPBadge\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
                             "count": 1
                         },
@@ -130,6 +126,10 @@
                         },
                         {
                             "xml": "<feature name=\"Diagnostic\"><param name=\"ios-package\" value=\"Diagnostic\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Badge\"><param name=\"ios-package\" value=\"APPBadge\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -285,9 +285,6 @@
         "cordova-plugin-app-launcher": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-badge": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
@@ -358,6 +355,9 @@
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-badge": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         }
     },
@@ -450,14 +450,6 @@
             "pluginId": "cordova-plugin-app-launcher",
             "clobbers": [
                 "plugins.launcher"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-badge/www/badge.js",
-            "id": "cordova-plugin-badge.Badge",
-            "pluginId": "cordova-plugin-badge",
-            "clobbers": [
-                "cordova.plugins.notification.badge"
             ]
         },
         {
@@ -856,6 +848,14 @@
             "clobbers": [
                 "cordova.plugins.diagnostic"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-badge/www/badge.js",
+            "id": "cordova-plugin-badge.Badge",
+            "pluginId": "cordova-plugin-badge",
+            "clobbers": [
+                "cordova.plugins.notification.badge"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -870,7 +870,6 @@
         "com.verso.cordova.clipboard": "0.1.0",
         "cordova-open-native-settings": "1.4.1",
         "cordova-plugin-app-launcher": "0.4.0",
-        "cordova-plugin-badge": "0.8.7",
         "cordova-plugin-camera": "4.0.1",
         "cordova-plugin-compat": "1.2.0",
         "cordova-plugin-email-composer": "0.8.13",
@@ -893,6 +892,7 @@
         "cordova-plugin-vibration": "3.0.1",
         "cordova-plugin-app-version": "0.1.9",
         "cordova.plugins.diagnostic": "3.9.2",
-        "cordova-plugin-whitelist": "1.3.1"
+        "cordova-plugin-whitelist": "1.3.1",
+        "cordova-plugin-badge": "0.8.7"
     }
 }

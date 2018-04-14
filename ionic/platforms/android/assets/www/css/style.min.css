@@ -46184,7 +46184,7 @@ ion-content.transDetails span.col.trans-time {
 
 .platform-ios:not(.platform-android) .has-ion-numeric-keyboard {
     bottom: 159px!important;
-    top: auto!important
+    /*top: 56px!important;*/
 }
 
 ion-content.transDetails .block-userInfo .acount-ref,
@@ -46438,7 +46438,7 @@ ion-content.transDetails .block-userInfo .InfoSender>p {
     text-align: left;
     position: absolute;
     width: 100%;
-    top: 24px
+    bottom: 49px;
 }
 
 .inSettigs .fa.fa-cloud-upload:before {
@@ -49324,7 +49324,7 @@ ion-content.modalSelected .socialLinks.twitter  {
      background: #ef7f31; 
      color: #fff;
      text-align: center;
-     padding: 5px;  
+     padding: 5px;   
 }
  
 #homePage ion-content .block .row,
@@ -49922,7 +49922,7 @@ ion-modal-view.modalCGV ion-content{
 }
 @media (max-height:736px) { /* iphone 6+, 7+ */
     #homePage .cause .header .cover-continer {
-        height: 142px;
+        height: 126px;
         overflow: hidden;
     }
 
@@ -49939,14 +49939,18 @@ ion-modal-view.modalCGV ion-content{
     #homePage ion-content .block.links strong { 
         font-size: 13px; 
     }
-
+   
+   ion-content.transDetails .block-userInfo .acount-type { 
+        font-size: 12px;
+        width: 125px;
+    }
 
 }
 
 @media (max-height:667px) { /* Samsung s5 */
     #homePage .cause .header .cover-continer {
-        height: 94px;
-    } 
+        height: 80px;
+    }  
 
 }
 
@@ -49955,7 +49959,18 @@ ion-modal-view.modalCGV ion-content{
         display: none;
     }
     #homePage .cause .header .cover-continer {
-        height: 80px;
+        min-height: 65px;
+        height: 65px;
+    }
+    #homePage ion-content .block{ 
+         margin: 6px 10px;
+    }
+    #homePage ion-content .block.links {
+        margin-top: 12px;
+    }
+    ion-content.transDetails .block-userInfo .acount-type { 
+        width: 96px;
+        line-height: 15px; 
     }
 
 }

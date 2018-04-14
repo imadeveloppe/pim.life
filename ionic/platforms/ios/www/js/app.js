@@ -116,6 +116,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                             if( data.success == 1 ){
 
                                 DATA.logo = data.logo;
+                                DATA.paramAppli = data;
                                 if( parseFloat(data.MinAmountTrans) > 0 ){
                                     API.minAmount = data.MinAmountTrans; 
                                 } 
@@ -692,6 +693,9 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                         $rootScope.GetlistSettings()
                                         break;
                                     case "updateassoccommision":
+                                        $rootScope.GetlistSettings()
+                                        break;
+                                    case "updatetransibancommision":
                                         $rootScope.GetlistSettings()
                                         break;
 

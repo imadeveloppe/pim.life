@@ -44,9 +44,6 @@
     <feature name="Launcher">
         <param name="ios-package" value="Launcher" />
     </feature>
-    <feature name="Badge">
-        <param name="ios-package" value="APPBadge" />
-    </feature>
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
@@ -104,6 +101,9 @@
     <feature name="Diagnostic">
         <param name="ios-package" value="Diagnostic" />
         <param name="onload" value="true" />
+    </feature>
+    <feature name="Badge">
+        <param name="ios-package" value="APPBadge" />
     </feature>
     <name>PIM</name>
     <description>

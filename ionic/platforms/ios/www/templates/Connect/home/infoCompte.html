@@ -103,7 +103,7 @@
                                 </div> 
                                 <img ng-src="{{ transaction.picto }}" ng-if="transaction.picto != '' " alt="" class="pecto" >
 
-                                <h2 class="oneLine"><span ng-if="transaction.isshop == 0 || transaction.isshop == 3">{{ transaction.fname }} </span>{{ transaction.lname }}</h2>
+                                <h2 class="oneLine"><span ng-if="transaction.isshop == 0 || transaction.isshop == 3 || transaction.isshop == 7">{{ transaction.fname }} </span>{{ transaction.lname }}</h2>
 
                                 <span class="date-shopping">{{ transaction.time }}</span><span ng-if="transaction.statut != ''" class="padding-left" style="color:#ef7f31;font-size: 100%;font-family: 'OpenSansBold';font-size: 11px;">
                                 {{ 'transaction_list.'+transaction.statut | translate }}

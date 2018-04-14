@@ -796,7 +796,7 @@ angular.module('pim.controllers', [])
  
 
     $scope.login = function() {
-        //console.log('go login ===>>>>')
+        console.log('go login ===>>>>')
         $ionicLoading.show({
             content: 'Loading',
             animation: 'fade-in',
@@ -1548,7 +1548,7 @@ angular.module('pim.controllers', [])
                 picto: UserDetails.user.picto_medium,
                 fname: UserDetails.user.fname,
                 lname: UserDetails.user.lname,
-                sexe: (UserDetails.user.sexe == 'Mrs') ? true : false,
+                sexe: (UserDetails.user.sexe == 'Mr') ? false : true,
                 birthdate: UserDetails.user.birth,
                 placebirth: UserDetails.user.placebirth,
                 birthcountry: UserDetails.user.birthcountry,
@@ -2514,11 +2514,12 @@ angular.module('pim.controllers', [])
     $scope.RefuseCGV = function () { 
         $scope.cgvModal.hide()
     }
- 
+    
+    console.log("UserDetails=UserDetails=UserDetails=UserDetails=UserDetails=", UserDetails);
     if (UserDetails == false) {
         //// //console.log("UserDetails=false");
-        Alert.error($filter('translate')("api.1001")); // Session expired
-        $location.path('/sign-in');
+        //Alert.error($filter('translate')("api.1001")); // Session expired
+        //$location.path('/sign-in');
     }
 
 

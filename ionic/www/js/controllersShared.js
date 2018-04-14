@@ -105,7 +105,7 @@ angular.module('pim.controllersShared', [])
 
     $scope.$on('$ionicView.beforeEnter', function() { 
 
-        $scope.accounts = Accounts.all(); 
+        
 
         $scope.page = 0;
         $scope.canMore = true; 
@@ -114,12 +114,16 @@ angular.module('pim.controllersShared', [])
         $scope.isCause = false;
         $scope.devise = API.devise;
         
-        $scope.GetDetails = User.GetDetails();
-
-        $scope.isPro = $scope.GetDetails.isPro; 
         
-
-        $scope.SelectedAssocID = $scope.GetDetails.user.associationid; 
+        $scope.GetDetails = User.GetDetails();
+        
+        if( $scope.GetDetails ){
+            console.log($scope.GetDetails )
+            $scope.isPro = $scope.GetDetails.isPro;  
+            $scope.SelectedAssocID = $scope.GetDetails.user.associationid; 
+        }
+            
+        $scope.accounts = Accounts.all(); 
 
         if(Go.is("/home")){
 
@@ -298,7 +302,7 @@ angular.module('pim.controllersShared', [])
 
         }); 
     };
-    $scope.GetAllAccounts();
+    //$scope.GetAllAccounts();
 
 
     $scope.$on('$ionicView.enter', function() {
@@ -3792,7 +3796,8 @@ angular.module('pim.controllersShared', [])
                     notif.type == 'annulupdatecontactmailbyadmin' ||
                     notif.type == 'annulupdatemailbyadmin' ||
                     notif.type == 'updatepimcommision' ||
-                    notif.type == 'updateassoccommision'
+                    notif.type == 'updateassoccommision' ||
+                    notif.type == 'updatetransibancommision'
 
 
                     )
@@ -6244,8 +6249,11 @@ angular.module('pim.controllersShared', [])
     };
 })
 
-.controller('customerServiceCtrl', function($scope, $state, $location, $ionicHistory, LockScreen, $filter) {  
+.controller('customerServiceCtrl', function($scope, $state, $location, $ionicHistory, LockScreen, $filter, AppServices) {  
 
+    $scope.$on('$ionicView.beforeEnter', function() { 
+        $scope.content = AppServices.linkify($filter('translate')('customer_service.text'));
+    })
     $scope.backToCode = function () {
         LockScreen.show();   
     }
@@ -6255,8 +6263,11 @@ angular.module('pim.controllersShared', [])
     } 
 })
 
-.controller('settingsCustomerServiceCtrl', function($scope, $state, $location, $ionicHistory, LockScreen, $filter) {  
+.controller('settingsCustomerServiceCtrl', function($scope, $state, $location, $ionicHistory, LockScreen, $filter, AppServices) {  
 
+    $scope.$on('$ionicView.beforeEnter', function() { 
+        $scope.content = AppServices.linkify($filter('translate')('customer_service.text'));
+    })
     $scope.backToCode = function () {
         LockScreen.show();   
     }
@@ -6264,6 +6275,7 @@ angular.module('pim.controllersShared', [])
     $scope.autoLogOut = function () { 
         LockScreen.logout();  
     } 
+    
 })
 
 .controller('resetLockCodeCtrl', function($scope, $state, $location, crypt, $filter,SharedService, Alert, Go,crypt) {  
@@ -6535,13 +6547,10 @@ angular.module('pim.controllersShared', [])
             if( data.success == 1 ){
                 $scope.cause = data.association;
                 $scope.loadedInfos = true;
-
-                hasWWW = $scope.cause.siteweb.toLowerCase().search('www.');
+  
                 hashttp = $scope.cause.siteweb.toLowerCase().search('http://');
-
-                if( hasWWW < 0 ){
-                    $scope.cause.siteweb = "www."+$scope.cause.siteweb.toLowerCase();
-                }
+ 
+                console.log(hashttps, hashttp)
                 if( hashttp < 0 ){
                     $scope.cause.siteweb = "http://"+$scope.cause.siteweb;
                 }

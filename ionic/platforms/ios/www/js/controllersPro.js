@@ -1147,7 +1147,7 @@ angular.module('pim.controllersPro', [])
     ////////////////////////////////
 })
 
-.controller('UpdateCompanyInfoCtrl', function($scope, $filter,$state, Alert, User, SharedService, Go, $rootScope, $timeout, crypt, $filter,$translate) {
+.controller('UpdateCompanyInfoCtrl', function($scope, $filter,$state, Alert, User, SharedService, Go, $rootScope, $timeout, crypt, $filter,$translate, DATA) {
 
 
     
@@ -1212,6 +1212,8 @@ angular.module('pim.controllersPro', [])
         }
     };
     // ****************************************************************************************
+
+    $scope.assoccommission = (DATA.paramAppli) ? DATA.paramAppli.assoccommission : 0.2;
 
     // ****************************************************************************************
     //////////////////////////////// commision Assoc  ///////////////////////////////////////
@@ -4634,6 +4636,7 @@ angular.module('pim.controllersPro', [])
 
         $scope.PersonaleData = $scope.UserDetails.user; 
         $scope.PersonaleData.revenumoyen = $scope.arrayRevenumoyen.indexOf($scope.UserDetails.user.revenumoyen);
+        $scope.PersonaleData.sexe = ($scope.PersonaleData.sexe == 'Mr') ? false : true;
 
         console.log($scope.UserDetails)
 

@@ -230,6 +230,15 @@
             </ion-content>
           </ion-modal-view>
         </script>  
+
+    <script type="text/javascript">
+        $('body').on("click",'a' , function (link) {
+            if( link.currentTarget.href && link.currentTarget.href != '#' ){
+                link.preventDefault(); 
+                window.open( link.currentTarget.href,'_system','EnableViewPortScale=yes,location=no,location=yes');
+            }      
+        })
+    </script>
 </body>
 
 

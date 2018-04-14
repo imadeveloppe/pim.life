@@ -1,0 +1,38 @@
+////////////////// keystore infos ///////////////////////
+Mot de passe :
+ExcellE,Ce1604
+
+Quels sont vos nom et prénom ?
+VERBECQ GILLES
+
+Quel est le nom de votre unité organisationnelle ?
+PIM
+
+Quel est le nom de votre entreprise ?
+PIM
+
+Quel est le nom de votre ville de résidence ?
+MARRAKECH
+
+Quel est le nom de votre état ou province ?
+MARRAKECH HAOUZ
+
+Quel est le code pays à deux lettres pour cette unité ?
+- MA
+
+
+
+
+////////////////// sign App ///////////////////////
+
+
+
+keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+
+cordova build --release
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore android-release-unsigned.apk alias_name
+
+cd /Users/pro/Library/Android/sdk/build-tools/25.0.1
+
+./zipalign -v 4 /st/ionic/pim/android-release-unsigned.apk /st/ionic/pim/pim.apk

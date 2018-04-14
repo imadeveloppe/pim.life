@@ -15,6 +15,14 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.diagnostic"
         ]
+    },
+    {
+        "id": "cordova-plugin-badge.Badge",
+        "file": "plugins/cordova-plugin-badge/www/badge.js",
+        "pluginId": "cordova-plugin-badge",
+        "clobbers": [
+            "cordova.plugins.notification.badge"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -22,7 +30,8 @@ module.exports.metadata =
 {
     "cordova-plugin-app-version": "0.1.9",
     "cordova.plugins.diagnostic": "3.9.2",
-    "cordova-plugin-whitelist": "1.3.1"
+    "cordova-plugin-whitelist": "1.3.1",
+    "cordova-plugin-badge": "0.8.7"
 };
 // BOTTOM OF METADATA
 });

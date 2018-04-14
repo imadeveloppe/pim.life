@@ -90,14 +90,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-badge/www/badge.js",
-        "id": "cordova-plugin-badge.Badge",
-        "pluginId": "cordova-plugin-badge",
-        "clobbers": [
-            "cordova.plugins.notification.badge"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "id": "cordova-plugin-camera.Camera",
         "pluginId": "cordova-plugin-camera",
@@ -493,6 +485,14 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.diagnostic"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-badge/www/badge.js",
+        "id": "cordova-plugin-badge.Badge",
+        "pluginId": "cordova-plugin-badge",
+        "clobbers": [
+            "cordova.plugins.notification.badge"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -509,7 +509,6 @@ module.exports.metadata =
     "com.verso.cordova.clipboard": "0.1.0",
     "cordova-open-native-settings": "1.4.1",
     "cordova-plugin-app-launcher": "0.4.0",
-    "cordova-plugin-badge": "0.8.7",
     "cordova-plugin-camera": "4.0.1",
     "cordova-plugin-compat": "1.2.0",
     "cordova-plugin-email-composer": "0.8.13",
@@ -532,7 +531,8 @@ module.exports.metadata =
     "cordova-plugin-vibration": "3.0.1",
     "cordova-plugin-app-version": "0.1.9",
     "cordova.plugins.diagnostic": "3.9.2",
-    "cordova-plugin-whitelist": "1.3.1"
+    "cordova-plugin-whitelist": "1.3.1",
+    "cordova-plugin-badge": "0.8.7"
 }
 // BOTTOM OF METADATA
 });

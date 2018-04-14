@@ -46438,7 +46438,7 @@ ion-content.transDetails .block-userInfo .InfoSender>p {
     text-align: left;
     position: absolute;
     width: 100%;
-    top: 24px
+    bottom: 49px;
 }
 
 .inSettigs .fa.fa-cloud-upload:before {
@@ -49939,7 +49939,11 @@ ion-modal-view.modalCGV ion-content{
     #homePage ion-content .block.links strong { 
         font-size: 13px; 
     }
-
+   
+   ion-content.transDetails .block-userInfo .acount-type { 
+        font-size: 12px;
+        width: 125px;
+    }
 
 }
 
@@ -49963,6 +49967,10 @@ ion-modal-view.modalCGV ion-content{
     }
     #homePage ion-content .block.links {
         margin-top: 12px;
+    }
+    ion-content.transDetails .block-userInfo .acount-type { 
+        width: 96px;
+        line-height: 15px; 
     }
 
 }

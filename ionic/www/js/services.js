@@ -514,12 +514,12 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     }
 
     function destroyUserCredentials() {
-        User.destroyUserData();
+        // User.destroyUserData();
         // Accounts.destoryAll();
         // authToken = undefined;
         // isAuthenticated = false;
         // $http.defaults.headers.common['Authorization'] = undefined; 
-        // window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
     var login = function(name, pw, touchid) {
@@ -547,7 +547,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
                     if (data.success == 1) {  
 
-                         resolve( data.UserDetails );
+                        
 
                         $storage.setObject('capitalSocial', {});
                         userInfos = data.userInfos;
@@ -611,7 +611,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         $rootScope.isPro = data.isshop ;
                         data.UserDetails.userInfos = data.userInfos;
                         User.SetDetails(data.UserDetails);
-                        $rootScope.$emit("settingStartprogress", {});
+                        //$rootScope.$emit("settingStartprogress", {});
 
                         $translate.use( data.UserDetails.user.lang );
                         window.localStorage.setItem('langCode', data.UserDetails.user.lang)
@@ -626,6 +626,9 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         //     window.localStorage.setItem('loged', '1');
                         //     console.log("asdasdsad asdasd ad Home")
                         // } 
+
+
+                        resolve( data.UserDetails );
 
 
                         if( ionic.Platform.isIOS() ){
@@ -740,7 +743,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
                                 }
                             });
-                        }else{
+                        }else if(window.SamsungPass){
+
                             SamsungPass.checkForRegisteredFingers(function() {
                                 var tookens = window.localStorage.getItem('TokenTouchIds')
                                 if( tookens == "" ){
@@ -851,6 +855,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                                 }
                             }, function() {});
                         }
+
+                        
                     }
                     else if(data.success == 0){
                         Alert.error( data.message )
@@ -917,6 +923,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }
                 });
             }, function(err) {
+                console.log("Geo.getPosition", err)
                 $ionicLoading.hide();
             });
         });
@@ -3016,12 +3023,12 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 .factory('Protocole', function($window, API, $http, Alert, $filter) {
 
     this.ipv6 = function ( type ,url, postData ) {
-        ////console.log("IPV6")
+        console.log("IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 ")
         
         var promise = new Promise(function(resolve, reject) { 
             var headers = {
                 "cache-control": "no-cache, private, no-store, must-revalidate",
-                "Authorization": "basic_auth",
+                "Authorization": $http.defaults.headers.common['Authorization'],
                 "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
             }
             if(window.localStorage.getItem("0a8d74531550c76bb2da1337ba98")){
@@ -3067,7 +3074,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         return promise; 
     }
     this.ipv4 = function ( type ,url, postData ) { 
-        ////console.log("IPV4")
+        console.log("IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 ")
         
         var promise = new Promise(function(resolve, reject) {
 
@@ -3252,7 +3259,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     
                     $rootScope.isLogin = false;
                     User.destroyAccount();
-                    AuthService.destroyUserCredentials();
+                    User.destroyUserData()
                     isLogout = true; 
                     $('.wrapper.page').addClass('isLogout');
                     $ionicHistory.clearHistory();
@@ -3289,6 +3296,23 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }
                 }
             }, function () {})
+        },
+        linkify : function (inputText) {
+            var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+            //URLs starting with http://, https://, or ftp://
+            replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+            replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+            //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+            replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+            replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+            //Change email addresses to mailto:: links.
+            replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+            replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+            return replacedText;
         }
     }
 })

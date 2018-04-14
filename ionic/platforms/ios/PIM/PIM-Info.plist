@@ -68,8 +68,6 @@
     <string>This app requires constant access to your location in order to track your position, even when the screen is off or the app is in the background.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>This app requires access to your location when the screen is on and the app is displayed.</string>
-    <key>NSMainNibFile</key>
-    <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
     <key>NSMicrophoneUsageDescription</key>

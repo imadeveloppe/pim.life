@@ -40,9 +40,6 @@
         "cordova-plugin-app-launcher": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-badge": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
@@ -113,6 +110,9 @@
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-badge": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         }
     },
