@@ -743,12 +743,22 @@ angular.module('pim.routes', [])
             }
         })
 
-         .state('tab.montionslegales', {
-            url: '/montionslegales',
+        .state('tab.montionslegales', {
+            url: '/settings/montionslegales',
             views: {
                 'tab-settings': {
-                    templateUrl: 'templates/Connect/settings/montionslegales.html',
-                    controller: 'cgvCtrl'
+                    templateUrl: 'templates/Connect/Settings/montionslegales.html',
+                    controller: 'montionslegalesCtrl'
+                }
+            }
+        })
+
+        .state('tab.tarification', {
+            url: '/settings/tarification',
+            views: {
+                'tab-settings': {
+                    templateUrl: 'templates/Connect/Settings/tarification.html',
+                    controller: 'tarificationCtrl'
                 }
             }
         })

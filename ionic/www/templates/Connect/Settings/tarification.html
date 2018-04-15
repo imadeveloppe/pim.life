@@ -1,0 +1,15 @@
+<ion-view view-title="{{ 'settings.tarification' | translate }}" can-swipe-back="false" id="cgv"> 
+	<ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+        <ion-nav-buttons side="right" class="has-header">
+            <button class="button button-clear icon ion-ios-cloud-download"  ng-click="download()" ></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content class="" style="top: 56px;background: #fff"> 
+        <ng-pdf ng-if="pdfUrl" template-url="templates/Connect/Settings/pdfviewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>  
+    </ion-content> 
+</ion-view>
+ 

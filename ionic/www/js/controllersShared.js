@@ -6231,20 +6231,25 @@ angular.module('pim.controllersShared', [])
             value: $scope.data.confirmcode
         }];
         if (SharedService.Validation(validationList)) {
-            var postData = {
-                "task": "SettingsChangecode",
-                "actualcode": crypt.sha256($scope.data.currentcode),
-                "code": crypt.sha256($scope.data.newcode),
-                "confirmcode": crypt.sha256($scope.data.confirmcode)
-            };
-            Alert.loader(true);
-            Go.post(postData).then(function(data) {
-                if (data.success == 1) {
-                    window.localStorage.setItem('lockCode', crypt.sha256($scope.data.newcode))
-                    Alert.success( $filter('translate')('lock_code.success_update') )
-                    $scope.data = {}
-                }
-            });
+            // var postData = {
+            //     "task": "SettingsChangecode",
+            //     "actualcode": crypt.sha256($scope.data.currentcode),
+            //     "code": crypt.sha256($scope.data.newcode),
+            //     "confirmcode": crypt.sha256($scope.data.confirmcode)
+            // };
+            // Alert.loader(true);
+            // Go.post(postData).then(function(data) {
+            //     if (data.success == 1) {
+            //         window.localStorage.setItem('lockCode', crypt.sha256($scope.data.newcode))
+            //         Alert.success( $filter('translate')('lock_code.success_update') )
+            //         $scope.data = {}
+            //     }
+            // });
+
+            Alert.success( $filter('translate')('lock_code.success_update') )
+            setTimeout(function () {
+                $rootScope.GotoSettings();
+            },1500)
         }
     };
 })
@@ -6368,6 +6373,291 @@ angular.module('pim.controllersShared', [])
             
 
     }
+
+})
+
+.controller('montionslegalesCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go) {  
+
+    $scope.trustAsHtml = function(string) {
+        return $sce.trustAsHtml(string);
+    }; 
+
+})
+
+.controller('tarificationCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go,BASE64_LOGOS, $filter, $ionicModal, $ionicLoading, $cordovaFile, $cordovaFileOpener2) {  
+
+    $scope.trustAsHtml = function(string) {
+        return $sce.trustAsHtml(string);
+    }; 
+
+    var docDefinition = { 
+        pageSize: 'A4', 
+        pageMargins: [ 20, 20, 20, 20 ],
+        footer: { 
+            // columns: [ 
+            //     {
+            //         text: "",
+            //         width: 5
+            //     },
+            //     {
+            //         text: $filter('translate')('bank_statement_pdf.info_pim'), 
+            //         style: ['quote', 'small'],
+            //         alignment: 'center'
+            //     },
+            //     {
+            //         text: "",
+            //         width: 10
+            //     }
+            // ]
+        },
+        content:[
+            { 
+                columns:[
+                    {
+                        image: BASE64_LOGOS.pim,
+                        width: 50
+                    },
+                    {
+                        text: '',
+                        width: 20
+                    },
+                    {
+                        text: 'TARIFS TTC au 13 avril 2018',
+                        fontSize: 15,
+                        margin: [0,20,0,10],
+                        bold: true,
+                    }
+                ]
+            }, 
+            {
+                text: 'Une Appli mobile prépayée, une tarification transparentes et simple, sans découvert possible, sans frais cachés',
+                fontSize: 10.5,
+                color: '#ef7f31',
+                bold: true,
+                margin: [0,40,0,10],
+                alignment : 'center'
+            },
+            {
+                table: {
+                    widths: ['*', 90, 90, 90], 
+                    headerRows: 1,
+                    body:  [ 
+                        [ 
+                            { text: "Compte", style: 'tableHeader' }, 
+                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Compte courant avec RIB (IBAN) français", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "20 €", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Historique des transactions", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "4 Portefeuilles virtuels", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'}, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Frais de gestion annuels", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "10 € / an", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ]
+                    ]
+                },
+                layout: 'headerLineOnly'  
+            },
+            {
+                table: {
+                    widths: ['*', 90, 90, 90], 
+                    headerRows: 1,
+                    body:  [ 
+                        [ 
+                            { text: "Virements", style: 'tableHeader' }, 
+                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "1 Virement entrant - sortant / mois", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Virement entrant - sortant additionnel", style: 'tableBody' }, 
+                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                        ]
+                    ]
+                },
+                layout: 'headerLineOnly',
+                margin: [0,30,0,0]
+            },
+            {
+                table: {
+                    widths: ['*', 90, 90, 90], 
+                    headerRows: 1,
+                    body:  [ 
+                        [ 
+                            { text: "Opérations intra - PIM", style: 'tableHeader' }, 
+                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Paiement par QR Code", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Encaissement par QR Code", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "1,2 %", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                        ],
+                        [ 
+                            { text: "Transfert d’argent à distance", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Encaissement à distance", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "1, 2 %", style: 'tableBody', alignment : 'center'},  
+                           { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                        ]
+                    ]
+                },
+                layout: 'headerLineOnly',
+                margin: [0,30,0,0]
+            },
+            {
+                text: 'PIM transforme les frais bancaires en actions solidaires & reverse 50 % de ses commissions à l’association sélectionnée par l’Utilisateur',
+                fontSize: 9,
+                color: '#ef7f31',
+                bold: true,
+                margin: [0,50,0,10],
+                alignment : 'center'
+            },
+            {
+                text: $filter('translate')('bank_statement_pdf.info_pim'), 
+                style: ['quote', 'small'],
+                alignment: 'center'
+            },
+
+
+        ],
+        styles: { 
+            quote: {
+                italics: true
+            },
+            small: {
+                fontSize: 6
+            },
+            bold: { 
+                bold: true
+            },
+            tableBody:{
+                fontSize: 11,
+                margin: [0,5,0,5]
+            },
+            tableHeader:{
+                fontSize: 13,
+                bold: true
+            }
+        }
+    }; 
+    var base64ToUint8Array = function (base64) {  
+        var raw = atob(base64);
+        var uint8Array = new Uint8Array(raw.length);
+        for (var i = 0; i < raw.length; i++) {
+        uint8Array[i] = raw.charCodeAt(i);
+        }
+        return uint8Array;
+    }
+
+    var generatePdf = function function_name(argument) {
+ 
+
+        var pdf = pdfMake.createPdf(docDefinition);
+
+        pdf.getBase64(function (output) { 
+            var pdfOutput = base64ToUint8Array(output) 
+            var blob = new Blob([pdfOutput], {type: 'application/pdf'}); 
+            $scope.pdfUrl = URL.createObjectURL(blob); 
+        });
+    }
+
+    var base64toBlob  = function (base64Data, contentType) {
+          contentType = contentType || '';
+          var sliceSize = 1024;
+          var byteCharacters = atob(base64Data);
+          var bytesLength = byteCharacters.length;
+          var slicesCount = Math.ceil(bytesLength / sliceSize);
+          var byteArrays = new Array(slicesCount);
+
+        for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+            var begin = sliceIndex * sliceSize;
+            var end = Math.min(begin + sliceSize, bytesLength);
+
+            var bytes = new Array(end - begin);
+            for (var offset = begin, i = 0 ; offset < end; ++i, ++offset) {
+                bytes[i] = byteCharacters[offset].charCodeAt(0);
+            }
+            byteArrays[sliceIndex] = new Uint8Array(bytes);
+        }
+        return new Blob(byteArrays, { type: contentType });
+    }
+
+    
+
+    generatePdf();
+
+    $scope.download = function () {
+        console.log("HERE")
+        $ionicLoading.show({
+          template: $filter('translate')('bank_statement.please_wait')+'<br> <ion-spinner icon="ios-small"></ion-spinner>'
+        })
+        
+        setTimeout(function () {
+            const pdfDocGenerator = pdfMake.createPdf(docDefinition);  
+            pdfDocGenerator.getBase64((data) => {  
+                $ionicLoading.hide();
+
+                var documentsDirectory = ( ionic.Platform.isIOS() ) ? cordova.file.documentsDirectory : cordova.file.externalApplicationStorageDirectory;
+
+                $cordovaFile.writeFile( documentsDirectory,'Tarification.pdf' ,base64toBlob(data, "application/pdf"), true)
+                .then(function (success) { 
+                    $cordovaFileOpener2.open( 
+                        documentsDirectory+'Tarification.pdf',
+                        'application/pdf'
+                    ).then(function() {
+                        $ionicLoading.hide();
+                    }, function(err) { 
+                        $ionicLoading.hide();
+                        console.log("An error occurred. Show a message to the user", err)
+                    });
+                }, function (error) {
+                    alert('Fails');
+                }); 
+                
+            }); 
+        }, 1200)
+    }
+ 
 
 })
 

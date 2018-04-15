@@ -29,7 +29,7 @@ function handleOpenURL(url) {
 
 ionic.Gestures.gestures.Hold.defaults.hold_threshold = 5; 
 
-angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.controllersPro','pim.controllersAssociation', 'pim.routes', 'pim.services', 'pim.directives', 'pim.constant', 'pim.controllersShared', 'pim.utils', 'ngCordovaOauth','pascalprecht.translate', 'ionic-lock-screen','mobiscroll-calendar','mobiscroll-form', 'ngMask'])
+angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.controllersPro','pim.controllersAssociation', 'pim.routes', 'pim.services', 'pim.directives', 'pim.constant', 'pim.controllersShared', 'pim.utils', 'ngCordovaOauth','pascalprecht.translate', 'ionic-lock-screen','mobiscroll-calendar','mobiscroll-form', 'ngMask','pdf'])
  
 .config(['$mdIconProvider', function($mdIconProvider, $mdThemingProvider ) {
     $mdIconProvider.icon('md-close', 'img/icons/ic_close_24px.svg', 24); 
@@ -464,6 +464,8 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
                 var payload = JSON.parse(notification.data);
 
+                console.log("payload : ", payload);
+
                 $rootScope.updateNotifConnectedUser({
                     id: payload.notiftouserid,
                     isshop: payload.notiftoshop,
@@ -543,6 +545,8 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                         })
                                     }) 
 
+                                }, function () {
+                                    $rootScope.deteleUserFromConnectedUserList( payload.notiftouserid, payload.notiftoshop)
                                 })
                                     
                                     

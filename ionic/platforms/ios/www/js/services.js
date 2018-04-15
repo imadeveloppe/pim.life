@@ -3208,14 +3208,17 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                   },500)
                   console.log("attemptNumber", attemptNumber)
                   if( attemptNumber == 3 ){ 
-                      thiservice.logout() 
+                    Alert.error( $filter('translate')('passcode.faild_lockout') )
+                    setTimeout(function () {
+                        thiservice.logout() 
+                    }, 1500)
                   }
                 }
             });  
         }    
 
 
-        thiservice.verif = function (code, callBackFunction ) {
+        thiservice.verif = function (code, callBackFunction, wrongCodeThreeTimes ) {
             
             $lockScreen.show({
                 code: code, 
@@ -3233,6 +3236,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                       navigator.vibrate(200)
                       },500)
                       if( attemptNumber >= 3 ){ 
+                          wrongCodeThreeTimes()
                           $lockScreen.hide(); 
                           Alert.error( $filter('translate')('passcode.faild_lockout') )
                       }
