@@ -414,6 +414,26 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     };
 })
 
+.directive('textarea', function() {
+  return {
+    restrict: 'E',
+    link: function(scope, element, attr){
+        var update = function(){
+            element.css("height", "auto");
+            var height = element[0].scrollHeight; 
+            if( element[0].scrollHeight > 34 ){
+                element.css("height", element[0].scrollHeight + "px");
+            }else{
+                element.css("height", "23px");
+            }
+        };
+        scope.$watch(attr.ngModel, function(){
+            update();
+        });
+    }
+  };
+})
+
 .service('Badges', function(DATA, $rootScope, $cordovaBadge) {
     var UserMail = window.localStorage.getItem('username_a0f55e81c44553384a9421');
     var keybadge = '1550ca98761550c76bb2da133bb2988uueda133' + UserMail;
@@ -490,16 +510,16 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         authToken = token;
         role = USER_ROLES.public;
         // Set the token as header for your requests!
-        $http.defaults.headers.common['X_AUTHENTICATION_TOKEN'] = token; 
+        $http.defaults.headers.common['Authorization'] = token; 
     }
 
     function destroyUserCredentials() {
-        User.destroyUserData();
+        // User.destroyUserData();
         // Accounts.destoryAll();
-        authToken = undefined;
-        isAuthenticated = false;
-        $http.defaults.headers.common['X_AUTHENTICATION_TOKEN'] = undefined; 
-        window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+        // authToken = undefined;
+        // isAuthenticated = false;
+        // $http.defaults.headers.common['Authorization'] = undefined; 
+         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
 
     var login = function(name, pw, touchid) {
@@ -523,19 +543,19 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 var userInfos;
 
                 var request = Protocole.post( connexion )
-                request.then(function( data ) {
-
-
+                request.then(function( data ) {  
 
                     if (data.success == 1) {  
+
+                        
+
                         $storage.setObject('capitalSocial', {});
                         userInfos = data.userInfos;
                         ////////////////////////////////////////////////// add User connected ///////////////////////////////////////////////
                          
                         var connectedUsers = $storage.getArrayOfObjects("connectedUsers");
                         var finded = false; 
-
-                        console.log("connectedUsers", connectedUsers)
+ 
                         angular.forEach(connectedUsers, function (object, index) {
                             if( userInfos.id == object.id && userInfos.isshop == object.isshop ){
                                 finded = true;
@@ -546,15 +566,14 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         setTimeout(function () {
                             if( !finded ) {
                                 connectedUsers.push( userInfos ); 
-                            }
-                            console.log("connectedUsers", connectedUsers)
+                            } 
                             $storage.setArrayOfObjects("connectedUsers", connectedUsers);
                         }) 
 
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         Alert.loader(true)
                         // Geo.getPosition().then(function(position) {
                         User.lat = position.lat;
@@ -592,21 +611,22 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         $rootScope.isPro = data.isshop ;
                         data.UserDetails.userInfos = data.userInfos;
                         User.SetDetails(data.UserDetails);
-                        $rootScope.$emit("settingStartprogress", {});
+                        //$rootScope.$emit("settingStartprogress", {});
 
                         $translate.use( data.UserDetails.user.lang );
                         window.localStorage.setItem('langCode', data.UserDetails.user.lang)
                         window.localStorage.setItem('lockCode', data.UserDetails.user.code)
  
 
-                        if( parseInt(data.UserDetails.user.blocedcode) == 1 ){ 
-                            $location.path('/resetlockcode'); 
-                            console.log("asdasdsad asdasd ad resetlockcode")
-                        }else{ 
-                            $location.path('/tab/home');
-                            window.localStorage.setItem('loged', '1');
-                            console.log("asdasdsad asdasd ad Home")
-                        }
+                        // if( parseInt(data.UserDetails.user.blocedcode) == 1 ){ 
+                        //     $location.path('/resetlockcode'); 
+                        //     console.log("asdasdsad asdasd ad resetlockcode")
+                        // }else{ 
+                        //     $location.path('/tab/home');
+                        //     window.localStorage.setItem('loged', '1');
+                        //     console.log("asdasdsad asdasd ad Home")
+                        // } 
+
 
                         resolve( data.UserDetails );
 
@@ -723,7 +743,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
                                 }
                             });
-                        }else{
+                        }else if(window.SamsungPass){
+
                             SamsungPass.checkForRegisteredFingers(function() {
                                 var tookens = window.localStorage.getItem('TokenTouchIds')
                                 if( tookens == "" ){
@@ -834,6 +855,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                                 }
                             }, function() {});
                         }
+
+                        
                     }
                     else if(data.success == 0){
                         Alert.error( data.message )
@@ -841,9 +864,11 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                         if (!Go.is('addprofile')) { 
                             Directlogout()
                         } 
+                    }else if(data.success == 1022){  /// probleme de geolocalisation
+                        Geo.activeGpsPopin();
                     }else if (data.success == -1) { // deja suspendu
                         $ionicLoading.hide();
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         $location.path('/blocked');
                     }else if (data.success == -2) { // bloque par l'admin
                         // deleted by admin
@@ -857,7 +882,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }
                     else if (data.success == -3) { // email pas encore valide
                         ////console.log(data) 
-                        storeUserCredentials(data.userToken);
+                        //storeUserCredentials(data.userToken);
                         $ionicLoading.hide();
                         if( $location.path() == "/sign-in" ){
                             $state.go('emailNotValidated');
@@ -898,6 +923,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }
                 });
             }, function(err) {
+                console.log("Geo.getPosition", err)
                 $ionicLoading.hide();
             });
         });
@@ -916,8 +942,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
             Alert.loader(false);
             $rootScope.isLogin = false;
-            User.destroyAccount();
-            destroyUserCredentials();
+            User.destroyAccount(); 
             isLogout = true; 
             $('.wrapper.page').addClass('isLogout');
             $ionicHistory.clearHistory();
@@ -951,8 +976,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     $('.wrapper.page').addClass('isLogout');
                     window.localStorage.setItem('loged', '0');  
                     var userInfos = User.GetDetails().userInfos;
-                    $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop); 
-                    destroyUserCredentials();
+                    $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop);  
                     $rootScope.isLogin = false;
                     User.destroyAccount(); 
                     isLogout = true;
@@ -1006,6 +1030,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
     var that = this;
     UserEmail = '';
 
+
+
     var loadUserData = function() {
         // ll = JSON.parse($window.localStorage['12eb088d9afa0f55e81c44553384a9492aa']);
         var data = window.localStorage.getItem(LOCAL_TOKEN_KEY);
@@ -1025,13 +1051,14 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         // $window.localStorage['12eb088d9afa0f55e81c44553384a9492aa'] = JSON.stringify(Lists.Indicatifs);
     }
 
+
     var destroyUserData = function() {
         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
         window.localStorage.setItem(LOCAL_TOKEN_KEY, JSON.stringify([]));
 
         ////console.log(('destroyUserData =====================')
         loadUserData();
-    }
+    } 
 
     var SetDetails = function(data) {
         ////console.log(('go to stor')
@@ -2036,7 +2063,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 hideLoader = true;
             }
         }
-        if( !postData.NoLoader ){
+        if( !postData.NoLoader || postData.hideLoader ){
             Alert.loader(true);
         } 
 
@@ -2074,7 +2101,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 
                 if (data.success == 1) {
                     if (NoToken) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                     }
                     deferred.resolve(data);
                 }   
@@ -2087,7 +2114,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 
                 }else if (data.success == -1) { // deja suspendu 
                     $ionicLoading.hide();
-                    storeUserCredentials(data.userToken);
+                    //storeUserCredentials(data.userToken);
                     $location.path('/blocked');
                 }else if (data.success == -2) { // bloque par l'admin
                     // deleted by admin
@@ -2100,7 +2127,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 }
                 else if (data.success == -3) { // email pas encore valide
                     ////console.log(data)
-                    storeUserCredentials(data.userToken);
+                    //storeUserCredentials(data.userToken);
                     $location.path('/email-not-validated');
                     $ionicLoading.hide();
                 }
@@ -2129,6 +2156,8 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     setTimeout(function () {
                         $location.path('/blocked');
                     },1000)
+                }else if(data.success == 1022){  /// probleme de geolocalisation
+                    Geo.activeGpsPopin();
                 }
                 else {
                     Alert.loader(true);
@@ -2257,6 +2286,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     enableHighAccuracy: false
                 };
                 if(window.cordova){
+                // if( 1){
                     $cordovaGeolocation
                     .getCurrentPosition(posOptions)
                     .then(function(position) {  
@@ -2342,6 +2372,54 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                 });
             });
             return deferred.promise;
+        },
+        isLocationAvailable: function () {
+            cordova.plugins.diagnostic.isLocationAvailable(function(available){ 
+
+                if( !available ){
+                    swal({
+                        title: $filter('translate')('global_fields.gps'),
+                        text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonColor: "#254e7b",
+                        confirmButtonText: $filter('translate')('global_fields.goto_settings'),
+                        showLoaderOnConfirm: true,  
+                        allowOutsideClick: false
+                    }).then(function (confirm) {
+                        if( confirm ){
+                            if( ionic.Platform.isIOS() ){
+                                window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
+                            }else{ 
+                                cordova.plugins.diagnostic.switchToLocationSettings();
+                            }
+                        }
+                    }, function () {})
+                }
+                
+            }, function(error){
+                console.error("The following error occurred: "+error);
+            });
+        },
+        activeGpsPopin: function () {
+            swal({
+                title: $filter('translate')('global_fields.gps'),
+                text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
+                type: "info",
+                showCancelButton: false,
+                confirmButtonColor: "#254e7b",
+                confirmButtonText: $filter('translate')('global_fields.goto_settings'),
+                showLoaderOnConfirm: true,  
+                allowOutsideClick: false
+            }).then(function (confirm) {
+                if( confirm ){
+                    if( ionic.Platform.isIOS() ){
+                        window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
+                    }else{ 
+                        cordova.plugins.diagnostic.switchToLocationSettings();
+                    }
+                }
+            }, function () {})
         }
     };
 
@@ -2945,12 +3023,12 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
 .factory('Protocole', function($window, API, $http, Alert, $filter) {
 
     this.ipv6 = function ( type ,url, postData ) {
-        ////console.log("IPV6")
+        console.log("IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 IPV6 ")
         
         var promise = new Promise(function(resolve, reject) { 
             var headers = {
                 "cache-control": "no-cache, private, no-store, must-revalidate",
-                "Authorization": "basic_auth",
+                "Authorization": $http.defaults.headers.common['Authorization'],
                 "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
             }
             if(window.localStorage.getItem("0a8d74531550c76bb2da1337ba98")){
@@ -2965,7 +3043,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     } 
                     $window.CordovaHttpPlugin.post( url, postData, headers, function( res ) { 
                         Alert.loader(false);
-                        //console.log("res", JSON.parse(res.data))
+                        console.log("res", JSON.parse(res.data))
                         // resolve( res.data );
                         resolve( JSON.parse(res.data) );
                     }, function(err) {
@@ -2996,7 +3074,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         return promise; 
     }
     this.ipv4 = function ( type ,url, postData ) { 
-        ////console.log("IPV4")
+        console.log("IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 IPV4 ")
         
         var promise = new Promise(function(resolve, reject) {
 
@@ -3130,14 +3208,17 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                   },500)
                   console.log("attemptNumber", attemptNumber)
                   if( attemptNumber == 3 ){ 
-                      thiservice.logout() 
+                    Alert.error( $filter('translate')('passcode.faild_lockout') )
+                    setTimeout(function () {
+                        thiservice.logout() 
+                    }, 1500)
                   }
                 }
             });  
         }    
 
 
-        thiservice.verif = function (code, callBackFunction ) {
+        thiservice.verif = function (code, callBackFunction, wrongCodeThreeTimes ) {
             
             $lockScreen.show({
                 code: code, 
@@ -3155,6 +3236,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                       navigator.vibrate(200)
                       },500)
                       if( attemptNumber >= 3 ){ 
+                          wrongCodeThreeTimes()
                           $lockScreen.hide(); 
                           Alert.error( $filter('translate')('passcode.faild_lockout') )
                       }
@@ -3181,7 +3263,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     
                     $rootScope.isLogin = false;
                     User.destroyAccount();
-                    AuthService.destroyUserCredentials();
+                    User.destroyUserData()
                     isLogout = true; 
                     $('.wrapper.page').addClass('isLogout');
                     $ionicHistory.clearHistory();
@@ -3196,3 +3278,49 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         }
     return thiservice;
 })
+
+.service('AppServices', function($filter) {
+    return {
+        updateApp: function (data) {
+            swal({
+                title: $filter('translate')('global_fields.update_app'),
+                text: $filter('translate')('global_fields.update_app_texte'),
+                type: "info",
+                showCancelButton: false,
+                confirmButtonColor: "#254e7b",
+                confirmButtonText: $filter('translate')('global_fields.update_app'), 
+                showLoaderOnConfirm: true,  
+                allowOutsideClick: false
+            }).then(function (confirm) {
+                if( confirm ){
+                    if( ionic.Platform.isIOS() ){
+                        window.open("itms-apps://itunes.apple.com/app/"+data.iosappid, '_system')
+                    }else{
+                        window.open("https://play.google.com/store/apps/details?id="+data.andriodappid, '_system')
+                    }
+                }
+            }, function () {})
+        },
+        linkify : function (inputText) {
+            var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+            //URLs starting with http://, https://, or ftp://
+            replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+            replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+            //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+            replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+            replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+            //Change email addresses to mailto:: links.
+            replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+            replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+            return replacedText;
+        }
+    }
+})
+
+
+
+

@@ -1,76 +1,17 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "https://github.com/caixiangsap/filechooser.git",
-        "scope": null,
-        "escapedName": null,
-        "name": null,
-        "rawSpec": "https://github.com/caixiangsap/filechooser.git",
-        "spec": "git+https://github.com/caixiangsap/filechooser.git",
-        "type": "hosted",
-        "hosted": {
-          "type": "github",
-          "ssh": "git@github.com:caixiangsap/filechooser.git",
-          "sshUrl": "git+ssh://git@github.com/caixiangsap/filechooser.git",
-          "httpsUrl": "git+https://github.com/caixiangsap/filechooser.git",
-          "gitUrl": "git://github.com/caixiangsap/filechooser.git",
-          "shortcut": "github:caixiangsap/filechooser",
-          "directUrl": "https://raw.githubusercontent.com/caixiangsap/filechooser/master/package.json"
-        }
-      },
-      "/ST/ionic/pim.life/node_modules"
-    ]
-  ],
-  "_from": "git+https://github.com/caixiangsap/filechooser.git",
-  "_id": "cordova-plugin-file-chooser@1.0.1",
-  "_inCache": true,
-  "_location": "/cordova-plugin-file-chooser",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "https://github.com/caixiangsap/filechooser.git",
-    "scope": null,
-    "escapedName": null,
-    "name": null,
-    "rawSpec": "https://github.com/caixiangsap/filechooser.git",
-    "spec": "git+https://github.com/caixiangsap/filechooser.git",
-    "type": "hosted",
-    "hosted": {
-      "type": "github",
-      "ssh": "git@github.com:caixiangsap/filechooser.git",
-      "sshUrl": "git+ssh://git@github.com/caixiangsap/filechooser.git",
-      "httpsUrl": "git+https://github.com/caixiangsap/filechooser.git",
-      "gitUrl": "git://github.com/caixiangsap/filechooser.git",
-      "shortcut": "github:caixiangsap/filechooser",
-      "directUrl": "https://raw.githubusercontent.com/caixiangsap/filechooser/master/package.json"
-    }
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "git+https://github.com/caixiangsap/filechooser.git#05dde6b8f98ce3dcca98c74e718111c420e21ecc",
-  "_shasum": "e529f0eb642637b48723a807320c3f7db8b85de5",
-  "_shrinkwrap": null,
-  "_spec": "https://github.com/caixiangsap/filechooser.git",
-  "_where": "/ST/ionic/pim.life/node_modules",
-  "author": {
-    "name": "CCWC-IT"
-  },
-  "bugs": {
-    "url": "https://github.com/caixiangsap/filechooser/issues"
-  },
+  "name": "cordova-plugin-file-chooser",
+  "version": "1.0.1",
+  "description": "File Chooser for Cordova/Phonegap based on filechooser from cdibened & crypho & wrrzag88.",
   "cordova": {
     "id": "cordova-plugin-file-chooser",
     "platforms": [
       "android"
     ]
   },
-  "dependencies": {},
-  "description": "File Chooser for Cordova/Phonegap based on filechooser from cdibened & crypho & wrrzag88.",
-  "devDependencies": {},
-  "gitHead": "05dde6b8f98ce3dcca98c74e718111c420e21ecc",
-  "homepage": "https://github.com/caixiangsap/filechooser#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caixiangsap/filechooser.git"
+  },
   "keywords": [
     "cordova",
     "filechooser",
@@ -80,14 +21,10 @@
     "ecosystem:cordova",
     "cordova-android"
   ],
+  "author": "CCWC-IT",
   "license": "MIT",
-  "name": "cordova-plugin-file-chooser",
-  "optionalDependencies": {},
-  "readme": "# FileChooser Cordova plugin for Android (mainly KitKat)\n\nThis project was forked from https://github.com/wrrzag88/filechooser.git, that was forked from[Crypho/filechooser](https://github.com/Crypho/filechooser), that was originally forked from [cdibened/filechooser](https://github.com/cdibened/filechooser), so... thank you both for your work.\n\nThis plugin was created as a workaround for https://issues.apache.org/jira/browse/CB-5294 and https://code.google.com/p/android/issues/detail?id=62220. This plugin is mainly configured for Android 4.4 so I would recommend to continue to use the native file dialogs for earlier versions of Android. There might be issues with the plugin as I have not fully tested all possible scenarios on many devices, but I have installed it on a Nexus 5 and it worked fine.\n\nThe core pieces of the code were taken from https://github.com/iPaulPro/aFileChooser. A huge thanks to him!!!  All I did was write the plugin wrapper around it.  Please take note of the second part of the `Setup` step from the aforementioned **[aFileChooser](https://github.com/iPaulPro/aFileChooser)**.\n```\n    Note that like a ContentProvider, the DocumentProvider authority must be unique.\n    You should change com.ianhanniballake.localstorage.documents in your Manifest, as\n    well as the LocalStorageProvider.AUTHORITY field.\n```\n\n\n### Installation\n```\ncordova plugin add https://github.com/caixiangsap/filechooser.git\n```\n\n### Usage\n```\n    var success = function(data) {\n        console.log(data.url);\n        // do something\n    };\n\n    var error = function(msg) {\n        console.log(msg);\n        //do something\n    };\n\n    filechooser.open({\"mime\": \"application/pdf\"}, success, error);\n```\n\n### Example\n```\n    var success = function( data ) {\n        var filepath = data.url;\n        function win(r) {\n            console.log(\"Code = \" + r.responseCode);\n            console.log(\"Response = \" + r.response);\n            console.log(\"Sent = \" + r.bytesSent);\n        }\n\n        function fail(error) {\n            console.log(\"An error has occurred: Code = \" + error.code);\n            console.log(\"upload error source \" + error.source);\n            console.log(\"upload error target \" + error.target);\n        }\n\n        var uri = encodeURI(\"http://localhost/upload/processupload.php\");\n        var options = new FileUploadOptions();\n        options.fileKey=\"file\";\n        options.fileName=filepath.substr(filepath.lastIndexOf('/')+1);\n\n        var ft = new FileTransfer();\n        ft.onprogress = function(progressEvent) {\n            if (progressEvent.lengthComputable) {\n                loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);\n            }\n            else {\n                loadingStatus.increment();\n            }\n        };\n\n        ft.upload(filepath, uri, win, fail, options);  \n    };\n\n    var error = function( msg ) {\n        console.log( msg );\n    };\n\n\n    <input type=\"file\" id=\"fileinput\" name=\"fileinput\"/>\n    if( device.platform.toLowerCase() === 'android' && device.version.indexOf( '4.4' ) === 0 ) {\n        $('#fileinput').click( function(e) {\n            filechooser.open( {}, success, error );\n        });\n    }\n```\n",
-  "readmeFilename": "README.md",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/caixiangsap/filechooser.git"
+  "bugs": {
+    "url": "https://github.com/caixiangsap/filechooser/issues"
   },
-  "version": "1.0.1"
+  "homepage": "https://github.com/caixiangsap/filechooser#readme"
 }

@@ -67,8 +67,8 @@
         <span ng-if="dt.request.transmode != 'iban_transfer'">{{ dt.user1.line1}} {{ dt.user1.zip}} {{ dt.user1.city}} {{ dt.user1.country}}</span>
         <span ng-if="dt.request.transmode == 'iban_transfer'">{{ dt.user1.line1}} <br>{{ dt.user1.zip}} {{ dt.user1.city}} <br>{{ dt.user1.country}}</span>
 
-        <span ng-if="dt.request.transmode != 'iban_transfer'">{{ 'transaction_detail.tel' | translate }} {{ dt.user1.phone}}</span> 
-        <span ng-if="dt.request.transmode != 'iban_transfer'">{{ 'transaction_detail.email' | translate }} {{ dt.user1.mail}}</span>
+        <span ng-if="dt.request.transmode != 'iban_transfer'"><strong>{{ 'transaction_detail.tel' | translate }}</strong> {{ dt.user1.phone}}</span> 
+        <span ng-if="dt.request.transmode != 'iban_transfer'" style="word-break: break-all;"><strong>{{ 'transaction_detail.email' | translate }}</strong> {{ dt.user1.mail}}</span>
 
     </div>
 
@@ -77,9 +77,9 @@
 
         <span class="oneLine" style="padding-right: 41px;">{{ dt.user2.fname}} {{ dt.user2.lname}}</span>
 
-        <span>{{ 'transaction_detail.email' | translate }} {{ dt.user2.mail}}</span>
+        <span style="word-break: break-all;padding-right: 52px;"><strong>{{ 'transaction_detail.email' | translate }}</strong> {{ dt.user2.mail}}</span>
 
-        <span>{{ 'transaction_detail.tel' | translate }} {{ dt.user2.phone}} {{s}}</span> 
+        <span><strong>{{ 'transaction_detail.tel' | translate }}</strong> {{ dt.user2.phone}} {{s}}</span> 
 
         
 

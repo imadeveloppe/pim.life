@@ -6,7 +6,7 @@ jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.
 
 ExcellE,Ce1604
 
-cd /Users/pro/Library/Android/sdk/build-tools/25.0.1
+cd /Users/imac/Library/Android/sdk/build-tools/26.0.2
 
 ./zipalign -v 4 /st/ionic/pim/android-release-unsigned.apk /st/ionic/pim/pim.apk
 

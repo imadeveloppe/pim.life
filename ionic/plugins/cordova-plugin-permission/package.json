@@ -1,0 +1,33 @@
+{
+    "name": "cordova-plugin-permission",
+    "version": "0.1.0",
+    "description": "Verify and request grants for Android app permissions",
+    "directories": {
+        "example": "example"
+    },
+    "lint-staged": {
+        "*.js": ["eslint --fix", "git add"],
+        "*.json": ["prettier --write", "git add"]
+    },
+    "scripts": {
+        "precommit": "lint-staged && npm run docs && git add README.md",
+        "docs": "jsdoc2md --template README.hbs www/index.js > README.md"
+    },
+    "keywords": ["ecosystem:cordova", "cordova-android", "app", "permission"],
+    "author": "Adriano Di Giovanni <me@adrianodigiovanni.com> (http://adrianodigiovanni.com/)",
+    "license": "MIT",
+    "devDependencies": {
+        "eslint": "^4.18.1",
+        "eslint-config-prettier": "^2.9.0",
+        "eslint-config-standard": "^11.0.0",
+        "eslint-plugin-import": "^2.9.0",
+        "eslint-plugin-node": "^6.0.1",
+        "eslint-plugin-prettier": "^2.6.0",
+        "eslint-plugin-promise": "^3.6.0",
+        "eslint-plugin-standard": "^3.0.1",
+        "husky": "^0.14.3",
+        "jsdoc-to-markdown": "^4.0.1",
+        "lint-staged": "^7.0.0",
+        "prettier": "^1.11.1"
+    }
+}

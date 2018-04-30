@@ -15,9 +15,11 @@ angular.module('pim.controllers', [])
     $scope.$on('$ionicView.beforeLeave', function(e) {
         $scope.loader = Alert.loader(true);
     });
+
     $scope.$on('$ionicView.beforeEnter', function(e) {
         $scope.loader = Alert.loader(true); 
     });
+
     $scope.$on('$ionicView.afterEnter', function(e) {
         if(!Go.is('list-notifications') && !Go.is('info-compte') && !Go.is('statistics') && !Go.is('changequestions') && !Go.is('sign-up-step3')){
             $scope.loader = Alert.loader(false);
@@ -74,7 +76,7 @@ angular.module('pim.controllers', [])
                     }else{ 
                         switch( isshop ){
                             case '0':
-                                $state.go('resetQuestionSendResponses',{
+                                $state.go('signup',{
                                     code: code
                                 })
                                 break;
@@ -277,7 +279,7 @@ angular.module('pim.controllers', [])
 
 
         if( ionic.Platform.isIOS() ){
-            window.open('message://');
+            cordova.InAppBrowser.open('message:/', '_system'); 
         }else{
             
             window.plugins.launcher.canLaunch({packageName:'com.google.android.gm'}, function(data) {
@@ -488,8 +490,8 @@ angular.module('pim.controllers', [])
     $scope.openMailApp = function () {
 
 
-        if( ionic.Platform.isIOS() ){
-            window.open('message://');
+        if( ionic.Platform.isIOS() ){ 
+            cordova.InAppBrowser.open('message:/', '_system'); 
         }else{
             
             window.plugins.launcher.canLaunch({packageName:'com.google.android.gm'}, function(data) {
@@ -530,7 +532,7 @@ angular.module('pim.controllers', [])
         $ionicHistory.goBack()
     }
 })
-.controller('SignInCtrl', function($scope, Alert, $rootScope, $sce, Catgs, $rootScope, User, $state, $location, AuthService, crypt, $ionicLoading, $cordovaTouchID, $ionicModal, Go, $translate, $filter, $ionicHistory) {
+.controller('SignInCtrl', function($scope, Alert, $rootScope, $sce, Catgs, $rootScope, User, $state, $location,SharedService, AuthService, crypt, $ionicLoading, $cordovaTouchID, $ionicModal, Go, $translate, $filter, $ionicHistory) {
     
     $scope.trustAsHtml = function(string) {
         return $sce.trustAsHtml(string);
@@ -720,15 +722,15 @@ angular.module('pim.controllers', [])
         }
         Go.post(postData).then(function(data) {
             if (data.success == 1) {
-                $scope.cgvModal.hide();
+                $scope.cgvModal.hide(); 
 
-                if( parseInt($scope.UserDetails.user.blocedcode) == 1 ){ 
-                    $location.path('/resetlockcode'); 
-                    console.log("asdasdsad asdasd ad resetlockcode")
+                if( parseInt($scope.UserDetails.user.firstconnexion) == 1 ){ 
+                    $location.path('/firstConnnectionToPim');  
+                }else if( parseInt($scope.UserDetails.user.blocedcode) == 1 ){ 
+                    $location.path('/resetlockcode');  
                 }else{ 
                     $location.path('/tab/home');
-                    window.localStorage.setItem('loged', '1');
-                    console.log("asdasdsad asdasd ad Home")
+                    window.localStorage.setItem('loged', '1'); 
                 }
             } 
         })
@@ -796,49 +798,62 @@ angular.module('pim.controllers', [])
  
 
     $scope.login = function() {
-        console.log('go login ===>>>>')
-        $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-        });
-        AuthService.login($scope.datalogin.username, crypt.sha256($scope.datalogin.password), 0).then(function(dataUser) {
-
-            window.localStorage.setItem('username_a0f55e81c44553384a9421', $scope.datalogin.username);
-            $scope.datalogin = {
-                username: $scope.datalogin.username,
-                password: ''
-            };
-            User.UserEmail = $scope.datalogin.username;
-            $ionicLoading.hide();
-            $rootScope.FirstTimeInSettings = true;
-            Catgs.Sync(true); 
 
 
-            $scope.UserDetails = dataUser
-            /////////******************* Accept CGV *****************************
-            if( parseInt( dataUser.user.cgvvalid ) == 0 ){
-                $scope.cgv = dataUser.cgv;
-                $scope.cgvModal.show();
-                $scope.loadCGV(dataUser)
-            }else{ 
-                if( parseInt(dataUser.user.firstconnexion) == 1 ){ 
-                    $location.path('/firstConnnectionToPim');  
-                }else if( parseInt(dataUser.user.blocedcode) == 1 ){ 
-                    $location.path('/resetlockcode');  
+        var validationList = [{
+            type: 'email',
+            value: $scope.datalogin.username
+        },{
+            type: 'passwordr',
+            value: $scope.datalogin.password
+        }];
+
+        if (SharedService.Validation(validationList)) {
+
+            console.log('go login ===>>>>')
+            $ionicLoading.show({
+                content: 'Loading',
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
+            AuthService.login($scope.datalogin.username, crypt.sha256($scope.datalogin.password), 0).then(function(dataUser) {
+
+                window.localStorage.setItem('username_a0f55e81c44553384a9421', $scope.datalogin.username);
+                $scope.datalogin = {
+                    username: $scope.datalogin.username,
+                    password: ''
+                };
+                User.UserEmail = $scope.datalogin.username;
+                $ionicLoading.hide();
+                $rootScope.FirstTimeInSettings = true;
+                Catgs.Sync(true); 
+
+
+                $scope.UserDetails = dataUser
+                /////////******************* Accept CGV *****************************
+                if( parseInt( dataUser.user.cgvvalid ) == 0 ){
+                    $scope.cgv = dataUser.cgv;
+                    $scope.cgvModal.show();
+                    $scope.loadCGV(dataUser)
                 }else{ 
-                    $location.path('/tab/home');
-                    window.localStorage.setItem('loged', '1'); 
+                    if( parseInt(dataUser.user.firstconnexion) == 1 ){ 
+                        $location.path('/firstConnnectionToPim');  
+                    }else if( parseInt(dataUser.user.blocedcode) == 1 ){ 
+                        $location.path('/resetlockcode');  
+                    }else{ 
+                        $location.path('/tab/home');
+                        window.localStorage.setItem('loged', '1'); 
+                    }
                 }
-            }
-            /////////*********************************************************
+                /////////*********************************************************
 
 
-        }, function(err) {
-            $ionicLoading.hide();
-        });
+            }, function(err) {
+                $ionicLoading.hide();
+            });
+        }
     };
     $scope.$on('$ionicView.enter', function(e) {
 
@@ -2261,7 +2276,7 @@ angular.module('pim.controllers', [])
     };
 })
 
-.controller('SettingsCtrl', function($scope,$sce, $ionicModal, Geo, $cordovaBadge, AuthService, DATA, $storage, $translate, $cordovaTouchID, ResetePage, $interval, $rootScope, $window, $state, Phone, pickerView, Chats, User, $location, Lists, SharedService, Go, crypt, Alert, AuthService, $timeout, $ionicHistory, $filter, $translate) {
+.controller('SettingsCtrl', function($scope,$stateParams, $sce, $ionicModal, Geo, $cordovaBadge, AuthService, DATA, $storage, $translate, $cordovaTouchID, ResetePage, $interval, $rootScope, $window, $state, Phone, pickerView, Chats, User, $location, Lists, SharedService, Go, crypt, Alert, AuthService, $timeout, $ionicHistory, $filter, $translate) {
      
 
     $scope.data = {};
@@ -2727,7 +2742,10 @@ angular.module('pim.controllers', [])
             };
             Go.post(postData).then(function(data) {
                 if (data.success == 1) { 
-                    $state.go('tab.SmsCode');
+                    $state.go('tab.SmsCode',{
+                        indicatif: $scope.data.Indicatif,
+                        phone: $scope.data.phone
+                    });
                 }
             });
 
@@ -2738,7 +2756,8 @@ angular.module('pim.controllers', [])
     });
 
     $scope.ValidateSMS = function() {
-        
+             
+
         var validationList = [{
             type: 'codesms',
             value: $scope.data.smscode
@@ -2756,7 +2775,7 @@ angular.module('pim.controllers', [])
                     $scope.data.Indicatif = $window.localStorage['indicatif'];
                     $scope.data.phone = $window.localStorage['phone'];
                         
-                    Alert.success( $filter('translate')('sms_code.success_send') + ' : (' + $scope.data.Indicatif + ') ' + $scope.data.phone );
+                    Alert.success( $filter('translate')('sms_code.success_send') + ' : (' + $stateParams.indicatif + ') ' + $stateParams.phone );
  
                     $rootScope.GotoSettings()
                 }
@@ -3062,7 +3081,7 @@ angular.module('pim.controllers', [])
                 
             }); 
         }else{
-            if( SamsungPass ){
+            if( window.SamsungPass ){
                 SamsungPass.checkForRegisteredFingers(function() {
                     var tookens = JSON.parse( window.localStorage.getItem('TokenTouchIds') ) 
                     if( tookens != '' && tookens != '[]' ){

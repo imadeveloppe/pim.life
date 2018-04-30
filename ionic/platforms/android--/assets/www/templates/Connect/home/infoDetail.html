@@ -10,7 +10,7 @@
 
 <div class="info-detail" ng-show="dt.user1">
 
-    <div class="block-1 padding" style="padding-top: 22px;">
+    <div class="block-1 padding" style="padding-top: 22px;margin-bottom: 92px;">
 
         <button data-tap-disabled="true" ng-click="$ionicGoBack()" class="button back-button buttons  button-clear header-item"><i class="icon ion-ios-arrow-back"></i> 
         {{ 'global_fields.back' | translate }}
@@ -58,11 +58,11 @@
 
     </div>
 
-    <div ng-if="dt.request.statut != ''" class="padding-left" style="color:#ef7f31;font-size: 100%;font-family: 'OpenSansBold';position: relative;top: 91px;"><i class="ion-load-d"></i>
+    <div ng-if="dt.request.statut != ''" class="padding-left" style="color:#ef7f31;font-size: 100%;font-family: 'OpenSansBold';position: relative;"><i class="ion-load-d"></i>
         {{ 'transaction_list.'+dt.request.statut | translate }}
     </div>
 
-    <div class="address padding-left" id="div0"  style="margin-top: 92px;border-top: 1px solid rgb(237, 237, 237);">
+    <div class="address padding-left" id="div0"  style="border-top: 1px solid rgb(237, 237, 237);" ng-if="dt.user2.isshop == 0">
 
         <span ng-if="dt.request.transmode != 'iban_transfer'">{{ dt.user1.line1}} {{ dt.user1.zip}} {{ dt.user1.city}} {{ dt.user1.country}}</span>
         <span ng-if="dt.request.transmode == 'iban_transfer'">{{ dt.user1.line1}} <br>{{ dt.user1.zip}} {{ dt.user1.city}} <br>{{ dt.user1.country}}</span>

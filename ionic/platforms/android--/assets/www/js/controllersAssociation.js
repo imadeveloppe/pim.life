@@ -102,7 +102,9 @@ angular.module('pim.controllersAssociation', [])
 
                     if( parseInt( data.UserDetails.user.cgvvalid ) == 0 ){ 
                         $scope.cgv = data.UserDetails.cgv;
+                        $scope.UserData = data;
                         $scope.cgvModal.show();
+                        $scope.loadCGV();
                         
                     }else{
                         $scope.acceptedCGV( $scope.connexionDATA )
@@ -139,9 +141,37 @@ angular.module('pim.controllersAssociation', [])
         $scope.cgvModal = modal;
     });
 
+    $scope.cgv = "";
+    $scope.canLoadMore = true; 
+    $scope.cgvpage= 1;
+    
+    $scope.loadCGV = function () { 
+        Go.post({
+            task: "getcgv",
+            isshop: $scope.UserData.userInfos.isshop,
+            NoLoader: true,
+            page  : $scope.cgvpage
+        }).then(function (data) { 
+            if(data.success == 1){
+                $scope.cgvpage++;
+                $scope.cgv += data.cgv;
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    })
+                })
+                if(data.cgvend == 0){ 
+                    $scope.canLoadMore = true; 
+                }else{ 
+                    $scope.canLoadMore = false; 
+                } 
+            }    
+        }) 
+    }
+
     $scope.acceptedCGV = function (data) { 
         // ******************************************************************************************************************************
-        AuthService.storeUserCredentials(data.userToken);
+        //AuthService.storeUserCredentials(data.userToken);
         
 
         User.lat = data.position.lat;
@@ -373,9 +403,9 @@ angular.module('pim.controllersAssociation', [])
                 "question1": $scope.data.idquestion1,
                 "question2": $scope.data.idquestion2,
                 "question3": $scope.data.idquestion3,
-                "answer1": $scope.data.answer1,
-                "answer2": $scope.data.answer2,
-                "answer3": $scope.data.answer3
+                "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.data.answer3.toLowerCase())
             };
             Alert.loader(true)
             Go.SPost(postData).then(function(data) { 
@@ -525,7 +555,7 @@ angular.module('pim.controllersAssociation', [])
                     
                 
             }); 
-        }else{
+        }else if( SamsungPass ){
             SamsungPass.checkForRegisteredFingers(function() {
                 var tookens = JSON.parse( window.localStorage.getItem('TokenTouchIds') ) 
                 if( tookens != '' && tookens != '[]' ){

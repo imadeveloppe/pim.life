@@ -88,9 +88,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "cordova-plugin-badge/pimlife672753-badge.gradle"
-apply from: "cordova-plugin-firebase/pimlife672753-build.gradle"
-apply from: "phonegap-plugin-barcodescanner/pimlife672753-barcodescanner.gradle"
+apply from: "cordova-plugin-badge/pimpushs-badge.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -252,14 +250,6 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     debugCompile project(path: "CordovaLib", configuration: "debug")
     releaseCompile project(path: "CordovaLib", configuration: "release")
-    compile "com.android.support:support-v4:24.1.1+"
-    compile "com.android.support:support-v4:+"
-    compile "com.google.gms:google-services:+"
-    compile "com.google.android.gms:play-services-tagmanager:+"
-    compile "com.google.firebase:firebase-core:+"
-    compile "com.google.firebase:firebase-messaging:+"
-    compile "com.google.firebase:firebase-crash:+"
-    compile "com.google.firebase:firebase-config:+"
     compile "com.android.support:support-v4:26.+"
     compile "com.android.support:appcompat-v7:26.+"
     // SUB-PROJECT DEPENDENCIES END

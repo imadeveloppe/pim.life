@@ -21,6 +21,34 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Clipboard\"><param name=\"ios-package\" value=\"CDVClipboard\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NativeSettings\"><param name=\"ios-package\" value=\"NativeSettings\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FirebasePlugin\"><param name=\"ios-package\" value=\"FirebasePlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"TouchID\"><param name=\"ios-package\" value=\"TouchID\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"CordovaHttpPlugin\"><param name=\"ios-package\" value=\"CordovaHttpPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" value=\"CDVStatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -33,19 +61,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"AppAvailability\"><param name=\"ios-package\" value=\"AppAvailability\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Clipboard\"><param name=\"ios-package\" value=\"CDVClipboard\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"NativeSettings\"><param name=\"ios-package\" value=\"NativeSettings\" /></feature>",
                             "count": 1
                         },
                         {
@@ -65,15 +81,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"FileOpener2\"><param name=\"ios-package\" value=\"FileOpener2\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"FirebasePlugin\"><param name=\"ios-package\" value=\"FirebasePlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
@@ -93,19 +101,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"TouchID\"><param name=\"ios-package\" value=\"TouchID\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Toast\"><param name=\"ios-package\" value=\"Toast\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"CordovaHttpPlugin\"><param name=\"ios-package\" value=\"CordovaHttpPlugin\" /></feature>",
                             "count": 1
                         },
                         {
@@ -130,6 +126,10 @@
                         },
                         {
                             "xml": "<feature name=\"Badge\"><param name=\"ios-package\" value=\"APPBadge\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -160,6 +160,10 @@
                         },
                         {
                             "xml": "<string>This app requires photo library access to function properly.</string>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<string>This app needs read/write-access photo library access</string>",
                             "count": 1
                         }
                     ],
@@ -197,15 +201,19 @@
                         {
                             "xml": "<string>This app requires microphone access to function properly.</string>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<string>This app needs microphone access</string>",
+                            "count": 1
                         }
                     ],
                     "NSCameraUsageDescription": [
                         {
-                            "xml": "<string> </string>",
+                            "xml": "<string>This app requires camera access to function properly.</string>",
                             "count": 1
                         },
                         {
-                            "xml": "<string>This app requires camera access to function properly.</string>",
+                            "xml": "<string>This app needs camera access</string>",
                             "count": 1
                         }
                     ],
@@ -224,6 +232,12 @@
                     "NSRemindersUsageDescription": [
                         {
                             "xml": "<string>This app requires reminders access to function properly.</string>",
+                            "count": 1
+                        }
+                    ],
+                    "NSPhotoLibraryAddUsageDescription": [
+                        {
+                            "xml": "<string>This app needs write-access to photo library</string>",
                             "count": 1
                         }
                     ]
@@ -261,20 +275,8 @@
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "io.ionic.starter"
         },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "com-badrit-base64": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "com.cordova.plugin.SamsungPassPlugin": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-appavailability": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "com.verso.cordova.clipboard": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
@@ -282,65 +284,73 @@
         "cordova-open-native-settings": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-app-launcher": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-email-composer": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-file-opener2": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-firebase": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-image-picker": {
-            "PHOTO_LIBRARY_USAGE_DESCRIPTION": " ",
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-save-image": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-lock-info": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "cordova-plugin-touchid": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "com.cesidiodibenedetto.filechooser": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "phonegap-plugin-barcodescanner": {
-            "CAMERA_USAGE_DESCRIPTION": " ",
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-http": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "cordova-plugin-urlhandler": {
             "URL_SCHEME": "pimlife",
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "com-badrit-base64": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-appavailability": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "com.cordova.plugin.SamsungPassPlugin": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-app-launcher": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-email-composer": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-file-opener2": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-image-picker": {
+            "PHOTO_LIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-save-image": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-lock-info": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "com.cesidiodibenedetto.filechooser": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
@@ -358,6 +368,19 @@
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-badge": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-ios-camera-permissions": {
+            "CAMERA_USAGE_DESCRIPTION": "This app needs camera access",
+            "MICROPHONE_USAGE_DESCRIPTION": "This app needs microphone access",
+            "PHOTOLIBRARY_ADD_USAGE_DESCRIPTION": "This app needs write-access to photo library",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": "This app needs read/write-access photo library access",
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-permission": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         }
     },
@@ -396,14 +419,6 @@
             ]
         },
         {
-            "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
-            "id": "cordova-plugin-statusbar.statusbar",
-            "pluginId": "cordova-plugin-statusbar",
-            "clobbers": [
-                "window.StatusBar"
-            ]
-        },
-        {
             "file": "plugins/ionic-plugin-keyboard/www/ios/keyboard.js",
             "id": "ionic-plugin-keyboard.keyboard",
             "pluginId": "ionic-plugin-keyboard",
@@ -411,22 +426,6 @@
                 "cordova.plugins.Keyboard"
             ],
             "runs": true
-        },
-        {
-            "file": "plugins/com-badrit-base64/www/Base64.js",
-            "id": "com-badrit-base64.Base64",
-            "pluginId": "com-badrit-base64",
-            "clobbers": [
-                "navigator.Base64"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-appavailability/www/AppAvailability.js",
-            "id": "cordova-plugin-appavailability.AppAvailability",
-            "pluginId": "cordova-plugin-appavailability",
-            "clobbers": [
-                "appAvailability"
-            ]
         },
         {
             "file": "plugins/com.verso.cordova.clipboard/www/clipboard.js",
@@ -442,55 +441,6 @@
             "pluginId": "cordova-open-native-settings",
             "clobbers": [
                 "cordova.plugins.settings"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-app-launcher/www/Launcher.js",
-            "id": "cordova-plugin-app-launcher.Launcher",
-            "pluginId": "cordova-plugin-app-launcher",
-            "clobbers": [
-                "plugins.launcher"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
-            "id": "cordova-plugin-camera.Camera",
-            "pluginId": "cordova-plugin-camera",
-            "clobbers": [
-                "Camera"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
-            "id": "cordova-plugin-camera.CameraPopoverOptions",
-            "pluginId": "cordova-plugin-camera",
-            "clobbers": [
-                "CameraPopoverOptions"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-camera/www/Camera.js",
-            "id": "cordova-plugin-camera.camera",
-            "pluginId": "cordova-plugin-camera",
-            "clobbers": [
-                "navigator.camera"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-camera/www/ios/CameraPopoverHandle.js",
-            "id": "cordova-plugin-camera.CameraPopoverHandle",
-            "pluginId": "cordova-plugin-camera",
-            "clobbers": [
-                "CameraPopoverHandle"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-email-composer/www/email_composer.js",
-            "id": "cordova-plugin-email-composer.EmailComposer",
-            "pluginId": "cordova-plugin-email-composer",
-            "clobbers": [
-                "cordova.plugins.email",
-                "plugin.email"
             ]
         },
         {
@@ -667,19 +617,116 @@
             "runs": true
         },
         {
-            "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
-            "id": "cordova-plugin-file-opener2.FileOpener2",
-            "pluginId": "cordova-plugin-file-opener2",
-            "clobbers": [
-                "cordova.plugins.fileOpener2"
-            ]
-        },
-        {
             "file": "plugins/cordova-plugin-firebase/www/firebase.js",
             "id": "cordova-plugin-firebase.FirebasePlugin",
             "pluginId": "cordova-plugin-firebase",
             "clobbers": [
                 "FirebasePlugin"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-touchid/www/touchid.js",
+            "id": "cordova-plugin-touchid.TouchID",
+            "pluginId": "cordova-plugin-touchid",
+            "clobbers": [
+                "touchid"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-http/www/cordovaHTTP.js",
+            "id": "cordova-plugin-http.CordovaHttpPlugin",
+            "pluginId": "cordova-plugin-http",
+            "clobbers": [
+                "CordovaHttpPlugin"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-urlhandler/www/ios/LaunchMyApp.js",
+            "id": "cordova-plugin-urlhandler.LaunchMyApp",
+            "pluginId": "cordova-plugin-urlhandler",
+            "clobbers": [
+                "window.plugins.launchmyapp"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+            "id": "cordova-plugin-statusbar.statusbar",
+            "pluginId": "cordova-plugin-statusbar",
+            "clobbers": [
+                "window.StatusBar"
+            ]
+        },
+        {
+            "file": "plugins/com-badrit-base64/www/Base64.js",
+            "id": "com-badrit-base64.Base64",
+            "pluginId": "com-badrit-base64",
+            "clobbers": [
+                "navigator.Base64"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-appavailability/www/AppAvailability.js",
+            "id": "cordova-plugin-appavailability.AppAvailability",
+            "pluginId": "cordova-plugin-appavailability",
+            "clobbers": [
+                "appAvailability"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-app-launcher/www/Launcher.js",
+            "id": "cordova-plugin-app-launcher.Launcher",
+            "pluginId": "cordova-plugin-app-launcher",
+            "clobbers": [
+                "plugins.launcher"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
+            "id": "cordova-plugin-camera.Camera",
+            "pluginId": "cordova-plugin-camera",
+            "clobbers": [
+                "Camera"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+            "id": "cordova-plugin-camera.CameraPopoverOptions",
+            "pluginId": "cordova-plugin-camera",
+            "clobbers": [
+                "CameraPopoverOptions"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/www/Camera.js",
+            "id": "cordova-plugin-camera.camera",
+            "pluginId": "cordova-plugin-camera",
+            "clobbers": [
+                "navigator.camera"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/www/ios/CameraPopoverHandle.js",
+            "id": "cordova-plugin-camera.CameraPopoverHandle",
+            "pluginId": "cordova-plugin-camera",
+            "clobbers": [
+                "CameraPopoverHandle"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-email-composer/www/email_composer.js",
+            "id": "cordova-plugin-email-composer.EmailComposer",
+            "pluginId": "cordova-plugin-email-composer",
+            "clobbers": [
+                "cordova.plugins.email",
+                "plugin.email"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-file-opener2/www/plugins.FileOpener2.js",
+            "id": "cordova-plugin-file-opener2.FileOpener2",
+            "pluginId": "cordova-plugin-file-opener2",
+            "clobbers": [
+                "cordova.plugins.fileOpener2"
             ]
         },
         {
@@ -748,14 +795,6 @@
             ]
         },
         {
-            "file": "plugins/cordova-plugin-touchid/www/touchid.js",
-            "id": "cordova-plugin-touchid.TouchID",
-            "pluginId": "cordova-plugin-touchid",
-            "clobbers": [
-                "touchid"
-            ]
-        },
-        {
             "file": "plugins/cordova-plugin-x-toast/www/Toast.js",
             "id": "cordova-plugin-x-toast.Toast",
             "pluginId": "cordova-plugin-x-toast",
@@ -764,32 +803,11 @@
             ]
         },
         {
-            "file": "plugins/cordova-plugin-x-toast/test/tests.js",
-            "id": "cordova-plugin-x-toast.tests",
-            "pluginId": "cordova-plugin-x-toast"
-        },
-        {
             "file": "plugins/com.cesidiodibenedetto.filechooser/www/filechooser.js",
             "id": "com.cesidiodibenedetto.filechooser.FileChooser",
             "pluginId": "com.cesidiodibenedetto.filechooser",
             "clobbers": [
                 "FileChooser"
-            ]
-        },
-        {
-            "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
-            "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
-            "pluginId": "phonegap-plugin-barcodescanner",
-            "clobbers": [
-                "cordova.plugins.barcodeScanner"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-http/www/cordovaHTTP.js",
-            "id": "cordova-plugin-http.CordovaHttpPlugin",
-            "pluginId": "cordova-plugin-http",
-            "clobbers": [
-                "CordovaHttpPlugin"
             ]
         },
         {
@@ -809,14 +827,6 @@
             ]
         },
         {
-            "file": "plugins/cordova-plugin-urlhandler/www/ios/LaunchMyApp.js",
-            "id": "cordova-plugin-urlhandler.LaunchMyApp",
-            "pluginId": "cordova-plugin-urlhandler",
-            "clobbers": [
-                "window.plugins.launchmyapp"
-            ]
-        },
-        {
             "file": "plugins/cordova-plugin-dialogs/www/notification.js",
             "id": "cordova-plugin-dialogs.notification",
             "pluginId": "cordova-plugin-dialogs",
@@ -829,7 +839,6 @@
             "id": "cordova-plugin-vibration.notification",
             "pluginId": "cordova-plugin-vibration",
             "merges": [
-                "navigator.notification",
                 "navigator"
             ]
         },
@@ -856,43 +865,66 @@
             "clobbers": [
                 "cordova.plugins.notification.badge"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-barcodescanner/www/barcodescanner.js",
+            "id": "cordova-plugin-barcodescanner.BarcodeScanner",
+            "pluginId": "cordova-plugin-barcodescanner",
+            "clobbers": [
+                "cordova.plugins.barcodeScanner"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-permission/www/index.js",
+            "id": "cordova-plugin-permission.Permission",
+            "pluginId": "cordova-plugin-permission",
+            "clobbers": [
+                "window.plugins.Permission"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-permission/tests/index.spec.js",
+            "id": "cordova-plugin-permission.tests",
+            "pluginId": "cordova-plugin-permission"
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-console": "1.1.0",
         "cordova-plugin-device": "1.1.4",
         "cordova-plugin-splashscreen": "4.0.3",
-        "cordova-plugin-statusbar": "2.2.1",
         "ionic-plugin-keyboard": "2.2.1",
-        "com-badrit-base64": "0.2.0",
-        "com.cordova.plugin.SamsungPassPlugin": "1.0.0",
-        "cordova-plugin-appavailability": "0.4.2",
         "com.verso.cordova.clipboard": "0.1.0",
         "cordova-open-native-settings": "1.4.1",
-        "cordova-plugin-app-launcher": "0.4.0",
-        "cordova-plugin-camera": "4.0.1",
         "cordova-plugin-compat": "1.2.0",
-        "cordova-plugin-email-composer": "0.8.13",
         "cordova-plugin-file": "6.0.1",
-        "cordova-plugin-file-opener2": "2.0.19",
         "cordova-plugin-firebase": "0.1.25",
+        "cordova-plugin-touchid": "0.4.0",
+        "cordova-plugin-http": "1.2.0",
+        "cordova-plugin-urlhandler": "0.7.0",
+        "cordova-plugin-statusbar": "2.2.1",
+        "com-badrit-base64": "0.2.0",
+        "cordova-plugin-appavailability": "0.4.2",
+        "com.cordova.plugin.SamsungPassPlugin": "1.0.0",
+        "cordova-plugin-app-launcher": "0.4.0",
+        "cordova-plugin-camera": "4.0.3",
+        "cordova-plugin-email-composer": "0.8.15",
+        "cordova-plugin-file-opener2": "2.0.19",
         "cordova-plugin-geolocation": "4.0.1",
         "cordova-plugin-image-picker": "1.1.1",
-        "cordova-plugin-inappbrowser": "2.0.1",
+        "cordova-plugin-inappbrowser": "2.0.2",
         "cordova-plugin-save-image": "0.3.0",
         "cordova-plugin-lock-info": "0.0.1",
-        "cordova-plugin-touchid": "0.4.0",
-        "cordova-plugin-x-toast": "2.6.0",
+        "cordova-plugin-x-toast": "2.6.2",
         "com.cesidiodibenedetto.filechooser": "1.0.4",
-        "phonegap-plugin-barcodescanner": "7.0.2",
-        "cordova-plugin-http": "1.2.0",
-        "cordova-plugin-file-transfer": "1.7.0",
-        "cordova-plugin-urlhandler": "0.7.0",
+        "cordova-plugin-file-transfer": "1.7.1",
         "cordova-plugin-dialogs": "2.0.1",
-        "cordova-plugin-vibration": "3.0.1",
+        "cordova-plugin-vibration": "3.1.0",
         "cordova-plugin-app-version": "0.1.9",
         "cordova.plugins.diagnostic": "3.9.2",
         "cordova-plugin-whitelist": "1.3.1",
-        "cordova-plugin-badge": "0.8.7"
+        "cordova-plugin-badge": "0.8.7",
+        "cordova-plugin-barcodescanner": "0.7.4",
+        "cordova-plugin-ios-camera-permissions": "1.2.0",
+        "cordova-plugin-permission": "0.1.0"
     }
 }

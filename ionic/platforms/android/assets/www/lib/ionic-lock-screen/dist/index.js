@@ -149,6 +149,9 @@ var lockScreenDirective=function(n,$filter, $cordovaTouchID, crypt, LockScreen) 
                   } else {
                     o.passcodeWrong = true;
                     passcodeAttempts++;
+                    if(passcodeAttempts >= 3){
+                      passcodeAttempts = 0;
+                    }
                     o.onWrong && o.onWrong(passcodeAttempts);
                     n(() => {
                       o.enteredPasscode = '';

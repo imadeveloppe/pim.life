@@ -1,12 +1,4 @@
 {
-    "cordova-plugin-statusbar": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-statusbar@2.2.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
@@ -39,30 +31,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com-badrit-base64": {
-        "source": {
-            "type": "registry",
-            "id": "com-badrit-base64"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "com.cordova.plugin.SamsungPassPlugin": {
-        "source": {
-            "type": "registry",
-            "id": "https://github.com/tabrindle/cordova-plugin-samsungpass.git"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-appavailability": {
-        "source": {
-            "type": "registry",
-            "id": "https://github.com/ohh2ahh/AppAvailability.git"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "com.verso.cordova.clipboard": {
         "source": {
             "type": "registry",
@@ -74,23 +42,7 @@
     "cordova-open-native-settings": {
         "source": {
             "type": "registry",
-            "id": "cordova-open-native-settings"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-app-launcher": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-app-launcher"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-camera": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-camera@4.0.1"
+            "id": "cordova-open-native-settings@^1.5.0"
         },
         "is_top_level": true,
         "variables": {}
@@ -98,15 +50,7 @@
     "cordova-plugin-compat": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-compat@1.2.0"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-email-composer": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-email-composer"
+            "id": "cordova-plugin-compat@^1.2.0"
         },
         "is_top_level": true,
         "variables": {}
@@ -119,18 +63,102 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-file-opener2": {
+    "cordova-plugin-firebase": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-file-opener2"
+            "id": "cordova-plugin-firebase@^0.1.25"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-firebase": {
+    "cordova-plugin-touchid": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-firebase"
+            "id": "cordova-plugin-touchid"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-http": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-http"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-urlhandler": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-urlhandler"
+        },
+        "is_top_level": true,
+        "variables": {
+            "URL_SCHEME": "pimlife"
+        }
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar@2.2.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com-badrit-base64": {
+        "source": {
+            "type": "registry",
+            "id": "com-badrit-base64@^0.2.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-appavailability": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ohh2ahh/AppAvailability.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.cordova.plugin.SamsungPassPlugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tabrindle/cordova-plugin-samsungpass.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-app-launcher": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-app-launcher@^0.4.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-camera@^4.0.1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-email-composer": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-email-composer@^0.8.13"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-file-opener2": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-file-opener2@^2.0.19"
         },
         "is_top_level": true,
         "variables": {}
@@ -138,7 +166,7 @@
     "cordova-plugin-geolocation": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-geolocation@4.0.1"
+            "id": "cordova-plugin-geolocation@^4.0.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -146,7 +174,7 @@
     "cordova-plugin-image-picker": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-image-picker"
+            "id": "cordova-plugin-image-picker@^1.1.3"
         },
         "is_top_level": true,
         "variables": {}
@@ -162,7 +190,7 @@
     "cordova-plugin-save-image": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-save-image"
+            "id": "cordova-plugin-save-image@^0.3.0"
         },
         "is_top_level": true,
         "variables": {}
@@ -170,15 +198,7 @@
     "cordova-plugin-lock-info": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-lock-info"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-touchid": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-touchid"
+            "id": "cordova-plugin-lock-info@0.0.2"
         },
         "is_top_level": true,
         "variables": {}
@@ -186,31 +206,16 @@
     "cordova-plugin-x-toast": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-x-toast"
+            "id": "cordova-plugin-x-toast@^2.6.0"
         },
         "is_top_level": true,
         "variables": {}
     },
     "com.cesidiodibenedetto.filechooser": {
         "source": {
-            "type": "registry",
-            "id": "https://github.com/caixiangsap/filechooser.git"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "phonegap-plugin-barcodescanner": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-barcodescanner@7.0.2"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-http": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-http"
+            "type": "git",
+            "url": "https://github.com/caixiangsap/filechooser.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
@@ -223,20 +228,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-urlhandler": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-urlhandler"
-        },
-        "is_top_level": true,
-        "variables": {
-            "URL_SCHEME": "pimlife"
-        }
-    },
     "cordova-plugin-dialogs": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-dialogs"
+            "id": "cordova-plugin-dialogs@^2.0.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -244,7 +239,7 @@
     "cordova-plugin-vibration": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-vibration"
+            "id": "cordova-plugin-vibration@^3.0.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -277,6 +272,40 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-badge@^0.8.7"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-barcodescanner": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-barcodescanner"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-barcodescanner": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-barcodescanner@^7.0.2"
+        },
+        "is_top_level": true,
+        "variables": {
+            "CAMERA_USAGE_DESCRIPTION": " "
+        }
+    },
+    "cordova-plugin-ios-camera-permissions": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-ios-camera-permissions"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-permission": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-permission"
         },
         "is_top_level": true,
         "variables": {}

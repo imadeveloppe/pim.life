@@ -138,15 +138,15 @@
           <div style="height: 10px;"></div>
           <span class="input-label" style="">{{ 'company_informations.comissionassoc' | translate }} (%)</span>
           <div mobiscroll-form="nbremployeSettings" class="nbremploye"> 
-             <input ng-model="data.comissiomassoc" ng-value="data.comissiomassoc" type="range" id="comissionAssoc"  min="0.2" max="1" step="0.1" data-step-labels="[0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]">  
+             <input ng-model="data.comissiomassoc" ng-value="data.comissiomassoc" type="range" id="comissionAssoc"  min="{{assoccommission}}" max="1" step="0.1" data-step-labels="[0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1]">  
           </div> 
           <div style="height: 30px;"></div>
         </label>
 
-        <label class="item item-input item-floating-label" style="margin-top: 30px;">
+       <!--  <label class="item item-input item-floating-label" style="margin-top: 30px;">
             <span class="input-label">{{ 'company_informations.comissiompim' | translate }}</span>
             <input type="text" placeholder="{{ 'company_informations.comissiompim' | translate }}" ng-model="data.comissionPim"  ng-disabled="true">
-        </label> 
+        </label> --> 
     </div> 
 
 

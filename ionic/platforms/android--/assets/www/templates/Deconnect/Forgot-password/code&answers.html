@@ -29,6 +29,11 @@
                     <button ng-click="codequestions()" data-tap-disabled="true" id="fullName-button1" class="button button-small button-positive button-block">
                     {{ 'forgot_password_step_2.validate' | translate }}
                     </button>
+                    
+                    <center style="margin-top: 30px">
+                        <span ui-sref="resetQuestionSendEmail" class="button-clean button-positive">{{ 'forgot_password_step_2.forget_secret_questions' | translate }}</span>
+                    </center>
+
                 </div>
             </form>
         </div>

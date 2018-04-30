@@ -13,6 +13,7 @@ function handleOpenURL(url) {
 
     ////// inscription
     if( url.search("pimlife://signup.pim.life") >= 0 && url.search("code") >= 0 && url.search("isshop") >= 0){
+        console.log('signup')
         var body = document.getElementsByTagName("body")[0];
         var appLaunchedController = angular.element(body).scope();
         appLaunchedController.InscriptionVerifEmail(url);
@@ -20,6 +21,7 @@ function handleOpenURL(url) {
 
     ////// questions secrests oublies 
     if( url.search("pimlife://questionsoublie.pim.life") >= 0 && url.search("code") >= 0 && url.search("usercode") >= 0){ 
+        console.log('questionsoublie')
         var body = document.getElementsByTagName("body")[0];
         var appLaunchedController = angular.element(body).scope();
         appLaunchedController.resetQuestionsSecret( url );
@@ -29,7 +31,7 @@ function handleOpenURL(url) {
 
 ionic.Gestures.gestures.Hold.defaults.hold_threshold = 5; 
 
-angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.controllersPro','pim.controllersAssociation', 'pim.routes', 'pim.services', 'pim.directives', 'pim.constant', 'pim.controllersShared', 'pim.utils', 'ngCordovaOauth','pascalprecht.translate', 'ionic-lock-screen','mobiscroll-calendar','mobiscroll-form', 'ngMask'])
+angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.controllersPro','pim.controllersAssociation', 'pim.routes', 'pim.services', 'pim.directives', 'pim.constant', 'pim.controllersShared', 'pim.utils', 'ngCordovaOauth','pascalprecht.translate', 'ionic-lock-screen','mobiscroll-calendar','mobiscroll-form', 'ngMask','pdf'])
  
 .config(['$mdIconProvider', function($mdIconProvider, $mdThemingProvider ) {
     $mdIconProvider.icon('md-close', 'img/icons/ic_close_24px.svg', 24); 
@@ -146,6 +148,9 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
         }
 
         $rootScope.checkForUpdate();
+
+
+ 
 
 
 
@@ -464,6 +469,8 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
                 var payload = JSON.parse(notification.data);
 
+                console.log("payload : ", payload);
+
                 $rootScope.updateNotifConnectedUser({
                     id: payload.notiftouserid,
                     isshop: payload.notiftoshop,
@@ -528,21 +535,12 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                                 // ******************************************************************************************************************************
 
 
-                                            }else{
-                                                var array = [];
-                                                var connectedUsers = $storage.getArrayOfObjects("connectedUsers"); 
-                                                angular.forEach( connectedUsers, function (object, index) {
-                                                    if( object.id != id || object.isshop != isshop ){
-                                                        array.push(object);
-                                                    }
-                                                })
-                                                setTimeout(function () { 
-                                                    $storage.setArrayOfObjects("connectedUsers", array);
-                                                })
-                                            } 
+                                            }
                                         })
                                     }) 
 
+                                }, function () {
+                                    $rootScope.deteleUserFromConnectedUserList( payload.notiftouserid, payload.notiftoshop)
                                 })
                                     
                                     
@@ -801,6 +799,14 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                     case "treezorvaldation_refused_signatory":
                                     case "treezorvaldation_refused_rep":
                                     case "treezorvaldation_refused_shareholder":
+
+                                    case "add_new_signatory":
+                                    case "add_new_Legalrepresentative":
+                                    case "add_new_Shareholder":
+                                    case "validation_email_Shareholder":
+                                    case "validation_email_Legalrepresentative":
+                                    case "validation_email_signatory":
+                                    
                                         $rootScope.$emit('GetShareCapitalData');
                                         break;
 

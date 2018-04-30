@@ -10,7 +10,7 @@
  
 
     <!-- <meta name="format-detection" content="telephone=no"> -->
-    <title></title>
+    <title>PIM</title>
 
 
     <!-- compiled css output --> 
@@ -234,8 +234,18 @@
         </script>  
 
     <script type="text/javascript">
+
+        function HasAttr( link, attribute ) {
+            var attr = link.attr(attribute); 
+            if (typeof attr !== typeof undefined && attr !== false) {
+                return true;
+            }else{
+                return false;
+            }
+        }
         $('body').on("click",'a' , function (link) {
-            if( link.currentTarget.href && link.currentTarget.href != '#' ){
+            console.log(link)
+            if( link.currentTarget.href && link.currentTarget.href != '#' && !HasAttr($(this), 'ng-click') && !HasAttr($(this), 'ui-sref') ){
                 link.preventDefault(); 
                 window.open( link.currentTarget.href,'_system','EnableViewPortScale=yes,location=no,location=yes');
             }      

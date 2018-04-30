@@ -10,7 +10,7 @@
  
 
     <!-- <meta name="format-detection" content="telephone=no"> -->
-    <title></title>
+    <title>PIM</title>
 
 
     <!-- compiled css output --> 
@@ -128,6 +128,8 @@
     <script src="js/constant.js"></script>
     <script src="lib/pdfmake/pdfmake.min.js"></script>
     <script src="lib/pdfmake/vfs_fonts.js"></script>
+    <script src="lib/pdfjs-dist/build/pdf.js"></script>
+    <script src="lib/angular-pdf/dist/angular-pdf.js"></script>
      
 
     <link rel="stylesheet" href="css/style.min.css">
@@ -137,7 +139,7 @@
     <script src="lib/ionic-lock-screen/dist/index.js"></script>
 </head>
 
-<body ng-app="pim" ng-controller="AppCtrl" id="content" on-swipe-up="onGesture('Swipe Up')" on-swipe-right="onGesture('Swipe Right')" on-swipe-down="onGesture('Swipe Down')" on-swipe-left="onGesture('Swipe Left')" on-hold="onGesture('Hold')" on-double-tap="onGesture('Double-Tap')" scroll="false" style="background-color:#254e7b;"  animation="slide-left-right-ios7" class="platform-ios  platform-cordova platform-webview platform-android platform-cordova platform-webview" ng-cloak>
+<body ng-app="pim" ng-controller="AppCtrl" id="content" on-swipe-up="onGesture('Swipe Up')" on-swipe-right="onGesture('Swipe Right')" on-swipe-down="onGesture('Swipe Down')" on-swipe-left="onGesture('Swipe Left')" on-hold="onGesture('Hold')" on-double-tap="onGesture('Double-Tap')" scroll="false" style="background-color:#254e7b;"  animation="slide-left-right-ios7" class="platform-ios  platform-cordova platform-webview" ng-cloak>
 
 
 <lock-screen></lock-screen>
@@ -232,8 +234,18 @@
         </script>  
 
     <script type="text/javascript">
+
+        function HasAttr( link, attribute ) {
+            var attr = link.attr(attribute); 
+            if (typeof attr !== typeof undefined && attr !== false) {
+                return true;
+            }else{
+                return false;
+            }
+        }
         $('body').on("click",'a' , function (link) {
-            if( link.currentTarget.href && link.currentTarget.href != '#' ){
+            console.log(link)
+            if( link.currentTarget.href && link.currentTarget.href != '#' && !HasAttr($(this), 'ng-click') && !HasAttr($(this), 'ui-sref') ){
                 link.preventDefault(); 
                 window.open( link.currentTarget.href,'_system','EnableViewPortScale=yes,location=no,location=yes');
             }      

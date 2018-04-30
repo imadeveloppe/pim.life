@@ -27,8 +27,8 @@
             </div>
             <div class="content">
                 <div class="title">
-                    <h4 class="oneLine" style="margin: 0;">{{ cause.brandname }}</h4>
-                    <small class="oneLine" style="margin: 0;">{{ cause.slogan }}</small>
+                    <h4 style="margin: 0;">{{ cause.brandname }}</h4>
+                    <small style="margin: 0;line-height: 15px;display: block;" >{{ cause.slogan }}</small>
                     <div style="height: 15px"></div>
                     <p>{{ 'detail_cause.donations_received_with_pim_since' | translate }} {{ cause.year }}: <strong>{{ cause.yeardonations }}{{ devise }} </strong> </p> 
                     <p>{{ 'detail_cause.number_of_donors' | translate }} : <strong>{{ cause.nbrdonors*1 }}</strong> </p> 
@@ -36,7 +36,8 @@
                     <div style="height: 15px"></div>
                 </div>
 
-                <strong class="category">{{ 'detail_cause.category' | translate }} : {{ cause.assoccatlabel }}</strong>
+                <strong class="category">{{ 'detail_cause.category' | translate }} :</strong>
+                <div class="item-category">{{ cause.assoccatlabel }}</div>
                 <p class="description">{{ cause.desc }}</p>
 
                 <div class="actionBtn" style="text-align: right;" ng-if="!isCurrentCause && !isCause">
@@ -56,12 +57,11 @@
                         </p>
                     </div>
                 </div> 
-            </div> 
-
+            </div>  
             <div class="personalInfos">
                     <strong class="padding">{{ 'detail_cause.contact_information' | translate }}</strong>
                     <ion-list>
-                      <ion-item ng-if="cause.fulladdress != ''" class="item item-icon-left" ng-click="actionBtn( 'geo', cause.lat, cause.lng, cause.name )"> 
+                      <ion-item ng-if="cause.fulladdress != ''" class="item item-icon-left" ng-click="actionBtn( 'geo', cause.lat, cause.lng, cause.brandname )"> 
                         <i class="icon ion-ios-location"></i> 
                         {{ cause.fullAddress }} 
                       </ion-item>

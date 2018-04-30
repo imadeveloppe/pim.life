@@ -11,17 +11,25 @@ function handleOpenURL(url) {
     console.log(url);
     console.log("////////////////////////////////////")
 
-    if( url.search("pimlife") >= 0 && url.search("code") >= 0 && url.search("isshop") >= 0){
+    ////// inscription
+    if( url.search("pimlife://signup.pim.life") >= 0 && url.search("code") >= 0 && url.search("isshop") >= 0){
         var body = document.getElementsByTagName("body")[0];
         var appLaunchedController = angular.element(body).scope();
         appLaunchedController.InscriptionVerifEmail(url);
+    }
+
+    ////// questions secrests oublies 
+    if( url.search("pimlife://questionsoublie.pim.life") >= 0 && url.search("code") >= 0 && url.search("usercode") >= 0){ 
+        var body = document.getElementsByTagName("body")[0];
+        var appLaunchedController = angular.element(body).scope();
+        appLaunchedController.resetQuestionsSecret( url );
     }
         
 }
 
 ionic.Gestures.gestures.Hold.defaults.hold_threshold = 5; 
 
-angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.controllersPro','pim.controllersAssociation', 'pim.routes', 'pim.services', 'pim.directives', 'pim.constant', 'pim.controllersShared', 'pim.utils', 'ngCordovaOauth','pascalprecht.translate', 'ionic-lock-screen','mobiscroll-calendar','mobiscroll-form', 'ngMask'])
+angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.controllersPro','pim.controllersAssociation', 'pim.routes', 'pim.services', 'pim.directives', 'pim.constant', 'pim.controllersShared', 'pim.utils', 'ngCordovaOauth','pascalprecht.translate', 'ionic-lock-screen','mobiscroll-calendar','mobiscroll-form', 'ngMask','pdf'])
  
 .config(['$mdIconProvider', function($mdIconProvider, $mdThemingProvider ) {
     $mdIconProvider.icon('md-close', 'img/icons/ic_close_24px.svg', 24); 
@@ -89,7 +97,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
     };
 })
 
-.run(function($ionicPlatform,$sce, $ionicModal, $cordovaBadge,$storage, $rootScope, API, DATA, Alert, AuthService, User, $window, $interval,  Accounts, $state, $location, $translate, LockScreen, $filter, Go, Geo, $ionicHistory, User) {  
+.run(function($ionicPlatform,$sce, $ionicModal, $cordovaBadge,$storage, $rootScope, API, DATA, Alert, AuthService, User, $window, $interval,  Accounts, $state, $location, $translate, LockScreen, $filter, Go, Geo, $ionicHistory, User, AppServices) {  
 
     $ionicPlatform.ready(function() {  
          
@@ -102,122 +110,35 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                     
                     Geo.getPosition().then(function(position) {
                         Go.post({ 
-                            task:"getParamAppli", 
+                            "task":"getParamAppli", 
                             "NoLoader": true
                         }).then(function(data) {
                             if( data.success == 1 ){
 
                                 DATA.logo = data.logo;
+                                DATA.paramAppli = data;
                                 if( parseFloat(data.MinAmountTrans) > 0 ){
                                     API.minAmount = data.MinAmountTrans; 
                                 } 
 
                                 if( ionic.Platform.isIOS() ){
-                                    if( data.iosversion != AppVersion ){
-                                        swal({
-                                            title: $filter('translate')('global_fields.update_app'),
-                                            text: $filter('translate')('global_fields.update_app_texte'),
-                                            type: "info",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#254e7b",
-                                            confirmButtonText: $filter('translate')('global_fields.update_app'), 
-                                            showLoaderOnConfirm: true,  
-                                            allowOutsideClick: false
-                                        }).then(function (confirm) {
-                                            if( confirm ){
-                                               window.open("itms-apps://itunes.apple.com/app/"+data.iosappid, '_system')
-                                            }
-                                        }, function () {})
-                                    }else{
-                                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                                            if( !available ){
-                                                swal({
-                                                    title: $filter('translate')('global_fields.gps'),
-                                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                                    type: "info",
-                                                    showCancelButton: false,
-                                                    confirmButtonColor: "#254e7b",
-                                                    confirmButtonText: $filter('translate')('global_fields.goto_settings'),
-                                                    showLoaderOnConfirm: true,  
-                                                    allowOutsideClick: false
-                                                }).then(function (confirm) {
-                                                    if( confirm ){
-                                                       window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
-                                                    }
-                                                }, function () {})
-                                            }
-                                            
-                                        }, function(error){
-                                            console.error("The following error occurred: "+error);
-                                        });
+                                    if( data.iosversion != AppVersion ){ 
+                                        AppServices.updateApp(data);
+                                    }else{ 
+                                        Geo.isLocationAvailable() 
                                     }
                                 }else{
                                     if( data.andriodversion != AppVersion ){
-                                        swal({
-                                            title: $filter('translate')('global_fields.update_app'),
-                                            text: $filter('translate')('global_fields.update_app_texte'),
-                                            type: "info",
-                                            showCancelButton: false,
-                                            confirmButtonColor: "#254e7b",
-                                            confirmButtonText: $filter('translate')('global_fields.update_app'), 
-                                            showLoaderOnConfirm: true,  
-                                            allowOutsideClick: false
-                                        }).then(function (confirm) {
-                                            if( confirm ){
-                                               window.open("https://play.google.com/store/apps/details?id="+data.andriodappid, '_system')
-                                            }
-                                        }, function () {})
-                                    }else{
-                                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                                            if( !available ){
-                                                swal({
-                                                    title: $filter('translate')('global_fields.gps'),
-                                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                                    type: "info",
-                                                    showCancelButton: false,
-                                                    confirmButtonColor: "#254e7b",
-                                                    confirmButtonText: $filter('translate')('global_fields.goto_settings'), 
-                                                    showLoaderOnConfirm: true,  
-                                                    allowOutsideClick: false
-                                                }).then(function (confirm) {
-                                                    if( confirm ){
-                                                       cordova.plugins.diagnostic.switchToLocationSettings();
-                                                    }
-                                                }, function () {})
-                                            }
-                                            
-                                        }, function(error){
-                                            console.error("The following error occurred: "+error);
-                                        });
+                                         AppServices.updateApp(data);
+                                    }else{ 
+                                        Geo.isLocationAvailable() 
                                     }
                                 }
                             }
                                 
                         })
                     }, function (callback) {
-                        console.log("GPS false")
-
-                        cordova.plugins.diagnostic.isLocationAvailable(function(available){
-                            if( !available ){
-                                swal({
-                                    title: "GPS",
-                                    text: $filter('translate')('global_fields.you_need_to_activate_your_gps'),
-                                    type: "info",
-                                    showCancelButton: false,
-                                    confirmButtonColor: "#254e7b",
-                                    confirmButtonText: "Aller au paramètres", 
-                                    showLoaderOnConfirm: true,  
-                                    allowOutsideClick: false
-                                }).then(function (confirm) {
-                                    if( confirm ){
-                                       window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
-                                    }
-                                }, function () {})
-                            }
-                            
-                        }, function(error){
-                            console.error("The following error occurred: "+error);
-                        });
+                        Geo.isLocationAvailable() 
                     }) 
 
                 }); 
@@ -270,8 +191,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                 window.localStorage.getItem('loged', 1);
             }else{
                 window.localStorage.getItem('locked', 0);
-                window.localStorage.getItem('loged', 0);
-                $state.go('signin')
+                window.localStorage.getItem('loged', 0); 
             }
             setTimeout(function () {
                 $rootScope.ionicPlatformResume = false;
@@ -469,7 +389,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
         $rootScope.acceptedCGV = function (data) { 
             // ******************************************************************************************************************************
-                AuthService.storeUserCredentials(data.userToken);
+                //AuthService.storeUserCredentials(data.userToken);
                                          
                 User.lat = data.position.lat;
                 User.lng = data.position.lng;
@@ -526,7 +446,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
         $rootScope.RefuseCGV = function () { 
             $rootScope.cgvModal.hide()
         }
-       
+
 
         if( window.FirebasePlugin ){ 
 
@@ -544,6 +464,8 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
                 var payload = JSON.parse(notification.data);
 
+                console.log("payload : ", payload);
+
                 $rootScope.updateNotifConnectedUser({
                     id: payload.notiftouserid,
                     isshop: payload.notiftoshop,
@@ -553,7 +475,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
 
                     
 
-                if( User.GetDetails() && payload.type != 'validatedsignupemail' ){
+                if( User.GetDetails() && payload.type != 'validatedsignupemail' && payload.type != 'validatedquestionoublieemail' ){
  
                     var postData = {
                         task: "ConnectedRecipientNotif",
@@ -623,6 +545,8 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                         })
                                     }) 
 
+                                }, function () {
+                                    $rootScope.deteleUserFromConnectedUserList( payload.notiftouserid, payload.notiftoshop)
                                 })
                                     
                                     
@@ -775,6 +699,9 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                     case "updateassoccommision":
                                         $rootScope.GetlistSettings()
                                         break;
+                                    case "updatetransibancommision":
+                                        $rootScope.GetlistSettings()
+                                        break;
 
 
                                     case "add_doc_pi":
@@ -834,7 +761,53 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                                         break;
 
                                     //Blocked profil from Admin
-                                    
+
+
+                                    /////////////////////// CapitalSocial ////////////////////////////
+                                    case "add_doc_pi_signatory": 
+                                    case "add_doc_persenal_address_signatory":
+                                    case "add_doc_pi_rep":
+                                    case "add_doc_persenal_address_rep":
+                                    case "add_doc_pi_shareholder":
+                                    case "add_doc_persenal_address_shareholder":
+                                    case "profil_blocked_signatory":
+                                    case "profil_blocked_rep":
+                                    case "profil_blocked_shareholder":
+                                    case "doc_identity_confirmed_signatory":
+                                    case "doc_identity_refused_signatory":
+                                    case "doc_identity_confirmed_rep":
+                                    case "doc_identity_refused_rep":
+                                    case "doc_identity_confirmed_shareholder":
+                                    case "doc_identity_refused_shareholder":
+                                    case "doc_address_confirmed_signatory":
+                                    case "doc_address_refused_signatory":
+                                    case "doc_address_confirmed_rep":
+                                    case "doc_address_refused_rep":
+                                    case "doc_address_confirmed_shareholder":
+                                    case "doc_address_refused_shareholder":
+                                    case "updatepibyadmin_signatory":
+                                    case "updatepibyadmin_rep":
+                                    case "updatepibyadmin_shareholder":
+                                    case "updatephonebyadmin_signatory":
+                                    case "updatephonebyadmin_rep":
+                                    case "updatephonebyadmin_shareholder":
+                                    case "updateemailbyadmin_signatory":
+                                    case "updateemailbyadmin_rep":
+                                    case "updateemailbyadmin_shareholder":
+                                    case "updateaddressbyadmin_signatory":
+                                    case "updateaddressbyadmin_rep":
+                                    case "updateaddressbyadmin_shareholder":
+                                    case "treezorvaldation_confirmed":
+                                    case "treezorvaldation_confirmed_signatory":
+                                    case "treezorvaldation_confirmed_rep":
+                                    case "treezorvaldation_confirmed_shareholder":
+                                    case "treezorvaldation_refused":
+                                    case "treezorvaldation_refused_signatory":
+                                    case "treezorvaldation_refused_rep":
+                                    case "treezorvaldation_refused_shareholder":
+                                        $rootScope.$emit('GetShareCapitalData');
+                                        break;
+
 
                                     
 
@@ -873,8 +846,10 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
                     
                     switch( payload.type ){
                         case "validatedsignupemail":
+                        case "validatedquestionoublieemail":
                             handleOpenURL(payload.url)
                             break;
+
                     }
                 }
 

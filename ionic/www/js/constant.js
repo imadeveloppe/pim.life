@@ -41,7 +41,7 @@ angular.module('pim.constant', [])
   //     server: "https://dev.pim.life/",
   //     devise: "€",
   //     minAmount: 0.1
-  //
+  
   // })
   // .constant('ALGOLIA', {
   //     APPLICATION_ID: 'KCB10XUJYG',
@@ -55,8 +55,7 @@ angular.module('pim.constant', [])
   //   url: "https://preprod.pim.life/api/index.php",
   //   server: "https://preprod.pim.life/",
   //   devise: "€",
-  //   minAmount: 0.1
-
+  //   minAmount: 0.1 
   // })
   // .constant('ALGOLIA', {
   //   APPLICATION_ID: '5QS4R9I04P',

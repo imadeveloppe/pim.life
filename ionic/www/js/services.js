@@ -938,6 +938,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
             $storage.setArrayOfObjects("connectedUsers", []);  
 
             window.localStorage.setItem('loged', '0');  
+            window.localStorage.setItem('locked', '0');  
             $location.path('/sign-in');
 
             Alert.loader(false);
@@ -975,6 +976,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     $location.path('/sign-in');
                     $('.wrapper.page').addClass('isLogout');
                     window.localStorage.setItem('loged', '0');  
+                    window.localStorage.setItem('locked', '0');  
                     var userInfos = User.GetDetails().userInfos;
                     $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop);  
                     $rootScope.isLogin = false;
@@ -1653,9 +1655,12 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         }
     };
     var removeNotifObject = function(obj) {
-        Nlist = $storage.getObject('NotifList');
-        Nlist.splice(Nlist.indexOf(obj), 1);
-        $storage.setObject('NotifList', Nlist);
+        Nlist = $storage.getObject('NotifList'); 
+        if( Nlist ){
+            Nlist.splice(Nlist.indexOf(obj), 1);
+            $storage.setObject('NotifList', Nlist);
+        }
+        
     };
     return {
         getAllNotifs: getAllNotifs,
@@ -2389,7 +2394,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     }).then(function (confirm) {
                         if( confirm ){
                             if( ionic.Platform.isIOS() ){
-                                window.cordova.plugins.settings.open(["locations", true], function() {}, function() {});
+                                window.cordova.plugins.settings.open(["application_details", true], function() {}, function() {});
                             }else{ 
                                 cordova.plugins.diagnostic.switchToLocationSettings();
                             }

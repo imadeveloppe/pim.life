@@ -49920,6 +49920,15 @@ ion-modal-view.modalCGV ion-content{
 .cvgpage ol li,.cvgpage ul li {
     margin-bottom: 10px;
 }
+ion-content.page-cgv table td:nth-child(2),
+ion-content.cvgpage table td:nth-child(2) {
+    word-break: break-all;
+}
+
+ion-content.cvgpage table td p{
+    margin-left: 8px!important;
+}
+
 @media (max-height:736px) { /* iphone 6+, 7+ */
     #homePage .cause .header .cover-continer {
         height: 126px;

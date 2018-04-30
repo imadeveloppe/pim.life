@@ -21,9 +21,33 @@ angular.module('pim.routes', [])
         })
 
         .state('signup-validate-email-sent', {
-            url: '/sign-up-validate-email-sent/',
+            url: '/sign-up-validate-email-sent',
             templateUrl: 'templates/Deconnect/Sign-up/sign-up-validate-email-sent.html',
             controller: 'BeforeSignUpCtrl'
+        })
+
+        .state('resetQuestionSendEmail', {
+            url: '/resetQuestionSendEmail',
+            templateUrl: 'templates/Deconnect/Forgot-password/resetQuestionSendEmail.html',
+            controller: 'resetQuestionSendEmail'
+        })
+
+        .state('firstConnnectionToPim', {
+            url: '/firstConnnectionToPim',
+            templateUrl: 'templates/Connect/firstConnnectionToPim.html',
+            controller: 'firstConnnectionToPimCtrl'
+        })
+
+        .state('resetQuestionMailSent', {
+            url: '/resetQuestionMailSent',
+            templateUrl: 'templates/Deconnect/Forgot-password/resetQuestionMailSent.html',
+            controller: 'resetQuestionSendEmail'
+        })
+
+        .state('resetQuestionSendResponses', {
+            url: '/resetQuestionSendResponses/:code/:usercode',
+            templateUrl: 'templates/Deconnect/Forgot-password/questions.html',
+            controller: 'resetQuestionSendResponses'
         })
 
         .state('customerService', {
@@ -31,7 +55,18 @@ angular.module('pim.routes', [])
             cache: false,
             templateUrl: 'templates/Connect/customer-service.html',
             controller: 'customerServiceCtrl'
-        }) 
+        })  
+
+        .state('tab.settingsCustomerService', {
+            url: '/settings/settingsCustomerService',
+            cache: false,
+            views: {
+                'tab-settings': {
+                    templateUrl: 'templates/Connect/settings-customer-service.html',
+                    controller: 'settingsCustomerServiceCtrl'
+                }
+            }
+        })
 
         .state('resetLockCode', {
             url: '/resetlockcode',
@@ -704,6 +739,26 @@ angular.module('pim.routes', [])
                 'tab-settings': {
                     templateUrl: 'templates/Connect/cgv/assoc.html',
                     controller: 'cgvCtrl'
+                }
+            }
+        })
+
+        .state('tab.montionslegales', {
+            url: '/settings/montionslegales',
+            views: {
+                'tab-settings': {
+                    templateUrl: 'templates/Connect/Settings/montionslegales.html',
+                    controller: 'montionslegalesCtrl'
+                }
+            }
+        })
+
+        .state('tab.tarification', {
+            url: '/settings/tarification',
+            views: {
+                'tab-settings': {
+                    templateUrl: 'templates/Connect/Settings/tarification.html',
+                    controller: 'tarificationCtrl'
                 }
             }
         })

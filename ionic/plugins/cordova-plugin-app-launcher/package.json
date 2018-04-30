@@ -1,68 +1,11 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "cordova-plugin-app-launcher",
-        "scope": null,
-        "escapedName": "cordova-plugin-app-launcher",
-        "name": "cordova-plugin-app-launcher",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "/ST/ionic/pim.life/node_modules"
-    ]
-  ],
-  "_from": "cordova-plugin-app-launcher@latest",
-  "_id": "cordova-plugin-app-launcher@0.4.0",
-  "_inCache": true,
-  "_location": "/cordova-plugin-app-launcher",
-  "_nodeVersion": "8.1.4",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-app-launcher-0.4.0.tgz_1507825121432_0.8876434897538275"
-  },
-  "_npmUser": {
-    "name": "nchutchind",
-    "email": "nicholas@hutchind.com"
-  },
-  "_npmVersion": "5.3.0",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "cordova-plugin-app-launcher",
-    "scope": null,
-    "escapedName": "cordova-plugin-app-launcher",
-    "name": "cordova-plugin-app-launcher",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-app-launcher/-/cordova-plugin-app-launcher-0.4.0.tgz",
-  "_shasum": "3fe5ef22d843789ac4c0c5dac1badbf3b6ba5170",
-  "_shrinkwrap": null,
-  "_spec": "cordova-plugin-app-launcher",
-  "_where": "/ST/ionic/pim.life/node_modules",
-  "author": {
-    "name": "Nicholas Hutchind"
-  },
-  "bugs": {
-    "url": "https://github.com/nchutchind/cordova-plugin-app-launcher/issues"
-  },
-  "dependencies": {},
+  "name": "cordova-plugin-app-launcher",
+  "version": "0.4.0",
   "description": "This plugin allows you to see if other apps are installed and launch them. On Android, you can send extras to the launched Activity and receive result data (if available), as well as retrieve a list of applications that can open a specified uri.",
-  "devDependencies": {},
-  "directories": {},
-  "dist": {
-    "integrity": "sha512-D9xUoMUTG+K/kxm0f8uoHwWtCz+oTLKLAJBx6LZSb2PjunYJxU9OLR6t/CAqq2PAyFjv2Y/tswA7KAVls6NakQ==",
-    "shasum": "3fe5ef22d843789ac4c0c5dac1badbf3b6ba5170",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-app-launcher/-/cordova-plugin-app-launcher-0.4.0.tgz"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nchutchind/cordova-plugin-app-launcher.git"
   },
-  "gitHead": "f3c4509441dc88805aa047bd373970f9a915ed86",
-  "homepage": "https://github.com/nchutchind/cordova-plugin-app-launcher#readme",
   "keywords": [
     "cordova",
     "launcher",
@@ -70,19 +13,10 @@
     "cordova-android",
     "cordova-ios"
   ],
+  "author": "Nicholas Hutchind",
   "license": "MIT",
-  "maintainers": [
-    {
-      "name": "nchutchind",
-      "email": "nicholas@hutchind.com"
-    }
-  ],
-  "name": "cordova-plugin-app-launcher",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nchutchind/cordova-plugin-app-launcher.git"
+  "bugs": {
+    "url": "https://github.com/nchutchind/cordova-plugin-app-launcher/issues"
   },
-  "version": "0.4.0"
+  "homepage": "https://github.com/nchutchind/cordova-plugin-app-launcher#readme"
 }

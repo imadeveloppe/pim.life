@@ -21,8 +21,10 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
-        mavenCentral()
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 
     // Switch the Android Gradle plugin version requirement depending on the
@@ -30,20 +32,22 @@ buildscript {
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:3.0.0'
     }
 }
 
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 allprojects {
     repositories {
-        mavenCentral();
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '4.1.0'
 }
 
 // Configuration properties. Set these via environment variables, build-extras.gradle, or gradle.properties.
@@ -88,6 +92,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "cordova-plugin-firebase/pimpushs-build.gradle"
 apply from: "cordova-plugin-badge/pimpushs-badge.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
@@ -165,7 +170,7 @@ android {
     }
 
     defaultConfig {
-        versionCode cdvVersionCode ?: Integer.parseInt("" + privateHelpers.extractIntFromManifest("versionCode"))
+        versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
         applicationId privateHelpers.extractStringFromManifest("package")
 
         if (cdvMinSdkVersion != null) {
@@ -246,11 +251,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    implementation fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
-    debugCompile project(path: "CordovaLib", configuration: "debug")
-    releaseCompile project(path: "CordovaLib", configuration: "release")
-    compile "com.android.support:support-v4:26.+"
+    implementation(project(path: "CordovaLib"))
+    compile "com.android.support:support-v4:27.1.0"
+    compile "com.google.gms:google-services:+"
+    compile "com.google.android.gms:play-services-tagmanager:+"
+    compile "com.google.firebase:firebase-core:+"
+    compile "com.google.firebase:firebase-messaging:+"
+    compile "com.google.firebase:firebase-crash:+"
+    compile "com.google.firebase:firebase-config:+"
     compile "com.android.support:appcompat-v7:26.+"
     // SUB-PROJECT DEPENDENCIES END
 }
@@ -269,7 +279,7 @@ def promptForReleaseKeyPassword() {
 
 gradle.taskGraph.whenReady { taskGraph ->
     taskGraph.getAllTasks().each() { task ->
-        if (task.name == 'validateReleaseSigning') {
+        if (['validateReleaseSigning', 'validateSigningRelease', 'validateSigningArmv7Release', 'validateSigningX86Release'].contains(task.name)) {
             promptForReleaseKeyPassword()
         }
     }

@@ -2,6 +2,14 @@ angular.module('pim.controllersShared', [])
 
 .controller('firstConnnectionToPimCtrl', function($scope, Go, $translate, SharedService,crypt, Alert, $state, $filter) {
 
+    
+    $scope.settings = {
+        theme: (ionic.Platform.isIOS()) ? 'ios' : 'pim-theme',
+        display: 'bottom',
+        lang : $translate.use(),
+        multiline: 3,
+        height: 50
+    }
     $scope.$on('$ionicView.beforeEnter', function() {
 
         $scope.data = {} 
@@ -15,15 +23,21 @@ angular.module('pim.controllersShared', [])
                 $scope.listQuestions2 = data.listQuestions.listQuestions2;
                 $scope.listQuestions3 = data.listQuestions.listQuestions3;  
 
+                setTimeout(function () {
+                    $(".welcomToPim #q1 option:first").attr('disabled','disabled');
+                    $(".welcomToPim #q1 option:first").text( $filter('translate')('secret_questions.choose_a_question') );
+
+                    $(".welcomToPim #q2 option:first").attr('disabled','disabled');
+                    $(".welcomToPim #q2 option:first").text(  $filter('translate')('secret_questions.choose_a_question')  );
+
+                    $(".welcomToPim #q3 option:first").attr('disabled','disabled');
+                    $(".welcomToPim #q3 option:first").text(   $filter('translate')('secret_questions.choose_a_question')  );
+ 
+                })
+
             }
         })
-        $scope.settings = {
-            theme: (ionic.Platform.isIOS()) ? 'ios' : 'pim-theme',
-            display: 'bottom',
-            lang : $translate.use(),
-            multiline: 3,
-            height: 50
-        } 
+         
     })
 
 
@@ -64,7 +78,7 @@ angular.module('pim.controllersShared', [])
 
         if (SharedService.Validation(validationList)) {
             var postData = {
-                "task": "xxxxx", 
+                "task": "ChangeInfoFirstconnexion", 
                 "password": crypt.sha256($scope.data.password),
                 "confirmpassword": crypt.sha256($scope.data.confirmpassword),
 
@@ -83,7 +97,8 @@ angular.module('pim.controllersShared', [])
                 if (data.success == 1) {
                     Alert.success($filter('translate')('welcome_to_pim.success'))
                     setTimeout(function () {
-                        $state.go('tab.home')
+                        window.localStorage.setItem('lockCode', crypt.sha256($scope.data.code))
+                        $state.go('tab.home');
                     },1000)
                 }
             });  
@@ -1538,17 +1553,20 @@ angular.module('pim.controllersShared', [])
                     }   
 
                 }, function(error) {
-                    Alert.loader(false)
-                    alert(error);
-                },{
-                  preferFrontCamera : false, // iOS and Android
-                  showFlipCameraButton : true, // iOS and Android
-                  showTorchButton : true, // iOS and Android
-                  torchOn: false, // Android, launch with the torch switched on (if available) 
-                  prompt : $filter('translate')('qr_code_scanner.text'), // Android  
-                  orientation : "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
-                  disableAnimations : true, // iOS
-                  disableSuccessBeep: false // iOS
+                    navigator.notification.confirm(
+                        $filter('translate')('global_fields.access_to_camera_description'),
+                          function(index){
+                            if( index == 1 ){
+                                if( ionic.Platform.isIOS() ){
+                                    window.cordova.plugins.settings.open(["application_details", true], function() {}, function() {});
+                                }else{ 
+                                    cordova.plugins.diagnostic.switchToLocationSettings();
+                                }
+                            }
+                          },           
+                        $filter('translate')('global_fields.access_to_camera_title'),
+                        [$filter('translate')('global_fields.goto_settings'),$filter('translate')('global_fields.later')]     // buttonLabels
+                    );
                 }); 
                 setTimeout(function () {
                     window.localStorage.setItem('locked', 0)
@@ -3728,7 +3746,14 @@ angular.module('pim.controllersShared', [])
                     notif.type == 'treezorvaldation_refused' ||
                     notif.type == 'treezorvaldation_refused_signatory' ||
                     notif.type == 'treezorvaldation_refused_rep' ||
-                    notif.type == 'treezorvaldation_refused_shareholder'
+                    notif.type == 'treezorvaldation_refused_shareholder' ||
+
+                    notif.type == 'add_new_signatory' ||
+                    notif.type == 'add_new_Legalrepresentative' ||
+                    notif.type == 'add_new_Shareholder' ||
+                    notif.type == 'validation_email_Shareholder' ||
+                    notif.type == 'validation_email_Legalrepresentative' ||
+                    notif.type == 'validation_email_signatory'
         ) {
             $rootScope.$emit('GetShareCapitalData');
             $state.go('tab.settings');
@@ -6231,25 +6256,24 @@ angular.module('pim.controllersShared', [])
             value: $scope.data.confirmcode
         }];
         if (SharedService.Validation(validationList)) {
-            // var postData = {
-            //     "task": "SettingsChangecode",
-            //     "actualcode": crypt.sha256($scope.data.currentcode),
-            //     "code": crypt.sha256($scope.data.newcode),
-            //     "confirmcode": crypt.sha256($scope.data.confirmcode)
-            // };
-            // Alert.loader(true);
-            // Go.post(postData).then(function(data) {
-            //     if (data.success == 1) {
-            //         window.localStorage.setItem('lockCode', crypt.sha256($scope.data.newcode))
-            //         Alert.success( $filter('translate')('lock_code.success_update') )
-            //         $scope.data = {}
-            //     }
-            // });
+            var postData = {
+                "task": "SettingsChangecode",
+                "actualcode": crypt.sha256($scope.data.currentcode),
+                "code": crypt.sha256($scope.data.newcode),
+                "confirmcode": crypt.sha256($scope.data.confirmcode)
+            };
+            Alert.loader(true);
+            Go.post(postData).then(function(data) {
+                if (data.success == 1) {
+                    window.localStorage.setItem('lockCode', crypt.sha256($scope.data.newcode))
+                    Alert.success( $filter('translate')('lock_code.success_update') )
+                    $scope.data = {}
 
-            Alert.success( $filter('translate')('lock_code.success_update') )
-            setTimeout(function () {
-                $rootScope.GotoSettings();
-            },1500)
+                    setTimeout(function () {
+                        $rootScope.GotoSettings();
+                    },1500)
+                }
+            }); 
         }
     };
 })
@@ -6362,14 +6386,28 @@ angular.module('pim.controllersShared', [])
     
     $scope.download = function ( type ) {  
 
-        if( ionic.Platform.isIOS() ){
-            $cordovaFileOpener2.open( 
-                cordova.file.applicationDirectory+'www/docs/cgv/'+type+'/TERMS-OF-SALES.pdf',
-                'application/pdf'
-            )
-        }else{ 
-            window.open(API.server+'docs/cgv/'+type+'/TERMS-OF-SALES.pdf', '_system');
-        } 
+        // if( ionic.Platform.isIOS() ){
+        //     $cordovaFileOpener2.open( 
+        //         cordova.file.applicationDirectory+'www/docs/cgv/'+type+'/TERMS-OF-SALES.pdf',
+        //         'application/pdf'
+        //     )
+        // }else{ 
+        //     window.open(API.server+'docs/cgv/'+type+'/TERMS-OF-SALES.pdf', '_system');
+        // } 
+
+        switch( type ){
+            case 0:
+                window.open(API.server+'docs/PIM-CGU-CCSP-Utilisateur.pdf', '_system');
+                break;
+
+            case 1:
+                window.open(API.server+'docs/PIM-CGU-CCSP-Marchand.pdf', '_system');
+                break;
+
+            case 2:
+                window.open(API.server+'docs/PIM-CGU-CCSP-Association.pdf', '_system');
+                break;
+        }
             
 
     }
@@ -6837,13 +6875,15 @@ angular.module('pim.controllersShared', [])
             if( data.success == 1 ){
                 $scope.cause = data.association;
                 $scope.loadedInfos = true;
-  
-                hashttp = $scope.cause.siteweb.toLowerCase().search('http://');
- 
-                console.log(hashttps, hashttp)
-                if( hashttp < 0 ){
-                    $scope.cause.siteweb = "http://"+$scope.cause.siteweb;
+                
+                if( $scope.cause.siteweb.toLowerCase().search('https://') < 0 ){
+                    hashttp = $scope.cause.siteweb.toLowerCase().search('http://');
+      
+                    if( hashttp < 0 ){
+                        $scope.cause.siteweb = "http://"+$scope.cause.siteweb;
+                    }
                 }
+                    
             } 
         }) 
 

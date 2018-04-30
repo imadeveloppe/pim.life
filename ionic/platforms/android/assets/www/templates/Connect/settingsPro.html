@@ -99,6 +99,9 @@
                 <ion-item class="item-icon-left" ui-sref="tab.cgv_pro({isshop: 1})">
                     <i class="icon ion-document-text"></i>{{ 'setting_pro.cgv' | translate }}
                 </ion-item>
+                <ion-item class="item-icon-left" ui-sref="tab.tarification">
+                    <i class="icon ion-document-text"></i>{{ 'settings.tarification' | translate }}
+                </ion-item>
                 <ion-item class="item-icon-left" ui-sref="tab.montionslegales">
                     <i class="icon ion-document-text"></i>{{ 'settings.montionslegales' | translate }}
                 </ion-item>
@@ -141,7 +144,7 @@
             <ion-list id="myAccounts"> 
                 <ion-item class="item-divider" id="settings-list-item-divider3">{{ 'setting_pro.my_profiles' | translate }}</ion-item>
 
-                <ion-item ng-click="switch(user.id, user.isshop)" ng-if=" userInfos.id != user.id || userInfos.isshop != user.isshop " ng-repeat="user in connectedUsers"  class="item-icon-left item-icon-right connectedUsers" data-tap-disabled="true">
+                <ion-item ng-click="switch(user.id, user.isshop)" ng-if=" userInfos.id != user.id || userInfos.isshop != user.isshop " ng-repeat="user in connectedUsers"  class="item-icon-left item-icon-right connectedUsers">
                     <img ng-src="{{ user.picto }}" ng-if=" user.picto != '' ">
                     <span ng-if=" user.picto == '' " class="initiales" ng-class="{'isshop': user.isshop >= 1}">{{ user.initiales }}</span>
                     {{ user.name }}
@@ -152,7 +155,7 @@
                     </ion-option-button>
                 </ion-item>  
 
-                <ion-item class="item-icon-left" id="settings-list-item19" ui-sref="tab.addprofile" data-tap-disabled="true">
+                <ion-item class="item-icon-left" ui-sref="tab.addprofile">
                     <i class="icon ion-android-person-add"></i> {{ 'setting_pro.link_another_profil_to_my_phone' | translate }}
                 </ion-item> 
                  
@@ -160,10 +163,10 @@
 
             <ion-list id="settings-list10">
                 <ion-item class="item-divider" id="settings-list-item-divider3">{{ 'setting_pro.account' | translate }}</ion-item> 
-                <ion-item class="item-icon-left" ui-sref="tab.settingsCustomerService" data-tap-disabled="true">
+                <ion-item class="item-icon-left" ui-sref="tab.settingsCustomerService" >
                     <i class="icon ion-headphone"></i>{{ 'customer_service.title_page' | translate }}
                 </ion-item>
-                <ion-item class="item-icon-left  " id="settings-list-item19" ng-click="GoLogout()" data-tap-disabled="true">
+                <ion-item class="item-icon-left  " id="settings-list-item19" ng-click="GoLogout()" >
                     <i class="icon ion-power"></i>{{ 'setting_pro.log_out' | translate }}
                 </ion-item>
                 <!-- <ion-toggle toggle-class="toggle-positive" id="settings-toggle-account" name="etat_profile" ng-model="vm.Accountetat" ng-change="AccountEtat()"> {{ vm.Account_etat_View }}</ion-toggle> -->

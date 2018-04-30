@@ -1,71 +1,15 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-        "scope": null,
-        "escapedName": null,
-        "name": null,
-        "rawSpec": "https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-        "spec": "git+https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-        "type": "hosted",
-        "hosted": {
-          "type": "github",
-          "ssh": "git@github.com:tabrindle/cordova-plugin-samsungpass.git",
-          "sshUrl": "git+ssh://git@github.com/tabrindle/cordova-plugin-samsungpass.git",
-          "httpsUrl": "git+https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-          "gitUrl": "git://github.com/tabrindle/cordova-plugin-samsungpass.git",
-          "shortcut": "github:tabrindle/cordova-plugin-samsungpass",
-          "directUrl": "https://raw.githubusercontent.com/tabrindle/cordova-plugin-samsungpass/master/package.json"
-        }
-      },
-      "/ST/ionic/pim.life/node_modules"
-    ]
-  ],
-  "_from": "git+https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-  "_id": "cordova-plugin-samsungpass@1.0.0",
-  "_inCache": true,
-  "_location": "/cordova-plugin-samsungpass",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-    "scope": null,
-    "escapedName": null,
-    "name": null,
-    "rawSpec": "https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-    "spec": "git+https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-    "type": "hosted",
-    "hosted": {
-      "type": "github",
-      "ssh": "git@github.com:tabrindle/cordova-plugin-samsungpass.git",
-      "sshUrl": "git+ssh://git@github.com/tabrindle/cordova-plugin-samsungpass.git",
-      "httpsUrl": "git+https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-      "gitUrl": "git://github.com/tabrindle/cordova-plugin-samsungpass.git",
-      "shortcut": "github:tabrindle/cordova-plugin-samsungpass",
-      "directUrl": "https://raw.githubusercontent.com/tabrindle/cordova-plugin-samsungpass/master/package.json"
-    }
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "git+https://github.com/tabrindle/cordova-plugin-samsungpass.git#37a3d48f80636a930ddcb277afc770e1dc97afb2",
-  "_shasum": "37e6ead773475961a41958550564895923a35865",
-  "_shrinkwrap": null,
-  "_spec": "https://github.com/tabrindle/cordova-plugin-samsungpass.git",
-  "_where": "/ST/ionic/pim.life/node_modules",
-  "author": {
-    "name": "Trevor Brindle",
-    "email": "tabrindle@gmail.com"
-  },
-  "bugs": {
-    "url": "https://github.com/tabrindle/cordova-plugin-samsungpass/issues"
-  },
-  "dependencies": {},
+  "name": "cordova-plugin-samsungpass",
+  "version": "1.0.0",
   "description": "Cordova Plugin for Samsung Pass",
-  "devDependencies": {},
-  "gitHead": "37a3d48f80636a930ddcb277afc770e1dc97afb2",
-  "homepage": "https://github.com/tabrindle/cordova-plugin-samsungpass#readme",
+  "main": "config.xml",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://tabrindle@github.com/tabrindle/cordova-plugin-samsungpass.git"
+  },
   "keywords": [
     "Samsung",
     "Pass",
@@ -74,18 +18,10 @@
     "Cordova",
     "Phonegap"
   ],
+  "author": "Trevor Brindle <tabrindle@gmail.com>",
   "license": "MIT",
-  "main": "config.xml",
-  "name": "cordova-plugin-samsungpass",
-  "optionalDependencies": {},
-  "readme": "## Installation\n\n```cordova plugin add https://github.com/tabrindle/cordova-plugin-samsungpass.git```\n\nOR \n\n```npm install cordova-plugin-samsungpass```\n\n## Support\n- Android\n- Tested on Galaxy S6\n- Should work on Galaxy S5\n\n## Setup\n\n  ```cordova create ~/Developer/SamsungPassTest com.test.samsungpass SamsungPassTest```\n  \n  ```cordova platform add android```\n  \n  ```cordova plugin add cordova plugin add https://github.com/tabrindle/cordova-plugin-samsungpass.git```\n\n## Methods\n\nSamsungPass.checkSamsungPassSupport();\n\nSamsungPass.checkForRegisteredFingers();\n\nSamsungPass.startIdentifyWithDialog();\n\n## Example\n\nSuccess and Failure callbacks are defaulted so if you like, you may pass an empty function call like this:\n\n```\nSamsungPass.checkSamsungPassSupport();\n```\n\nIf you require more than just a log, then pass functions like this:\n\n```\nSamsungPass.checkForRegisteredFingers(function() {\n  console.log('CheckForRegisteredFingersWithSamsungPass Success');\n  //do something funny\n}, function() {\n  console.log('CheckForRegisteredFingersWithSamsungPass Failure');\n  //do something sad\n});\n```\n\n",
-  "readmeFilename": "README.md",
-  "repository": {
-    "type": "git",
-    "url": "git+https://tabrindle@github.com/tabrindle/cordova-plugin-samsungpass.git"
+  "bugs": {
+    "url": "https://github.com/tabrindle/cordova-plugin-samsungpass/issues"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "1.0.0"
+  "homepage": "https://github.com/tabrindle/cordova-plugin-samsungpass#readme"
 }

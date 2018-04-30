@@ -1,88 +1,21 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "cordova-plugin-lock-info",
-        "scope": null,
-        "escapedName": "cordova-plugin-lock-info",
-        "name": "cordova-plugin-lock-info",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
-      },
-      "/ST/ionic/pim.life/node_modules"
-    ]
-  ],
-  "_from": "cordova-plugin-lock-info@latest",
-  "_id": "cordova-plugin-lock-info@0.0.2",
-  "_inCache": true,
-  "_location": "/cordova-plugin-lock-info",
-  "_nodeVersion": "6.7.0",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/cordova-plugin-lock-info-0.0.2.tgz_1477833222942_0.5661540033761412"
-  },
-  "_npmUser": {
-    "name": "polybuildr",
-    "email": "v.a.ghaisas@gmail.com"
-  },
-  "_npmVersion": "3.10.3",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "cordova-plugin-lock-info",
-    "scope": null,
-    "escapedName": "cordova-plugin-lock-info",
-    "name": "cordova-plugin-lock-info",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-lock-info/-/cordova-plugin-lock-info-0.0.2.tgz",
-  "_shasum": "18caba626b91dc079a88ae4e69c97c3fc05f4d9b",
-  "_shrinkwrap": null,
-  "_spec": "cordova-plugin-lock-info",
-  "_where": "/ST/ionic/pim.life/node_modules",
-  "author": {
-    "name": "Vivek Ghaisas",
-    "email": "v.a.ghaisas@gmail.com"
-  },
-  "bugs": {
-    "url": "https://github.com/polybuildr/cordova-plugin-lock-info/issues"
-  },
-  "dependencies": {},
+  "name": "cordova-plugin-lock-info",
+  "version": "0.0.2",
   "description": "Cordova plugin to detect if screen is locked/unlocked on Android.",
-  "devDependencies": {},
-  "directories": {},
-  "dist": {
-    "shasum": "18caba626b91dc079a88ae4e69c97c3fc05f4d9b",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-lock-info/-/cordova-plugin-lock-info-0.0.2.tgz"
+  "repository": {
+    "type": "git",
+    "url": "git+https://polybuildr@github.com/polybuildr/cordova-plugin-lock-info.git"
   },
-  "gitHead": "1bc7b01cff058e79bd27bc95966831bbf52afe23",
-  "homepage": "https://github.com/polybuildr/cordova-plugin-lock-info#readme",
   "keywords": [
     "cordova",
     "plugin",
     "locked",
     "unlocked"
   ],
+  "author": "Vivek Ghaisas <v.a.ghaisas@gmail.com>",
   "license": "Apache-2.0",
-  "maintainers": [
-    {
-      "name": "polybuildr",
-      "email": "v.a.ghaisas@gmail.com"
-    }
-  ],
-  "name": "cordova-plugin-lock-info",
-  "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
-  "repository": {
-    "type": "git",
-    "url": "git+https://polybuildr@github.com/polybuildr/cordova-plugin-lock-info.git"
+  "bugs": {
+    "url": "https://github.com/polybuildr/cordova-plugin-lock-info/issues"
   },
-  "scripts": {},
-  "version": "0.0.2"
+  "homepage": "https://github.com/polybuildr/cordova-plugin-lock-info#readme"
 }

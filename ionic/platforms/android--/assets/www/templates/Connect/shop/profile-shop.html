@@ -63,9 +63,12 @@
                     <h3>{{ 'shop_detail.category' | translate }}</h3>
                     <div class="liste-categories">
                         <span class="item-categorie">{{ currentShop.catname }} - {{ currentShop.scatname }}</span>
-                    </div>
+                    </div> 
                 </div>
-
+                
+                <div class="contact-infos padding">
+                    <h3>{{ 'shop_detail.contact_information' | translate }}</h3>
+                </div>
                 <ion-list show-delete="shouldShowDelete">
                   <ion-item ng-if="data.infos.shopfullAddress != ''" class="item item-icon-left" ng-click="actionBtn( 'geo', currentShop._geoloc.lat, currentShop._geoloc.lng, currentShop.brandname )"> 
                     <i class="icon ion-ios-location"></i>

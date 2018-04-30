@@ -45827,8 +45827,7 @@ md-fab-speed-dial .md-button.md-fab {
 }
 
 .CostumTextarea {
-    padding-bottom: 0;
-    margin-bottom: -12px;
+    padding-bottom: 0; 
     font-size: 14px;
     padding-left: 0!important
 }
@@ -46185,7 +46184,7 @@ ion-content.transDetails span.col.trans-time {
 
 .platform-ios:not(.platform-android) .has-ion-numeric-keyboard {
     bottom: 159px!important;
-    top: auto!important
+    /*top: 56px!important;*/
 }
 
 ion-content.transDetails .block-userInfo .acount-ref,
@@ -46439,7 +46438,7 @@ ion-content.transDetails .block-userInfo .InfoSender>p {
     text-align: left;
     position: absolute;
     width: 100%;
-    top: 24px
+    bottom: 49px;
 }
 
 .inSettigs .fa.fa-cloud-upload:before {
@@ -47128,7 +47127,7 @@ ion-content.listCauses.hasCategory {
 
 .info-magazin .item-icon-left .item-content {
     white-space: normal;
-    font-size: 16px
+    font-size: 16px;
     color: #254e7b;
 }
 
@@ -47140,11 +47139,13 @@ ion-content.listCauses.hasCategory {
     background-color: #0c60ee
 }
 
-#profile-shop .magazin-categories h3 {
+#profile-shop .magazin-categories h3,
+#profile-shop .contact-infos h3 {
     font-size: 16px;
     color: #254e7b;
     font-weight: 700;
-    margin-bottom: 5px
+    margin-bottom: 5px;
+    text-transform:uppercase;
 }
 
 #profile-shop .liste-categories span {
@@ -48439,15 +48440,24 @@ body.platformAndroid.platform-ios.platform-cordova:not(.fullscreen) .bar-header:
 .inDeconnect .title { 
     margin-bottom: 9px;
 }
-#page-login .emptyInput {
+md-switch[disabled=disabled] {
+    opacity: 0.5;
+}
+.emptyInput {
     position: absolute;
     right: -7px;
     top: 8px; 
+    z-index: 999;
 }
-#page-login .emptyInput i{
+.emptyInput i{
 	font-size: 22px; 
 	color: rgb(37, 75, 120);
 }
+#MarchandDemandPayment .emptyInput { 
+    top: 24px; 
+    right: -4px;
+}
+
 #pageSetting .toucheId,
 #pageSettingPro .toucheId {
     position: absolute;
@@ -49033,7 +49043,28 @@ body.lockScreen .appArea {
 }
 .hasCause .cause.noCauseSelected {
     padding-top: 15px;
-    min-height: 120px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.hasCause .cause.noCauseSelected h2 {
+    color: #ef7f31;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 19px;
+}
+.hasCause .cause.noCauseSelected p{
+    color: #355c86;
+    margin-bottom: 20px;
+}   
+.hasCause .cause.noCauseSelected p strong{
+     display: block;
+}
+.hasCause .cause.noCauseSelected button{
+    background: #ef7f31;
+    border: none;
+    color: #fff;
+    padding: 7px 40px;
+    border-radius: 20px;
 }
 .hasCause .cause .header img.cover-cause{
     width: 100%; 
@@ -49132,21 +49163,33 @@ body.lockScreen .appArea {
     padding-top: 62px;
 }
 .detailCause .cause .content .title h4 { 
-    font-size: 20px;
+    font-size: 16px;
 }
 .detailCause .cause .content .title p {
-    font-size: 15px; 
-    margin-top: 4px;
+    font-size: 12px;
+    margin: 0;
 }
 .detailCause strong.category,
 .detailCause .missions strong,
 .detailCause .personalInfos strong{
     color: #254e7b;
-    font-size: 14px;
+    font-size: 16px;
     text-transform: uppercase;
     margin-bottom: 5px;
     display: block;
     margin-top: 22px;
+}
+.detailCause .item-category{
+    display: inline-block;
+    background: #f1f1f1;
+    color: #254e7b;
+    border: 1px solid #eaeaea;
+    border-radius: 11px;
+    line-height: 16px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    margin-bottom: 15px;
 }
 .detailCause  .cause .content{ 
     color: #272626;;
@@ -49197,7 +49240,7 @@ ion-content.modalSelected .actionBtn button.close{
     color: #fff;
     font-weight: bold;
     padding: 0 30px;
-    line-height: 23px;
+    line-height: 26px;
 }
 .modalSelect .buttonClose i:before{
     font-size: 80px;
@@ -49208,9 +49251,12 @@ ion-content.modalSelected .actionBtn button.close{
 }
 .modalSelect .dontShow{
     color: #fff;
-    font-size: 20px;
+    font-size: 14px;
     position: absolute;
     bottom: 2px;
+}
+.modalSelect .dontShow i{ 
+    font-size: 17px; 
 }
 ion-content.modalSelected {
     top: auto;
@@ -49278,7 +49324,7 @@ ion-content.modalSelected .socialLinks.twitter  {
      background: #ef7f31; 
      color: #fff;
      text-align: center;
-     padding: 5px;  
+     padding: 5px;   
 }
  
 #homePage ion-content .block .row,
@@ -49717,6 +49763,7 @@ ion-content.filterCatg .button-terminer i:before{
     height: 100%;
 }
 input.mbsc-control,
+.welcomToPim .inDeconnect input.mbsc-control,
 form.questionsSignin input.mbsc-control{
     display: none;
 } 
@@ -49844,11 +49891,38 @@ form.questionsSignin input.mbsc-control{
     padding-bottom: 5px;
 }
 
+ion-modal-view.modalCGV section.acceptCGV{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+}
+ion-modal-view.modalCGV ion-content{
+    bottom: 52px;
+}
 
+.item-stacked-label.singup_question {
+    margin-top: 20px;
+    border-top: 0;
+}
+.item-stacked-label.singup_question:first-child {
+    margin-top: 0; 
+}
+.item-stacked-label.singup_answer:last-child {
+    border-bottom:1px solid #ddd;
+}
 
+.cvgpage ol, .cvgpage ul {
+    list-style: outside;
+    padding-left: 17px;
+}
+.cvgpage ol li,.cvgpage ul li {
+    margin-bottom: 10px;
+}
 @media (max-height:736px) { /* iphone 6+, 7+ */
     #homePage .cause .header .cover-continer {
-        height: 142px;
+        height: 126px;
         overflow: hidden;
     }
 
@@ -49865,14 +49939,18 @@ form.questionsSignin input.mbsc-control{
     #homePage ion-content .block.links strong { 
         font-size: 13px; 
     }
-
+   
+   ion-content.transDetails .block-userInfo .acount-type { 
+        font-size: 12px;
+        width: 125px;
+    }
 
 }
 
 @media (max-height:667px) { /* Samsung s5 */
     #homePage .cause .header .cover-continer {
-        height: 94px;
-    } 
+        height: 80px;
+    }  
 
 }
 
@@ -49881,9 +49959,28 @@ form.questionsSignin input.mbsc-control{
         display: none;
     }
     #homePage .cause .header .cover-continer {
-        height: 80px;
+        min-height: 65px;
+        height: 65px;
+    }
+    #homePage ion-content .block{ 
+         margin: 6px 10px;
+    }
+    #homePage ion-content .block.links {
+        margin-top: 12px;
+    }
+    ion-content.transDetails .block-userInfo .acount-type { 
+        width: 96px;
+        line-height: 15px; 
     }
 
+}
+
+@media (min-width:400px) { /* iphone 6/78/ plus */ 
+    .hasCause .cause.noCauseSelected {
+        padding-top: 10%;
+        text-align: center;
+        padding-bottom: 10%;
+    }
 }
 
 @media (max-height:480px) { /* iphone 4 */ 
@@ -49947,6 +50044,23 @@ form.questionsSignin input.mbsc-control{
     }
     .liste-transaction .liste-shopping h2 {
         font-size: 12px; 
+    }
+
+    .hasCause .cause.noCauseSelected {
+        padding-top: 13px;
+        padding-bottom: 0;
+    }
+    .hasCause .cause.noCauseSelected h2 { 
+        font-size: 16px;
+    }
+    .hasCause .cause.noCauseSelected p {
+        margin-bottom: 10px;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .block-notifs-continner{
+        height: 25px!important;
+        margin-top: 5px!important;
     }
 }
 

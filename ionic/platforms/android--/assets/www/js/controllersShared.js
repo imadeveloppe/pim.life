@@ -1,5 +1,98 @@
 angular.module('pim.controllersShared', []) 
 
+.controller('firstConnnectionToPimCtrl', function($scope, Go, $translate, SharedService,crypt, Alert, $state, $filter) {
+
+    $scope.$on('$ionicView.beforeEnter', function() {
+
+        $scope.data = {} 
+        var postData = {
+            "task": "getQuestions"
+        };
+        Go.post(postData).then(function(data) {
+            if (data.success == 1) { 
+
+                $scope.listQuestions1 = data.listQuestions.listQuestions1;
+                $scope.listQuestions2 = data.listQuestions.listQuestions2;
+                $scope.listQuestions3 = data.listQuestions.listQuestions3;  
+
+            }
+        })
+        $scope.settings = {
+            theme: (ionic.Platform.isIOS()) ? 'ios' : 'pim-theme',
+            display: 'bottom',
+            lang : $translate.use(),
+            multiline: 3,
+            height: 50
+        } 
+    })
+
+
+    $scope.validate = function () {
+        console.log($scope.data)
+
+        var validationList = [{
+            type: 'password',
+            value: $scope.data.password
+        }, {
+            type: 'confirmePassword',
+            value: $scope.data.confirmpassword
+        },{
+            type: 'lockCode',
+            value: $scope.data.code
+        }, {
+            type: 'confirmLockCode',
+            value: $scope.data.confirmcode
+        },{
+            type: 'question1',
+            value: $scope.data.idquestion1
+        }, {
+            type: 'answer1',
+            value: $scope.data.answer1
+        }, {
+            type: 'question2',
+            value: $scope.data.idquestion2
+        }, {
+            type: 'answer2',
+            value: $scope.data.answer2
+        }, {
+            type: 'question3',
+            value: $scope.data.idquestion3
+        }, {
+            type: 'answer3',
+            value: $scope.data.answer3
+        }];
+
+        if (SharedService.Validation(validationList)) {
+            var postData = {
+                "task": "ChangeInfoFirstconnexion", 
+                "password": crypt.sha256($scope.data.password),
+                "confirmpassword": crypt.sha256($scope.data.confirmpassword),
+
+                "code" : crypt.sha256($scope.data.code),
+                "confirmcode" : crypt.sha256($scope.data.confirmcode),
+
+                "question1": $scope.data.idquestion1,
+                "question2": $scope.data.idquestion2,
+                "question3": $scope.data.idquestion3,
+                "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.data.answer3.toLowerCase())
+            };
+            Alert.loader(true)
+            Go.post(postData).then(function(data) { 
+                if (data.success == 1) {
+                    Alert.success($filter('translate')('welcome_to_pim.success'))
+                    setTimeout(function () {
+                        $state.go('tab.home')
+                    },1000)
+                }
+            });  
+
+        }
+
+    }
+})
+
 .controller('HomeCtrl', function($scope,API, $cordovaToast,$cordovaFileTransfer,$ionicActionSheet, $ionicModal, DATA, Catgs,$compile ,$filter, NgMap, ResetePage, Badges, $state, $rootScope, Accounts, $timeout, $ionicLoading, $q, User, Icons, $stateParams, Alert, SharedService, Go, $location, $translate, $ionicScrollDelegate) {
     var self = this; 
     $scope.new = {};
@@ -12,7 +105,7 @@ angular.module('pim.controllersShared', [])
 
     $scope.$on('$ionicView.beforeEnter', function() { 
 
-        $scope.accounts = Accounts.all(); 
+        
 
         $scope.page = 0;
         $scope.canMore = true; 
@@ -21,12 +114,16 @@ angular.module('pim.controllersShared', [])
         $scope.isCause = false;
         $scope.devise = API.devise;
         
-        $scope.GetDetails = User.GetDetails();
-
-        $scope.isPro = $scope.GetDetails.isPro; 
         
-
-        $scope.SelectedAssocID = $scope.GetDetails.user.associationid; 
+        $scope.GetDetails = User.GetDetails();
+        
+        if( $scope.GetDetails ){
+            console.log($scope.GetDetails )
+            $scope.isPro = $scope.GetDetails.isPro;  
+            $scope.SelectedAssocID = $scope.GetDetails.user.associationid; 
+        }
+            
+        $scope.accounts = Accounts.all(); 
 
         if(Go.is("/home")){
 
@@ -76,10 +173,10 @@ angular.module('pim.controllersShared', [])
         }else if(Go.is("/home") &&  parseInt($scope.SelectedAssocID) == 0 ){
             $scope.loaded = true; 
             if( $scope.isPro != 2 ){
-                setTimeout(function () {
-                    var heightVide = $('#homePage ion-content').height() - $('#homePage ion-content > div').height(); 
-                    $('#homePage .noCauseSelected').css('height', $('#homePage .noCauseSelected').height()+heightVide);
-                })
+                // setTimeout(function () {
+                //     var heightVide = $('#homePage ion-content').height() - $('#homePage ion-content > div').height(); 
+                //     $('#homePage .noCauseSelected').css('height', $('#homePage .noCauseSelected').height()+heightVide);
+                // })
             }   
         } 
 
@@ -205,7 +302,7 @@ angular.module('pim.controllersShared', [])
 
         }); 
     };
-    $scope.GetAllAccounts();
+    //$scope.GetAllAccounts();
 
 
     $scope.$on('$ionicView.enter', function() {
@@ -1478,11 +1575,11 @@ angular.module('pim.controllersShared', [])
             if( data.success == 1){
                 $rootScope.$emit('ClearTrans');
                 $state.go('tab.MarchandDemandPayment');
-            }else if(data.success == 1 && parseInt(data.valid) != 1){
-                Alert.error($filter('translate')('home.accountnotvalidatedyet'))
+                $scope.changeValidationFinalState( 1 );
+            }else{
+                $scope.changeValidationFinalState( 0 );
             } 
-
-            $scope.changeValidationFinalState( parseInt(data.valid) );
+            
         }) 
     }
 
@@ -1870,7 +1967,7 @@ angular.module('pim.controllersShared', [])
                                 "task": "PaymentSendToFriend",
                                 "recipient": $scope.trans.users[0].objectID.substr(2),
                                 "requesttoshop": $scope.trans.users[0].isshop,
-                                "amount": $scope.trans.amount,
+                                "amount": total,
                                 "accountId": $scope.accounts[$scope.trans.selectedAccount].id,
                                 "reason": $scope.trans.reson,
                                 "sharedreason": 1
@@ -2140,7 +2237,23 @@ angular.module('pim.controllersShared', [])
         $rootScope.$emit("PaymentDemandePayByQrCode");
     }
 
+    $scope.clearReason = function(){
+        $scope.trans.reson = ''; 
+        console.log('click')
+    }
 
+
+
+    $scope.$on('$ionicView.afterEnter', function() {
+        if( Go.is('MarchandDemandPayment') ){
+            $scope.trans.reson = $filter('translate')('request_payment_using_qr_code.customer_regulation');
+            setTimeout(function () {
+                $('[ng-model=amount]:visible').click()
+            },1000)
+        }
+            
+    });
+    
 
 
 
@@ -3170,6 +3283,16 @@ angular.module('pim.controllersShared', [])
                                         $ionicScrollDelegate.resize();
                                     })
                                 },1000)
+                            }
+
+                            hasWWW = $scope.data.infos.siteweb.toLowerCase().search('www.');
+                            hashttp = $scope.data.infos.siteweb.toLowerCase().search('http://');
+
+                            if( hasWWW < 0 ){
+                                $scope.data.infos.siteweb = "www."+$scope.data.infos.siteweb.toLowerCase();
+                            }
+                            if( hashttp < 0 ){
+                                $scope.data.infos.siteweb = "http://"+$scope.data.infos.siteweb;
                             } 
                         } 
                     })
@@ -3562,7 +3685,58 @@ angular.module('pim.controllersShared', [])
             
             $state.go("tab.causes");
             
-        } else if (
+        }
+        else if (
+                    notif.type == 'deselectassocbyblockassoc' ||
+                    notif.type == 'add_doc_pi_signatory' ||
+                    notif.type == 'add_doc_persenal_address_signatory' ||
+                    notif.type == 'add_doc_pi_rep' ||
+                    notif.type == 'add_doc_persenal_address_rep' ||
+                    notif.type == 'add_doc_pi_shareholder' ||
+                    notif.type == 'add_doc_persenal_address_shareholder' ||
+                    notif.type == 'profil_blocked_signatory' ||
+                    notif.type == 'profil_blocked_rep' ||
+                    notif.type == 'profil_blocked_shareholder' ||
+                    notif.type == 'doc_identity_confirmed_signatory' ||
+                    notif.type == 'doc_identity_refused_signatory' ||
+                    notif.type == 'doc_identity_confirmed_rep' ||
+                    notif.type == 'doc_identity_refused_rep' ||
+                    notif.type == 'doc_identity_confirmed_shareholder' ||
+                    notif.type == 'doc_identity_refused_shareholder' ||
+                    notif.type == 'doc_address_confirmed_signatory' ||
+                    notif.type == 'doc_address_refused_signatory' ||
+                    notif.type == 'doc_address_confirmed_rep' ||
+                    notif.type == 'doc_address_refused_rep' ||
+                    notif.type == 'doc_address_confirmed_shareholder' ||
+                    notif.type == 'doc_address_refused_shareholder' ||
+                    notif.type == 'updatepibyadmin_signatory' ||
+                    notif.type == 'updatepibyadmin_rep' ||
+                    notif.type == 'updatepibyadmin_shareholder' ||
+                    notif.type == 'updatephonebyadmin_signatory' ||
+                    notif.type == 'updatephonebyadmin_rep' ||
+                    notif.type == 'updatephonebyadmin_shareholder' ||
+                    notif.type == 'updateemailbyadmin_signatory' ||
+                    notif.type == 'updateemailbyadmin_rep' ||
+                    notif.type == 'updateemailbyadmin_shareholder' ||
+                    notif.type == 'updateaddressbyadmin_signatory' ||
+                    notif.type == 'updateaddressbyadmin_rep' ||
+                    notif.type == 'updateaddressbyadmin_shareholder' ||
+                    notif.type == 'treezorvaldation_confirmed' ||
+                    notif.type == 'treezorvaldation_confirmed_signatory' ||
+                    notif.type == 'treezorvaldation_confirmed_rep' ||
+                    notif.type == 'treezorvaldation_confirmed_shareholder' ||
+                    notif.type == 'treezorvaldation_refused' ||
+                    notif.type == 'treezorvaldation_refused_signatory' ||
+                    notif.type == 'treezorvaldation_refused_rep' ||
+                    notif.type == 'treezorvaldation_refused_shareholder'
+        ) {
+            $rootScope.$emit('GetShareCapitalData');
+            $state.go('tab.settings');
+            setTimeout(function() {
+                $state.go('tab.capital-social') ;
+            },500)
+            
+        }else if (
                     notif.type == 'doc_address_confirmed' || 
                     notif.type == 'doc_address_refused' ||
  
@@ -3622,7 +3796,9 @@ angular.module('pim.controllersShared', [])
                     notif.type == 'annulupdatecontactmailbyadmin' ||
                     notif.type == 'annulupdatemailbyadmin' ||
                     notif.type == 'updatepimcommision' ||
-                    notif.type == 'updateassoccommision'
+                    notif.type == 'updateassoccommision' ||
+                    notif.type == 'updatetransibancommision'
+
 
                     )
             {
@@ -4947,23 +5123,16 @@ angular.module('pim.controllersShared', [])
                 "email": $scope.data.email, 
             };
             Go.post(postData).then(function(datas) {
-                if (datas.success == 1) {
-                    AuthService.storeUserCredentials(datas.userToken);
-                    User.SetDetails(datas.UserDetails);
-                    $scope.data = datas.UserDetails.user;
+                if (datas.success == 1) { 
                     $state.go('forgotpassword-step2');
+                    $rootScope.secretQuestions = datas.questions;
+                    $rootScope.mailForgetPassword = $scope.data.email;
                 }
             });
         }
     };
 
-    if ($location.path() == '/forgot-password-step2') {
-        var Details = User.GetDetails();
-        console.log(Details.user)
-        $scope.data.question1 = Details.user.question1;
-        $scope.data.question2 = Details.user.question2;
-        $scope.data.question3 = Details.user.question3;
-    }
+    
 
     $scope.codequestions = function() {
         Alert.loader(true);
@@ -4984,9 +5153,9 @@ angular.module('pim.controllersShared', [])
             var postData = {
                 "task": "ForgotPasswordCheckAnswers",
                 "codesms": $scope.data.codeSMS,
-                "answer1": $scope.data.answer1,
-                "answer2": $scope.data.answer2,
-                "answer3": $scope.data.answer3
+                "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.data.answer3.toLowerCase())
             };
             Go.post(postData).then(function(data) {
                 if (data.success == 1) {
@@ -5004,6 +5173,13 @@ angular.module('pim.controllersShared', [])
         $scope.data.answer2 = '';
         $scope.data.answer3 = ''; 
         $scope.data.Indicatif = '+33';
+
+        if ($location.path() == '/forgot-password-step2' && $rootScope.secretQuestions) { 
+                $scope.data.question1 = $rootScope.secretQuestions.question1;
+                $scope.data.question2 = $rootScope.secretQuestions.question2;
+                $scope.data.question3 = $rootScope.secretQuestions.question3; 
+            
+        }
     });
 
     $scope.enternewpassword = function() {
@@ -5705,7 +5881,7 @@ angular.module('pim.controllersShared', [])
                 if( trans.transtype == "send" ){
                     Transactions.push([
                         {text: trans.date.split("/")[0]+"."+trans.date.split("/")[1], style: 'tableBody'}, 
-                        {text: trans.ref}, 
+                        {text: trans.ref, style: 'tableBody'}, 
                         {text: (trans.fname+" "+trans.lname).substr(0, 30), style: 'tableBody'}, 
                         {text: trans.description.substr(0, 30), style: 'tableBody'}, 
                         {text: trans.amount, style: 'tableBody', alignment: 'right'}, 
@@ -5716,7 +5892,7 @@ angular.module('pim.controllersShared', [])
                 if( trans.transtype == "recept" ){
                     Transactions.push([
                         {text: trans.date.split("/")[0]+"."+trans.date.split("/")[1], style: 'tableBody'}, 
-                        {text: trans.ref}, 
+                        {text: trans.ref, style: 'tableBody'}, 
                         {text: (trans.fname+" "+trans.lname).substr(0, 30) , style: 'tableBody'}, 
                         {text: trans.description.substr(0, 30), style: 'tableBody'}, 
                         {text: "", style: 'tableBody'}, 
@@ -5763,17 +5939,19 @@ angular.module('pim.controllersShared', [])
           template: $filter('translate')('bank_statement.please_wait')+'<br> <ion-spinner icon="ios-small"></ion-spinner>'
         })  
         setTimeout(function () {
-            Transactions.push([
+            Transactions.push([ 
                 {text: "", style: 'tableBody'}, 
                 {text: "", style: 'tableBody'}, 
-                {text: $filter('translate')('bank_statement_pdf.total'), style: 'tableHeader', alignment: 'right'}, 
+                {text: "", style: 'tableBody'}, 
+                {text: $filter('translate')('bank_statement_pdf.total'), alignment: 'right',style: ['bold','tableBody']}, 
                 {text: $scope.Debit.toFixed(2), style: 'tableHeader', alignment: 'right'}, 
                 {text: $scope.Credit.toFixed(2), style: 'tableHeader', alignment: 'right'}
             ]) 
-            Transactions.push([
+            Transactions.push([ 
                 {text: ""}, 
                 {text: ""}, 
-                {text: $filter('translate')('bank_statement_pdf.total_end_of_period'), style: 'tableHeader', alignment: 'right'}, 
+                {text: ""}, 
+                {text: $filter('translate')('bank_statement_pdf.total_end_of_period'), alignment: 'right',style:  ['bold','tableBody']}, 
                 {text: $scope.SoldeEndPeriod.toFixed(2), style: 'tableHeader', alignment: 'right'}, 
                 {text: ""}
             ])
@@ -5831,47 +6009,58 @@ angular.module('pim.controllersShared', [])
             var docDefinition = { 
                 pageSize: 'A4', 
                 pageMargins: [ 20, 20, 20, 20 ],
-                footer: {
-                    text: $filter('translate')('bank_statement_pdf.footer_page'), 
-                    style: ['quote', 'small'],
-                    alignment: 'center'
+                footer: { 
+                    columns: [
+                        {
+                            text: "",
+                            width: 10
+                        },
+                        {
+                            image: BASE64_LOGOS.treezor,
+                            width: 25
+                        },
+                        {
+                            text: "",
+                            width: 5
+                        },
+                        {
+                            text: $filter('translate')('bank_statement_pdf.footer_page'), 
+                            style: ['quote', 'small'],
+                            alignment: 'center'
+                        },
+                        {
+                            text: "",
+                            width: 10
+                        }
+                    ]
                 },
                 content:[
                     { 
                         columns:[
                             {
                                 image: BASE64_LOGOS.pim,
-                                width: 100
-                            },
-                            {
-                                text: "",
-                                width: 330
-                            },
-                            {
-                                text: $filter('translate')('bank_statement_pdf.info_pim'), 
-                                style: 'bold',
-                                fontSize: 9
+                                width: 50
                             }
                         ]
                     },
                     { 
                         text: $filter('translate')('bank_statement_pdf.your_bank_statement'), 
                         style: 'bold',
-                        margin: [0,40,0,0]
+                        margin: [0,40,0,30]
                     },
                     { 
                         columns: [
                             {
-                                text: $filter('translate')('bank_statement_pdf.account_n')+"\n"+$filter('translate')('bank_statement_pdf.period'),
+                                text:   $filter('translate')('bank_statement_pdf.account_n')+"\n"+
+                                        $filter('translate')('bank_statement_pdf.bic')+"\n"+
+                                        $filter('translate')('bank_statement_pdf.porte_monnaie'),
                                 width: 100,
                                 fontSize: 10
                             },
                             {
-                                text: $scope.accounts[$scope.trans.selectedAccount].number+" \n"+
-                                            $filter('translate')('bank_statement_pdf.from_to',{
-                                                dateStart: dateStartPeriod,
-                                                dateEnd: dateEndPeriod
-                                            }),
+                                text:   $scope.accounts[$scope.trans.selectedAccount].number+" \n"+
+                                        $scope.principalAccount.bic+" \n"+
+                                        $scope.accounts[trans.selectedAccount].name,
                                 width: 330,
                                 fontSize: 10
                             }, 
@@ -5879,24 +6068,36 @@ angular.module('pim.controllersShared', [])
                                 text: user+"\n"+adress+"\n"+zipCode+" "+city+" - "+country,
                                 fontSize: 9
                             }
+                        ],
+                        margin: [0,0,0,30]
+                    },
+                    {
+                        columns: [
+                            {
+                                text:   $filter('translate')('bank_statement_pdf.releve_n')+"\n"+
+                                        $filter('translate')('bank_statement_pdf.period'),
+                                width: 100,
+                                fontSize: 10, 
+                            },
+                            {
+                                text:   Month+"-"+Year+"\n"+
+                                        $filter('translate')('bank_statement_pdf.from_to',{
+                                            dateStart: dateStartPeriod,
+                                            dateEnd: dateEndPeriod
+                                        }),
+                                fontSize: 9
+                            }
                         ]
-                    },
+                    }, 
                     {
-                        text: $filter('translate')('bank_statement_pdf.descriptive_text'),
-                        margin: [0,20,0,20],
-                        fontSize: 9
-                    },
-                    {
-                        text: $filter('translate')('bank_statement_pdf.beginning_balance')+" "+$scope.SoldeDepartPeriod.toFixed(2)+" "+$scope.devis,
-                        fontSize: 12,
-                        style: 'bold',
-                        margin: [0,0,0,20]
+                        text:   "", 
+                        margin: [0,0,0,30]
                     },
                     /////////////////////////////////////////////////////////////////////////////////////////////////
                     {
                         style: 'tableExample',
                         table: {
-                            widths: [50, 130, '*', 80, 80],
+                            widths: [30, 70, '*', 100, 80, 80], 
                             headerRows: 1,
                             body:  Transactions
                         },
@@ -5924,8 +6125,8 @@ angular.module('pim.controllersShared', [])
                     }
                 }
             };
-            // pdfMake.createPdf(docDefinition).download();   
-            // $ionicLoading.hide();
+            //pdfMake.createPdf(docDefinition).download();   
+            $ionicLoading.hide();
             const pdfDocGenerator = pdfMake.createPdf(docDefinition);  
             pdfDocGenerator.getBase64((data) => {  
                 $ionicLoading.hide();
@@ -6012,7 +6213,7 @@ angular.module('pim.controllersShared', [])
     };
 })
 
-.controller('changeLockCodeCtrl', function($scope, $rootScope, $translate, Alert,Go, $filter, SharedService, crypt) { 
+.controller('changeLockCodeCtrl', function($scope, $rootScope, $translate, Alert, crypt, Go, $filter, SharedService, crypt) { 
 
     $scope.$on('$ionicView.beforeEnter', function() { 
         $scope.data = {}
@@ -6032,9 +6233,9 @@ angular.module('pim.controllersShared', [])
         if (SharedService.Validation(validationList)) {
             var postData = {
                 "task": "SettingsChangecode",
-                "actualcode": $scope.data.currentcode,
-                "code": $scope.data.newcode,
-                "confirmcode": $scope.data.confirmcode
+                "actualcode": crypt.sha256($scope.data.currentcode),
+                "code": crypt.sha256($scope.data.newcode),
+                "confirmcode": crypt.sha256($scope.data.confirmcode)
             };
             Alert.loader(true);
             Go.post(postData).then(function(data) {
@@ -6042,14 +6243,21 @@ angular.module('pim.controllersShared', [])
                     window.localStorage.setItem('lockCode', crypt.sha256($scope.data.newcode))
                     Alert.success( $filter('translate')('lock_code.success_update') )
                     $scope.data = {}
+
+                    setTimeout(function () {
+                        $rootScope.GotoSettings();
+                    },1500)
                 }
-            });
+            }); 
         }
     };
 })
 
-.controller('customerServiceCtrl', function($scope, $state, $location, $ionicHistory, LockScreen, $filter) {  
+.controller('customerServiceCtrl', function($scope, $state, $location, $ionicHistory, LockScreen, $filter, AppServices) {  
 
+    $scope.$on('$ionicView.beforeEnter', function() { 
+        $scope.content = AppServices.linkify($filter('translate')('customer_service.text'));
+    })
     $scope.backToCode = function () {
         LockScreen.show();   
     }
@@ -6059,7 +6267,22 @@ angular.module('pim.controllersShared', [])
     } 
 })
 
-.controller('resetLockCodeCtrl', function($scope, $state, $location, $filter,SharedService, Alert, Go,crypt) {  
+.controller('settingsCustomerServiceCtrl', function($scope, $state, $location, $ionicHistory, LockScreen, $filter, AppServices) {  
+
+    $scope.$on('$ionicView.beforeEnter', function() { 
+        $scope.content = AppServices.linkify($filter('translate')('customer_service.text'));
+    })
+    $scope.backToCode = function () {
+        LockScreen.show();   
+    }
+
+    $scope.autoLogOut = function () { 
+        LockScreen.logout();  
+    } 
+    
+})
+
+.controller('resetLockCodeCtrl', function($scope, $state, $location, crypt, $filter,SharedService, Alert, Go,crypt) {  
 
     $scope.$on('$ionicView.beforeEnter', function() { 
         $scope.data = {}
@@ -6076,8 +6299,8 @@ angular.module('pim.controllersShared', [])
         if (SharedService.Validation(validationList)) {
             var postData = {
                 "task": "DeblocChangecode", 
-                "code": $scope.data.newcode,
-                "confirmcode": $scope.data.confirmcode
+                "code": crypt.sha256($scope.data.newcode),
+                "confirmcode": crypt.sha256($scope.data.confirmcode)
             };
             Alert.loader(true);
             Go.post(postData).then(function(data) {
@@ -6104,16 +6327,37 @@ angular.module('pim.controllersShared', [])
     $scope.content = "";
 
     $scope.$on('$ionicView.beforeEnter', function() { 
+        
+        $scope.canLoadMore = false;
+        $scope.content = '';
+        $scope.page = 0;
 
+        $scope.loadContents();
+    })
+
+
+    $scope.loadContents = function () {
+        
         Go.post({
             task: "getcgv",
-            isshop: $stateParams.isshop
+            NoLoader: true,
+            isshop  : $stateParams.isshop,
+            page  : $scope.page
         }).then(function (data) {
             if(data.success == 1){
-                 $scope.content = data.cgv;
+                $scope.page++;
+                $scope.content += data.cgv;
+                setTimeout(function () {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },1000)
+                if(data.cgvend == 0){ 
+                    $scope.canLoadMore = true; 
+                }else{ 
+                    $scope.canLoadMore = false; 
+                } 
             }   
         })
-    })
+    }
     
     $scope.download = function ( type ) {  
 
@@ -6131,8 +6375,293 @@ angular.module('pim.controllersShared', [])
 
 })
 
+.controller('montionslegalesCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go) {  
 
-.controller('causesCtrl', function($scope, $rootScope, $state, $ionicModal, Catgs, ALGOLIA, Go, Geo, User) {  
+    $scope.trustAsHtml = function(string) {
+        return $sce.trustAsHtml(string);
+    }; 
+
+})
+
+.controller('tarificationCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go,BASE64_LOGOS, $filter, $ionicModal, $ionicLoading, $cordovaFile, $cordovaFileOpener2) {  
+
+    $scope.trustAsHtml = function(string) {
+        return $sce.trustAsHtml(string);
+    }; 
+
+    var docDefinition = { 
+        pageSize: 'A4', 
+        pageMargins: [ 20, 20, 20, 20 ],
+        footer: { 
+            // columns: [ 
+            //     {
+            //         text: "",
+            //         width: 5
+            //     },
+            //     {
+            //         text: $filter('translate')('bank_statement_pdf.info_pim'), 
+            //         style: ['quote', 'small'],
+            //         alignment: 'center'
+            //     },
+            //     {
+            //         text: "",
+            //         width: 10
+            //     }
+            // ]
+        },
+        content:[
+            { 
+                columns:[
+                    {
+                        image: BASE64_LOGOS.pim,
+                        width: 50
+                    },
+                    {
+                        text: '',
+                        width: 20
+                    },
+                    {
+                        text: 'TARIFS TTC au 13 avril 2018',
+                        fontSize: 15,
+                        margin: [0,20,0,10],
+                        bold: true,
+                    }
+                ]
+            }, 
+            {
+                text: 'Une Appli mobile prépayée, une tarification transparentes et simple, sans découvert possible, sans frais cachés',
+                fontSize: 10.5,
+                color: '#ef7f31',
+                bold: true,
+                margin: [0,40,0,10],
+                alignment : 'center'
+            },
+            {
+                table: {
+                    widths: ['*', 90, 90, 90], 
+                    headerRows: 1,
+                    body:  [ 
+                        [ 
+                            { text: "Compte", style: 'tableHeader' }, 
+                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Compte courant avec RIB (IBAN) français", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "20 €", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Historique des transactions", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "4 Portefeuilles virtuels", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'}, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Frais de gestion annuels", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "10 € / an", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ]
+                    ]
+                },
+                layout: 'headerLineOnly'  
+            },
+            {
+                table: {
+                    widths: ['*', 90, 90, 90], 
+                    headerRows: 1,
+                    body:  [ 
+                        [ 
+                            { text: "Virements", style: 'tableHeader' }, 
+                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "1 Virement entrant - sortant / mois", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Virement entrant - sortant additionnel", style: 'tableBody' }, 
+                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                        ]
+                    ]
+                },
+                layout: 'headerLineOnly',
+                margin: [0,30,0,0]
+            },
+            {
+                table: {
+                    widths: ['*', 90, 90, 90], 
+                    headerRows: 1,
+                    body:  [ 
+                        [ 
+                            { text: "Opérations intra - PIM", style: 'tableHeader' }, 
+                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
+                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Paiement par QR Code", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Encaissement par QR Code", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "1,2 %", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                        ],
+                        [ 
+                            { text: "Transfert d’argent à distance", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                        ],
+                        [ 
+                            { text: "Encaissement à distance", style: 'tableBody' }, 
+                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: "1, 2 %", style: 'tableBody', alignment : 'center'},  
+                           { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                        ]
+                    ]
+                },
+                layout: 'headerLineOnly',
+                margin: [0,30,0,0]
+            },
+            {
+                text: 'PIM transforme les frais bancaires en actions solidaires & reverse 50 % de ses commissions à l’association sélectionnée par l’Utilisateur',
+                fontSize: 9,
+                color: '#ef7f31',
+                bold: true,
+                margin: [0,50,0,10],
+                alignment : 'center'
+            },
+            {
+                text: $filter('translate')('bank_statement_pdf.info_pim'), 
+                style: ['quote', 'small'],
+                alignment: 'center'
+            },
+
+
+        ],
+        styles: { 
+            quote: {
+                italics: true
+            },
+            small: {
+                fontSize: 6
+            },
+            bold: { 
+                bold: true
+            },
+            tableBody:{
+                fontSize: 11,
+                margin: [0,5,0,5]
+            },
+            tableHeader:{
+                fontSize: 13,
+                bold: true
+            }
+        }
+    }; 
+    var base64ToUint8Array = function (base64) {  
+        var raw = atob(base64);
+        var uint8Array = new Uint8Array(raw.length);
+        for (var i = 0; i < raw.length; i++) {
+        uint8Array[i] = raw.charCodeAt(i);
+        }
+        return uint8Array;
+    }
+
+    var generatePdf = function function_name(argument) {
+ 
+
+        var pdf = pdfMake.createPdf(docDefinition);
+
+        pdf.getBase64(function (output) { 
+            var pdfOutput = base64ToUint8Array(output) 
+            var blob = new Blob([pdfOutput], {type: 'application/pdf'}); 
+            $scope.pdfUrl = URL.createObjectURL(blob); 
+        });
+    }
+
+    var base64toBlob  = function (base64Data, contentType) {
+          contentType = contentType || '';
+          var sliceSize = 1024;
+          var byteCharacters = atob(base64Data);
+          var bytesLength = byteCharacters.length;
+          var slicesCount = Math.ceil(bytesLength / sliceSize);
+          var byteArrays = new Array(slicesCount);
+
+        for (var sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+            var begin = sliceIndex * sliceSize;
+            var end = Math.min(begin + sliceSize, bytesLength);
+
+            var bytes = new Array(end - begin);
+            for (var offset = begin, i = 0 ; offset < end; ++i, ++offset) {
+                bytes[i] = byteCharacters[offset].charCodeAt(0);
+            }
+            byteArrays[sliceIndex] = new Uint8Array(bytes);
+        }
+        return new Blob(byteArrays, { type: contentType });
+    }
+
+    
+
+    generatePdf();
+
+    $scope.download = function () {
+        console.log("HERE")
+        $ionicLoading.show({
+          template: $filter('translate')('bank_statement.please_wait')+'<br> <ion-spinner icon="ios-small"></ion-spinner>'
+        })
+        
+        setTimeout(function () {
+            const pdfDocGenerator = pdfMake.createPdf(docDefinition);  
+            pdfDocGenerator.getBase64((data) => {  
+                $ionicLoading.hide();
+
+                var documentsDirectory = ( ionic.Platform.isIOS() ) ? cordova.file.documentsDirectory : cordova.file.externalApplicationStorageDirectory;
+
+                $cordovaFile.writeFile( documentsDirectory,'Tarification.pdf' ,base64toBlob(data, "application/pdf"), true)
+                .then(function (success) { 
+                    $cordovaFileOpener2.open( 
+                        documentsDirectory+'Tarification.pdf',
+                        'application/pdf'
+                    ).then(function() {
+                        $ionicLoading.hide();
+                    }, function(err) { 
+                        $ionicLoading.hide();
+                        console.log("An error occurred. Show a message to the user", err)
+                    });
+                }, function (error) {
+                    alert('Fails');
+                }); 
+                
+            }); 
+        }, 1200)
+    }
+ 
+
+})
+
+
+.controller('causesCtrl', function($scope, $rootScope, $state, $ionicModal, Catgs, ALGOLIA, Go, Geo, User, Alert) {  
     
 
     var userDetails;
@@ -6232,6 +6761,7 @@ angular.module('pim.controllersShared', [])
                     $scope.$apply(function () { 
                         $scope.searchProgress = false;
                         $scope.causes = results.hits; 
+                        Alert.loader(false)
                     })
                 });
                 
@@ -6306,6 +6836,13 @@ angular.module('pim.controllersShared', [])
             if( data.success == 1 ){
                 $scope.cause = data.association;
                 $scope.loadedInfos = true;
+  
+                hashttp = $scope.cause.siteweb.toLowerCase().search('http://');
+ 
+                console.log(hashttps, hashttp)
+                if( hashttp < 0 ){
+                    $scope.cause.siteweb = "http://"+$scope.cause.siteweb;
+                }
             } 
         }) 
 
@@ -7010,13 +7547,14 @@ angular.module('pim.controllersShared', [])
                 }));
 
             }
-            else if( parseFloat( $scope.accounts[ $scope.trans.selectedAccount ].solde.split(' ').join('') ) < $scope.trans.amount ){
+            // else if( parseFloat( $scope.accounts[ $scope.trans.selectedAccount ].solde.split(' ').join('') ) < $scope.trans.amount ){
 
-                console.log($scope.accounts[ $scope.trans.selectedAccount ].solde)
+            //     console.log($scope.accounts[ $scope.trans.selectedAccount ].solde)
                 
-                Alert.error( $filter('translate')('make_a_transfer.insufficient_balance_in_this_account') + ' ' + $scope.trans.amount + API.devise);
+            //     Alert.error( $filter('translate')('make_a_transfer.insufficient_balance_in_this_account') + ' ' + $scope.trans.amount + API.devise);
 
-            }else{
+            // }
+            else{
                 var validationList = [{
                     type: 'reason',
                     value: $scope.trans.reason

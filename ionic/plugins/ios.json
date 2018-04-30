@@ -16,20 +16,8 @@
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "io.ionic.starter"
         },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "com-badrit-base64": {
-            "PACKAGE_NAME": "io.ionic.starter"
-        },
-        "com.cordova.plugin.SamsungPassPlugin": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-appavailability": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "com.verso.cordova.clipboard": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
@@ -37,65 +25,73 @@
         "cordova-open-native-settings": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-app-launcher": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-compat": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-email-composer": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-file-opener2": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-firebase": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-image-picker": {
-            "PHOTO_LIBRARY_USAGE_DESCRIPTION": " ",
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-save-image": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-lock-info": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "cordova-plugin-touchid": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "com.cesidiodibenedetto.filechooser": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "phonegap-plugin-barcodescanner": {
-            "CAMERA_USAGE_DESCRIPTION": " ",
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
         "cordova-plugin-http": {
-            "PACKAGE_NAME": "com.ionicframework.pimlife672753"
-        },
-        "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
         },
         "cordova-plugin-urlhandler": {
             "URL_SCHEME": "pimlife",
             "PACKAGE_NAME": "com.ionicframework.pimlife672753"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "com-badrit-base64": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-appavailability": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "com.cordova.plugin.SamsungPassPlugin": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-app-launcher": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-email-composer": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-file-opener2": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-image-picker": {
+            "PHOTO_LIBRARY_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-save-image": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-lock-info": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "com.cesidiodibenedetto.filechooser": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
@@ -113,6 +109,19 @@
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-badge": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-ios-camera-permissions": {
+            "CAMERA_USAGE_DESCRIPTION": "This app needs camera access",
+            "MICROPHONE_USAGE_DESCRIPTION": "This app needs microphone access",
+            "PHOTOLIBRARY_ADD_USAGE_DESCRIPTION": "This app needs write-access to photo library",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": "This app needs read/write-access photo library access",
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-permission": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         }
     },

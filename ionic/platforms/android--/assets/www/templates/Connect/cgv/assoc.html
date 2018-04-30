@@ -1,0 +1,19 @@
+<ion-view view-title="{{ 'setting_pro.cgv' | translate }}" can-swipe-back="false" id="cgv"> 
+	<ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-clear" data-tap-disabled="true">
+          <i class="icon ion-ios-arrow-left"></i> 
+          {{ 'global_fields.back' | translate }}
+        </ion-nav-back-button>
+        <ion-nav-buttons side="right" class="has-header">
+            <button class="button button-clear icon ion-ios-cloud-download"  ng-click="download('pro')" ></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content class="padding cvgpage" style="background: #fff">
+        
+        <div data-ng-bind-html="trustAsHtml(content)" style="padding-bottom: 5px;">
+                <!-- Here is reserved for content -->
+        </div>
+        <ion-infinite-scroll immediate-check="false" ng-if="canLoadMore" spinner="android" distance="1px" on-infinite="loadContents()"></ion-infinite-scroll> 
+      
+    </ion-content>
+</ion-view>

@@ -591,7 +591,7 @@ angular.module('pim.routes', [])
             }
         })
         .state('tab.SmsCode', {
-            url: '/settings/smscode',
+            url: '/settings/smscode/:indicatif/:phone',
             views: {
                 'tab-settings': {
                     templateUrl: 'templates/Connect/Settings/SmsCode.html',
@@ -931,7 +931,7 @@ angular.module('pim.routes', [])
             }
         })
         .state('tab.SmsCodePro', {
-            url: '/settingsPro/smscode',
+            url: '/settingsPro/smscode/:indicatif/:phone',
             views: {
                 'tab-settings': {
                     templateUrl: 'templates/Connect/Settings/SmsCode.html',

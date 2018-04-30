@@ -30,6 +30,29 @@ angular.module('pim.controllersPro', [])
         defaultIndex: 7
     }];
 
+
+    $scope.loadCGV = function () {
+        Go.post({
+            task: "getcgv",
+            isshop: 1,
+            NoLoader: true,
+            page  : $scope.cgvpage
+        }).then(function (data) { 
+            if(data.success == 1){
+                $scope.cgvpage++;
+                $scope.cgv += data.cgv;
+                setTimeout(function () {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },1000)
+                if(data.cgvend == 0){ 
+                    $scope.canLoadMore = true; 
+                }else{ 
+                    $scope.canLoadMore = false; 
+                } 
+            }    
+        }) 
+    }
+
     if( $state.current.name == 'signuppro'){
         Go.post({
             "task": "SHOP_getTypes"
@@ -38,19 +61,16 @@ angular.module('pim.controllersPro', [])
                 $scope.dataTypes = data.businessType;
                 $scope.data.shoptypeid = -1;
             }             
-        });
+        }); 
 
-        Go.post({
-            task: "getcgv",
-            isshop: 1,
-            hideLoader: true
-        }).then(function (data) {
-            if(data.success == 1){
-                 $scope.cgv = data.cgv;
-            }   
-        }) 
+
+        $scope.cgv = "";
+        $scope.cgvpage= 0;
+        $scope.loadCGV()
+
     }
 
+    
     
     $scope.openPickerBusinessType = function() {  
         var objlist1 = [{
@@ -269,8 +289,8 @@ angular.module('pim.controllersPro', [])
              "password": crypt.sha256($scope.data.password),
              "confirmpassword": crypt.sha256($scope.data.confirmpassword),
              "lang": $translate.use(),
-             "code" : $scope.data.code,
-             "confirmcode" : $scope.data.confirmcode
+             "code" : crypt.sha256($scope.data.code),
+             "confirmcode" : crypt.sha256($scope.data.confirmcode)
 
        };
 
@@ -450,16 +470,16 @@ angular.module('pim.controllersPro', [])
                     "question1": $scope.data.idquestion1,
                     "question2": $scope.data.idquestion2,
                     "question3": $scope.data.idquestion3,
-                    "answer1": $scope.data.answer1,
-                    "answer2": $scope.data.answer2,
-                    "answer3": $scope.data.answer3,
+                    "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                    "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                    "answer3": crypt.sha256($scope.data.answer3.toLowerCase()),
                     "lat": pos.lat,
                     "long": pos.lng
                 };
                 Go.post(postData).then(function(data) {
                     Alert.loader(false);
                     if (data.success == 1) {
-                        AuthService.storeUserCredentials(data.userToken);
+                        //AuthService.storeUserCredentials(data.userToken);
                         User.SetDetails(data.UserDetails);
                         User.IsNew = true;
                         
@@ -499,7 +519,7 @@ angular.module('pim.controllersPro', [])
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
-        $scope.modal = modal;
+        $scope.modal = modal; 
     });
     $scope.openModal = function() {
         $scope.modal.show();
@@ -615,7 +635,9 @@ angular.module('pim.controllersPro', [])
 
                     if( parseInt( data.UserDetails.user.cgvvalid ) == 0 ){ 
                         $scope.cgv = data.UserDetails.cgv;
+                        $scope.UserData = data;
                         $scope.cgvModal.show();
+                        $scope.loadCGV();
                         
                     }else{
                         $scope.acceptedCGV( $scope.connexionDATA )
@@ -652,9 +674,37 @@ angular.module('pim.controllersPro', [])
         $scope.cgvModal = modal;
     });
 
+    $scope.cgv = "";
+    $scope.canLoadMore = true; 
+    $scope.cgvpage= 1;
+    
+    $scope.loadCGV = function () { 
+        Go.post({
+            task: "getcgv",
+            isshop: $scope.UserData.userInfos.isshop,
+            NoLoader: true,
+            page  : $scope.cgvpage
+        }).then(function (data) { 
+            if(data.success == 1){
+                $scope.cgvpage++;
+                $scope.cgv += data.cgv;
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    })
+                })
+                if(data.cgvend == 0){ 
+                    $scope.canLoadMore = true; 
+                }else{ 
+                    $scope.canLoadMore = false; 
+                }  
+            }    
+        }) 
+    }
+
     $scope.acceptedCGV = function (data) { 
         // ******************************************************************************************************************************
-        AuthService.storeUserCredentials(data.userToken);
+        //AuthService.storeUserCredentials(data.userToken);
         
 
         User.lat = data.position.lat;
@@ -897,9 +947,9 @@ angular.module('pim.controllersPro', [])
                 "question1": $scope.data.idquestion1,
                 "question2": $scope.data.idquestion2,
                 "question3": $scope.data.idquestion3,
-                "answer1": $scope.data.answer1,
-                "answer2": $scope.data.answer2,
-                "answer3": $scope.data.answer3
+                "answer1": crypt.sha256($scope.data.answer1.toLowerCase()),
+                "answer2": crypt.sha256($scope.data.answer2.toLowerCase()),
+                "answer3": crypt.sha256($scope.data.answer3.toLowerCase())
             };
             Alert.loader(true)
             Go.post(postData).then(function(data) { 
@@ -1049,7 +1099,7 @@ angular.module('pim.controllersPro', [])
                     
                 
             }); 
-        }else{
+        }else if(SamsungPass){
             SamsungPass.checkForRegisteredFingers(function() {
                 var tookens = JSON.parse( window.localStorage.getItem('TokenTouchIds') ) 
                 if( tookens != '' && tookens != '[]' ){
@@ -1097,7 +1147,7 @@ angular.module('pim.controllersPro', [])
     ////////////////////////////////
 })
 
-.controller('UpdateCompanyInfoCtrl', function($scope, $filter,$state, Alert, User, SharedService, Go, $rootScope, $timeout, crypt, $filter,$translate) {
+.controller('UpdateCompanyInfoCtrl', function($scope, $filter,$state, Alert, User, SharedService, Go, $rootScope, $timeout, crypt, $filter,$translate, DATA) {
 
 
     
@@ -1162,6 +1212,8 @@ angular.module('pim.controllersPro', [])
         }
     };
     // ****************************************************************************************
+
+    $scope.assoccommission = (DATA.paramAppli) ? DATA.paramAppli.assoccommission : 0.2;
 
     // ****************************************************************************************
     //////////////////////////////// commision Assoc  ///////////////////////////////////////
@@ -3012,11 +3064,11 @@ angular.module('pim.controllersPro', [])
 
         if( ionic.Platform.isIOS() ){
             $cordovaFileOpener2.open( 
-                cordova.file.applicationDirectory+'www/docs/LETTER-OF-AUTHORISATION.pdf',
+                cordova.file.applicationDirectory+'www/docs/Autorisation_de_procuration_bancaire_PIM.pdf',
                 'application/pdf'
             );
         }else{ 
-            window.open(API.server+"docs/LETTER-OF-AUTHORISATION.pdf", '_system');
+            window.open(API.server+"docs/Autorisation_de_procuration_bancaire_PIM.pdf", '_system');
         } 
              
 
@@ -4584,6 +4636,7 @@ angular.module('pim.controllersPro', [])
 
         $scope.PersonaleData = $scope.UserDetails.user; 
         $scope.PersonaleData.revenumoyen = $scope.arrayRevenumoyen.indexOf($scope.UserDetails.user.revenumoyen);
+        $scope.PersonaleData.sexe = ($scope.PersonaleData.sexe == 'Mr') ? false : true;
 
         console.log($scope.UserDetails)
 

@@ -1544,7 +1544,7 @@ angular.module('pim.controllersPro', [])
 
 
 
-.controller('ChangePhonemobileCtrl', function($scope, User, Alert, Phone,SharedService, Go, $state, $window, $filter) {
+.controller('ChangePhonemobileCtrl', function($scope, $rootScope, User, Alert, Phone,SharedService, Go, $state, $window, $filter, $stateParams) {
     $scope.data = {};
     $scope.title = $filter('translate')('mobile_phone.title_page');
     $scope.text =  $filter('translate')('mobile_phone.text');
@@ -1574,7 +1574,10 @@ angular.module('pim.controllersPro', [])
                 if (data.success == 1) {
                     $window.localStorage['indicatif'] = $scope.data.Indicatif;
                     $window.localStorage['phone'] = $scope.data.phone;
-                    $state.go('tab.SmsCodePro');
+                    $state.go('tab.SmsCodePro',{
+                        indicatif: $scope.data.Indicatif,
+                        phone: $scope.data.phone
+                    });
                 }
             });
         }
@@ -1603,12 +1606,12 @@ angular.module('pim.controllersPro', [])
                     $scope.data.mIndicatif = $window.localStorage['indicatif'];
                     $scope.data.mobile = $window.localStorage['phone'];
                     
-                    Alert.success( $filter('translate')('mobile_phone.success_update') + ' : (' + $scope.data.mIndicatif + ') ' + $scope.data.mobile )
+                    Alert.success( $filter('translate')('mobile_phone.success_update') + ' : (' + $stateParams.indicatif + ') ' + $stateParams.phone );
 
                     User.UpdateDataPro($scope.data, 'phone');
-                    $state.go('tab.ChangePhonemobile', {}, {
-                        reload: true
-                    });
+                    setTimeout(function () {
+                        $rootScope.GotoSettings();
+                    },1500)
                 }
             });
         }

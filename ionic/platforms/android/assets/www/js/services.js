@@ -938,6 +938,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
             $storage.setArrayOfObjects("connectedUsers", []);  
 
             window.localStorage.setItem('loged', '0');  
+            window.localStorage.setItem('locked', '0');  
             $location.path('/sign-in');
 
             Alert.loader(false);
@@ -975,6 +976,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                     $location.path('/sign-in');
                     $('.wrapper.page').addClass('isLogout');
                     window.localStorage.setItem('loged', '0');  
+                    window.localStorage.setItem('locked', '0');  
                     var userInfos = User.GetDetails().userInfos;
                     $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop);  
                     $rootScope.isLogin = false;
@@ -1653,9 +1655,12 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         }
     };
     var removeNotifObject = function(obj) {
-        Nlist = $storage.getObject('NotifList');
-        Nlist.splice(Nlist.indexOf(obj), 1);
-        $storage.setObject('NotifList', Nlist);
+        Nlist = $storage.getObject('NotifList'); 
+        if( Nlist ){
+            Nlist.splice(Nlist.indexOf(obj), 1);
+            $storage.setObject('NotifList', Nlist);
+        }
+        
     };
     return {
         getAllNotifs: getAllNotifs,
@@ -3208,14 +3213,17 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                   },500)
                   console.log("attemptNumber", attemptNumber)
                   if( attemptNumber == 3 ){ 
-                      thiservice.logout() 
+                    Alert.error( $filter('translate')('passcode.faild_lockout') )
+                    setTimeout(function () {
+                        thiservice.logout() 
+                    }, 1500)
                   }
                 }
             });  
         }    
 
 
-        thiservice.verif = function (code, callBackFunction ) {
+        thiservice.verif = function (code, callBackFunction, wrongCodeThreeTimes ) {
             
             $lockScreen.show({
                 code: code, 
@@ -3233,6 +3241,7 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
                       navigator.vibrate(200)
                       },500)
                       if( attemptNumber >= 3 ){ 
+                          wrongCodeThreeTimes()
                           $lockScreen.hide(); 
                           Alert.error( $filter('translate')('passcode.faild_lockout') )
                       }

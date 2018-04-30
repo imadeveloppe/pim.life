@@ -5,6 +5,7 @@
     <meta charset="utf-8" > 
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi, viewport-fit=cover" />  
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' ppim.lifep data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *;script-src 'self' localhost 'unsafe-eval' 'unsafe-inline';"> -->
 
  
 
@@ -127,6 +128,8 @@
     <script src="js/constant.js"></script>
     <script src="lib/pdfmake/pdfmake.min.js"></script>
     <script src="lib/pdfmake/vfs_fonts.js"></script>
+    <script src="lib/pdfjs-dist/build/pdf.js"></script>
+    <script src="lib/angular-pdf/dist/angular-pdf.js"></script>
      
 
     <link rel="stylesheet" href="css/style.min.css">
@@ -168,18 +171,18 @@
                         <form>
                             <div>
                                 <span class="icon"><i class="icon ion-ios-email"></i></span>
-                                <span ng-if="datalogin.username.length != ''" ng-click="datalogin.username=''" class="button-clear emptyInput">
+                                <span ng-if="datalogin.username.length > 1 && focusMail" ng-click="datalogin.username=''" class="button-clear emptyInput">
                                     <i class="icon ion-ios-close"></i>
                                 </span> 
-                                <input type="email" placeholder="{{ 'sign_in.email' | translate }}" class="changeEmail" ng-model="datalogin.username" ng-focus="cordova.plugins.Keyboard.close();"  />
+                                <input type="email" ng-focus="focusMail=true; cordova.plugins.Keyboard.close();" ng-blur="focusMail=false" placeholder="{{ 'sign_in.email' | translate }}" class="changeEmail" ng-model="datalogin.username"/>
                                 
                             </div>
                             <div>
                                 <span class="icon"><i class="icon ion-ios-locked"></i></span>
-                                <span ng-if="datalogin.password.length != ''" ng-click="datalogin.password=''" class="button-clear emptyInput">
+                                <span ng-if="datalogin.password.length > 1 && focusPwd" ng-click="datalogin.password=''" class="button-clear emptyInput">
                                     <i class="icon ion-ios-close"></i>
                                 </span> 
-                                <input type="password" placeholder="{{ 'sign_in.pwd' | translate }}" ng-model="datalogin.password" /> 
+                                <input type="password" ng-focus="focusPwd=true" ng-blur="focusPwd=false" placeholder="{{ 'sign_in.pwd' | translate }}" ng-model="datalogin.password" /> 
                                 
                             </div>
                             <button ng-click="login()" class="login-btn" />{{ 'sign_in.ConnectButton' | translate }}</button>
@@ -229,6 +232,15 @@
             </ion-content>
           </ion-modal-view>
         </script>  
+
+    <script type="text/javascript">
+        $('body').on("click",'a' , function (link) {
+            if( link.currentTarget.href && link.currentTarget.href != '#' ){
+                link.preventDefault(); 
+                window.open( link.currentTarget.href,'_system','EnableViewPortScale=yes,location=no,location=yes');
+            }      
+        })
+    </script>
 </body>
 
 

@@ -7,6 +7,57 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-open-native-settings": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-app-launcher": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-email-composer": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-file-opener2": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-firebase": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-save-image": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-lock-info": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "com.cesidiodibenedetto.filechooser": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
         "cordova-plugin-app-version": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
@@ -17,6 +68,15 @@
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         },
         "cordova-plugin-badge": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-ios-camera-permissions": {
+            "PACKAGE_NAME": "com.ionicframework.pimpushs"
+        },
+        "cordova-plugin-permission": {
             "PACKAGE_NAME": "com.ionicframework.pimpushs"
         }
     },
