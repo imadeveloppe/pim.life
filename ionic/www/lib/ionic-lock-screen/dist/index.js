@@ -36,7 +36,7 @@ var lockScreenService=function(n) {
 };
 
 lockScreenService.$inject=["$rootScope"];
-var lockScreenDirective=function(n,$filter, $cordovaTouchID, crypt, LockScreen) {
+var lockScreenDirective=function(n,$filter, $cordovaTouchID, crypt, LockScreen, $state) {
     var passcodeAttempts = 0;
     return {
         restrict:"E",
@@ -149,7 +149,7 @@ var lockScreenDirective=function(n,$filter, $cordovaTouchID, crypt, LockScreen) 
                   } else {
                     o.passcodeWrong = true;
                     passcodeAttempts++;
-                    if(passcodeAttempts >= 3){
+                    if(passcodeAttempts > 3){
                       passcodeAttempts = 0;
                     }
                     o.onWrong && o.onWrong(passcodeAttempts);
@@ -171,6 +171,8 @@ var lockScreenDirective=function(n,$filter, $cordovaTouchID, crypt, LockScreen) 
               o.passcodeWrong = false;
               if( parseInt(window.localStorage.getItem('locked')) == 1 && parseInt(window.localStorage.getItem('loged')) == 1 ){
                 LockScreen.show();
+              }else{
+                $state.go('signin')
               }
             }
         }
@@ -217,7 +219,7 @@ var lockScreenDirective=function(n,$filter, $cordovaTouchID, crypt, LockScreen) 
 }
 
 ;
-lockScreenDirective.$inject=["$timeout","$filter", "$cordovaTouchID", "crypt", "LockScreen"],
+lockScreenDirective.$inject=["$timeout","$filter", "$cordovaTouchID", "crypt", "LockScreen", "$state"],
 angular.module("ionic-lock-screen", []),
 angular.module("ionic-lock-screen").directive("lockScreen", lockScreenDirective),
 angular.module("ionic-lock-screen").service("$lockScreen", lockScreenService);

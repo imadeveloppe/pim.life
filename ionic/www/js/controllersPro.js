@@ -1014,10 +1014,14 @@ angular.module('pim.controllersPro', [])
                                                 "task": "SHOP_SettingsConfirmDeleteAcount"
                                             };
                                             Go.post(postData, false).then(function(data) {
+
+                                                alert(JSON.stringify(data))
+
                                                 if (data.success == 1) { 
-                                                    var UserDetails = User.GetDetails();
-                                                    var userInfos = UserDetails.userInfos;
-                                                    $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop)
+
+                                                    resolve();
+                                                    $state.go('sign')
+                                                    $('.wrapper.page').addClass('isLogout');  
 
                                                     
                                                     AuthService.destroyUserCredentials();
@@ -1025,14 +1029,10 @@ angular.module('pim.controllersPro', [])
                                                     window.localStorage.setItem('username_a0f55e81c44553384a9421', '');
 
                                                     $rootScope.isLogin = false;  
-                                                    isLogout = true; 
-                                                    $('.wrapper.page').addClass('isLogout');
-                                                    $ionicHistory.clearHistory();
-                                                    $ionicHistory.clearCache();
-
-                                                    $location.path('/');
+                                                    isLogout = true;   
+                                                    
                                                     Alert.success( $filter('translate')('delete_profile_confirm_deleting.account_deleted') );  
-                                                    resolve();
+                                                    
                                                 } else {
                                                     Alert.error(data.message);
                                                 }

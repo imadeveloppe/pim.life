@@ -3250,36 +3250,51 @@ angular.module('pim.services', ['ngCordova', 'ngMap', 'ngAria', 'ja.qr', 'ngAnim
         }
 
         thiservice.logout = function () {
-            var postData = {
-                 "task": "LogOut",
-                 "blocedcode": 1
-            }
-            Alert.loader(true);
-            var request = Protocole.post( postData )
-            request.then(function( data ) {  
-                var userInfos = User.GetDetails().userInfos;
+
+            var UserDetails = User.GetDetails(); 
+            if( UserDetails ){
+                var userInfos = UserDetails.userInfos;
                 $rootScope.deteleUserFromConnectedUserList(userInfos.id, userInfos.isshop)
 
-                Alert.loader(false);
-
-                if(data.success == 1){
-                    window.localStorage.setItem('loged', '0');  
-                    $location.path('/sign-in'); 
-                    
-                    $rootScope.isLogin = false;
-                    User.destroyAccount();
-                    User.destroyUserData()
-                    isLogout = true; 
-                    $('.wrapper.page').addClass('isLogout');
-                    $ionicHistory.clearHistory();
-                    $ionicHistory.clearCache(); 
-
-                    $('body').removeClass('lockScreen'); 
-                    $lockScreen.hide();
-                    $lockScreen.resetAttempt();
+                var postData = {
+                     "task": "LogOut",
+                     "blocedcode": 1
                 }
+                Alert.loader(true);
+                var request = Protocole.post( postData )
+                request.then(function( data ) {    
+
+                    Alert.loader(false);
+
+                    if(data.success == 1){  
+
+                        window.localStorage.setItem('loged', '0');  
+                        $location.path('/sign-in'); 
+                        
+                        $rootScope.isLogin = false;
+                        User.destroyAccount();
+                        User.destroyUserData()
+                        isLogout = true; 
+                        $('.wrapper.page').addClass('isLogout');
+                        $ionicHistory.clearHistory();
+                        $ionicHistory.clearCache(); 
+
+                        $('body').removeClass('lockScreen'); 
+                        $lockScreen.hide();
+                        $lockScreen.resetAttempt();
+                    }
+                    
+                })
+            }else{
+                $location.path('/sign-in'); 
+                window.localStorage.setItem('locked', '0');   
+                $('body').removeClass('lockScreen'); 
+                $lockScreen.hide();
+                $lockScreen.resetAttempt();
+                $('.wrapper.page').addClass('isLogout');
+            }   
+
                 
-            })
         }
     return thiservice;
 })

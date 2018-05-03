@@ -1014,6 +1014,9 @@ angular.module('pim.controllersPro', [])
                                                 "task": "SHOP_SettingsConfirmDeleteAcount"
                                             };
                                             Go.post(postData, false).then(function(data) {
+
+                                                alert(JSON.stringify(data))
+
                                                 if (data.success == 1) { 
                                                     var UserDetails = User.GetDetails();
                                                     var userInfos = UserDetails.userInfos;

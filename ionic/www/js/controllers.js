@@ -346,6 +346,20 @@ angular.module('pim.controllers', [])
                         $scope.listQuestions1 = data.listQuestions.listQuestions1;
                         $scope.listQuestions2 = data.listQuestions.listQuestions2;
                         $scope.listQuestions3 = data.listQuestions.listQuestions3;
+
+                        setTimeout(function () {
+                            $("#q1 option:first").attr('disabled','disabled');
+                            $("#q1 option:first").text( $filter('translate')('secret_questions.choose_a_question') );
+
+                            $("#q2 option:first").attr('disabled','disabled');
+                            $("#q2 option:first").text(  $filter('translate')('secret_questions.choose_a_question')  );
+
+                            $("#q3 option:first").attr('disabled','disabled');
+                            $("#q3 option:first").text(   $filter('translate')('secret_questions.choose_a_question')  );
+
+                            $scope.loader = Alert.loader(false);
+                        })
+                        
                     }
                 })
             },

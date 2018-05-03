@@ -177,7 +177,7 @@ angular.module('pim', ['ionic', 'pim.controllers', 'angular-filepicker', 'pim.co
         // *****************/////// Lock Screen /////////******************************** 
         if( parseInt(window.localStorage.getItem('loged')) == 1 ){ 
             window.localStorage.setItem('locked', 1)
-            if(window.cordova){
+            if(window.cordova || 1){
                 LockScreen.show();
             }
         }    
