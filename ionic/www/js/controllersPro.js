@@ -4856,6 +4856,8 @@ angular.module('pim.controllersPro', [])
         }else{
             $scope.showBtns = false; 
         }
+
+
  
           
         if (UserDetails != false) {
@@ -4878,8 +4880,7 @@ angular.module('pim.controllersPro', [])
                 case 0:  
                     $scope.ValidateMSG = "<span class='DocumentInValid'><i class='icon ion-alert-circled'></i> "+ $filter('translate')('local_address.sorry_your_document_was_not_verified_please_wait_for') +"</span>";
                     $scope.validate = false;
-                    $scope.validation = true;
-                    $scope.showBtns = false;
+                    $scope.validation = true; 
                     break;
                 case 1:   
                     if( parseInt(validationTreezor) == 0 ){
@@ -4888,14 +4889,12 @@ angular.module('pim.controllersPro', [])
                        $scope.ValidateMSG = "<span class='DocumentValid' ><i class='icon ion-android-checkmark-circle'></i> "+ $filter('translate')('personal_informations.all_your_informations_are_valid_you_can_use_pim_professionnal_account') +"</span>"; 
                     }
                     $scope.validate = true;
-                    $scope.validation = true; 
-                    $scope.showBtns = true;
+                    $scope.validation = true;  
                     break;
                 case 2:  
                     $scope.ValidateMSG = "<span class='DocumentInValid'><i class='icon ion-alert-circled'></i> "+ $filter('translate')('personal_informations.your_document_was_refused_please_can_you_upload')  +"<em ng-if='commentAdmin'><br><hr>"+$scope.commentAdmin+"<em></span>";
                     $scope.validate = false;
-                    $scope.validation = false;
-                    $scope.showBtns = true;
+                    $scope.validation = false; 
                     break;
                 // case 3:  
                 //     $scope.ValidateMSG = "<span class='DocumentInValid'><i style='font-size:35px;' class='icon ion-alert-circled'></i> <br>In compliance with the regulatory requirements in your country, we need to confirm your ID Card. Please, confirm your identity to avoid services interruptions.</span>";
@@ -4905,8 +4904,7 @@ angular.module('pim.controllersPro', [])
                 case -1:    
                     $scope.ValidateMSG = "<span class='DocumentInValid'><i style='font-size:35px;' class='icon ion-alert-circled'></i> <br>"+ $filter('translate')('local_address.in_compliance_with_the_regulatory_requirements_in_your_country__') +"</span>";
                     $scope.validate = true;
-                    $scope.validation = false;
-                    $scope.showBtns = true;
+                    $scope.validation = false; 
                     break;
             }
             // $scope.data.country = UserDetails.user.country;

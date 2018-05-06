@@ -14,9 +14,10 @@
                     <div class="list card border-rounded homev2 {{ account.cssClass }}"  style="margin-top:11px;">
                         <ion-item class="item-avatar item-icon-right positive  border-rounderd account">
                             <img  ng-src="{{account.cssClass == 'compte-pro' && icons[account.iconId].src || iconsBlue[account.iconId].src}}">
-                            <h2positive  class="oneLine">{{ account.name }}
-                                <p style="white-space:normal;">{{ account.number }}</p>
+                            <h2positive  class="oneLine">
+                                {{ account.name }} 
                             </h2positive>
+                            <p style="white-space:normal;">{{ account.number }}</p>
                         </ion-item>
                         <div class="item item-body " id="home-list-item-container2">
                             <p id="home-markdown1" style="margin-top:0px;color:#F6AA08;font-size:36px;text-align:center;" class=" ">

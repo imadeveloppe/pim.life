@@ -66,8 +66,8 @@ angular.module('pim.constant', [])
 
   // ///////////////////// AWS - Prod ////////////////////////////
   .constant('API', {
-    url: "http://prod.pim.life/api/index.php",
-    server: "http://prod.pim.life/",
+    url: "https://prod.pim.life/api/index.php",
+    server: "https://prod.pim.life/",
     devise: "€",
     minAmount: 0.1
   })

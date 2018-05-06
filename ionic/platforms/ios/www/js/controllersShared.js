@@ -4509,16 +4509,16 @@ angular.module('pim.controllersShared', [])
 .controller('FeedbackCtrl', function($scope,Camera, $ionicHistory, $ionicScrollDelegate, pickerView, $cordovaSocialSharing, PaymentFriend, DATA, Catgs, ResetePage, Badges, $state, $rootScope, Accounts, $timeout, $ionicLoading, $q, User, Icons, $stateParams, Alert, SharedService, Go, $location, $ionicActionSheet, $filter, $ionicModal) {
     
     ///////////////////////////////////////////////////////
+    $scope.trans = PaymentFriend;
+    $scope.rating = {};
+    $scope.rating.max = 5;
+    $scope.requests = [];
+    $scope.rating.rate = 0;
+    $scope.ImgURI = [];
+    
     if( !$rootScope.FeedBackData ){
         $rootScope.shareWithFaceBook = false;
-        $rootScope.shareWithTwitter = false; 
-
-        $scope.trans = PaymentFriend;
-        $scope.rating = {};
-        $scope.rating.max = 5;
-        $scope.requests = [];
-        $scope.rating.rate = 0;
-        $scope.ImgURI = [];
+        $rootScope.shareWithTwitter = false;  
     } 
 
     $scope.$on('$ionicView.beforeEnter', function() { 
@@ -6284,7 +6284,8 @@ angular.module('pim.controllersShared', [])
         $scope.content = AppServices.linkify($filter('translate')('customer_service.text'));
     })
     $scope.backToCode = function () {
-        LockScreen.show();   
+        $ionicHistory.goBack()
+        //LockScreen.show();    
     }
 
     $scope.autoLogOut = function () { 
@@ -6414,21 +6415,98 @@ angular.module('pim.controllersShared', [])
 
 })
 
-.controller('montionslegalesCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go) {  
+.controller('montionslegalesCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go, Alert) {  
 
     $scope.trustAsHtml = function(string) {
         return $sce.trustAsHtml(string);
     }; 
+
+    $scope.html = '';
+
+    $scope.$on('$ionicView.beforeEnter', function() {
+
+        var postData = {
+            "task": "getmentionslegales"
+        };
+        Alert.loader(true);
+        Go.post(postData).then(function(data) {
+            if (data.success == 1) {
+                $scope.html = data.cgv;
+            }
+        });
+    })
 
 })
 
-.controller('tarificationCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go,BASE64_LOGOS, $filter, $ionicModal, $ionicLoading, $cordovaFile, $cordovaFileOpener2) {  
+.controller('tarificationCtrl', function($scope, $cordovaFileOpener2,Alert, API,$translate, User, $sce, $stateParams, Go,BASE64_LOGOS, $filter, $ionicModal, $ionicLoading, $cordovaFile, $cordovaFileOpener2) {  
 
     $scope.trustAsHtml = function(string) {
         return $sce.trustAsHtml(string);
     }; 
 
-    var docDefinition = { 
+
+    $scope.$on('$ionicView.beforeEnter', function() {
+        Alert.loader(false)
+        var postData = {
+            "task": "getGrilleTarifaire"
+        };
+
+        Go.post(postData).then(function(data) {
+            if (data.success == 1) {
+                generatePdf(data.grille);
+                Alert.loader(true)
+            }
+        });
+    })
+
+
+    
+
+
+     
+ 
+
+     
+    var base64ToUint8Array = function (base64) {  
+        var raw = atob(base64);
+        var uint8Array = new Uint8Array(raw.length);
+        for (var i = 0; i < raw.length; i++) {
+        uint8Array[i] = raw.charCodeAt(i);
+        }
+        return uint8Array;
+    }
+
+    var generatePdf = function (PRICINGDATA) {
+
+        var ConnectedUserType;
+        switch( User.GetDetails().isPro ){
+            case '0':
+                ConnectedUserType = $filter('translate')('tarification.perso');
+                break;
+            case '1':
+                ConnectedUserType = $filter('translate')('tarification.pro');
+                break;
+            case '2':
+                ConnectedUserType = $filter('translate')('tarification.assoc');
+                break;
+        }
+
+        var FullMonths = JSON.parse($filter('translate')('statistics.months') );
+        var date = new Date()
+        switch( $translate.use() ){
+            case 'fr':
+                var currenDate = date.getDate()+" "+FullMonths[ date.getMonth() ]+" "+date.getFullYear()
+                break;
+            case 'en':
+                var currenDate = FullMonths[ date.getMonth() ]+" "+date.getDate()+" "+date.getFullYear()
+                break;
+            default:
+                var currenDate = date.getDate()+" "+FullMonths[ date.getMonth() ]+" "+date.getFullYear()
+                break;
+        }
+        
+        
+        var docDefinition = { 
         pageSize: 'A4', 
         pageMargins: [ 20, 20, 20, 20 ],
         footer: { 
@@ -6460,7 +6538,9 @@ angular.module('pim.controllersShared', [])
                         width: 20
                     },
                     {
-                        text: 'TARIFS TTC au 13 avril 2018',
+                        text: $filter('translate')('tarification.date', {
+                            date: currenDate,
+                        }),
                         fontSize: 15,
                         margin: [0,20,0,10],
                         bold: true,
@@ -6468,7 +6548,7 @@ angular.module('pim.controllersShared', [])
                 ]
             }, 
             {
-                text: 'Une Appli mobile prépayée, une tarification transparentes et simple, sans découvert possible, sans frais cachés',
+                text: $filter('translate')('tarification.texte'),
                 fontSize: 10.5,
                 color: '#ef7f31',
                 bold: true,
@@ -6477,38 +6557,76 @@ angular.module('pim.controllersShared', [])
             },
             {
                 table: {
-                    widths: ['*', 90, 90, 90], 
+                    widths: ['*', 120], 
                     headerRows: 1,
                     body:  [ 
                         [ 
-                            { text: "Compte", style: 'tableHeader' }, 
-                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.compte'), style: 'tableHeader' }, 
+                            { text: ConnectedUserType, style: 'tableHeader',  alignment : 'center'}  
                         ],
                         [ 
-                            { text: "Compte courant avec RIB (IBAN) français", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "20 €", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.compte_courant_avec_rib_iban_francais'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.compte_courant_avec_rib_iban_francais
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },  
                         ],
                         [ 
-                            { text: "Historique des transactions", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.historique_des_transactions'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.historique_des_transactions
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },  
                         ],
                         [ 
-                            { text: "4 Portefeuilles virtuels", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'}, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.portefeuilles_virtuels'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.portefeuilles_virtuels
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },   
                         ],
                         [ 
-                            { text: "Frais de gestion annuels", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "10 € / an", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.frais_de_gestion_annuels'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.frais_de_gestion_annuels
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },   
                         ]
                     ]
                 },
@@ -6516,26 +6634,60 @@ angular.module('pim.controllersShared', [])
             },
             {
                 table: {
-                    widths: ['*', 90, 90, 90], 
+                    widths: ['*', 120], 
                     headerRows: 1,
                     body:  [ 
                         [ 
-                            { text: "Virements", style: 'tableHeader' }, 
-                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.virements'), style: 'tableHeader' }, 
+                            { text: ConnectedUserType, style: 'tableHeader',  alignment : 'center'},   
                         ],
                         [ 
-                            { text: "1 Virement entrant - sortant / mois", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.virement_entrant_sortant_mois'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.virements.virement_entrant_sortant_mois
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },    
                         ],
                         [ 
-                            { text: "Virement entrant - sortant additionnel", style: 'tableBody' }, 
-                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
-                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
-                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.virement_entrant_sortant_additionne'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.virements.virement_entrant_sortant_additionne
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            }  
+                        ],
+                        [ 
+                            { text: $filter('translate')('tarification.nbrtransibanoffert'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.virements.nbrtransibanoffert
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            }  
                         ]
                     ]
                 },
@@ -6544,38 +6696,80 @@ angular.module('pim.controllersShared', [])
             },
             {
                 table: {
-                    widths: ['*', 90, 90, 90], 
+                    widths: ['*', 120], 
                     headerRows: 1,
                     body:  [ 
                         [ 
                             { text: "Opérations intra - PIM", style: 'tableHeader' }, 
-                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                            { 
+                                    text: ConnectedUserType, 
+                                style: 'tableHeader',  
+                                alignment : 'center'
+                            },   
                         ],
                         [ 
                             { text: "Paiement par QR Code", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.paiement_par_qr_code
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },    
                         ],
                         [ 
                             { text: "Encaissement par QR Code", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "1,2 %", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.encaissement_par_qr_code
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },     
                         ],
                         [ 
                             { text: "Transfert d’argent à distance", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.transfert_dargent_distance
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },   
                         ],
                         [ 
                             { text: "Encaissement à distance", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "1, 2 %", style: 'tableBody', alignment : 'center'},  
-                           { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.encaissement_a_distance
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },    
                         ]
                     ]
                 },
@@ -6617,18 +6811,7 @@ angular.module('pim.controllersShared', [])
                 bold: true
             }
         }
-    }; 
-    var base64ToUint8Array = function (base64) {  
-        var raw = atob(base64);
-        var uint8Array = new Uint8Array(raw.length);
-        for (var i = 0; i < raw.length; i++) {
-        uint8Array[i] = raw.charCodeAt(i);
-        }
-        return uint8Array;
-    }
-
-    var generatePdf = function function_name(argument) {
- 
+    };
 
         var pdf = pdfMake.createPdf(docDefinition);
 
@@ -6636,6 +6819,7 @@ angular.module('pim.controllersShared', [])
             var pdfOutput = base64ToUint8Array(output) 
             var blob = new Blob([pdfOutput], {type: 'application/pdf'}); 
             $scope.pdfUrl = URL.createObjectURL(blob); 
+            Alert.loader(false)
         });
     }
 
@@ -6660,9 +6844,7 @@ angular.module('pim.controllersShared', [])
         return new Blob(byteArrays, { type: contentType });
     }
 
-    
-
-    generatePdf();
+     
 
     $scope.download = function () {
         console.log("HERE")

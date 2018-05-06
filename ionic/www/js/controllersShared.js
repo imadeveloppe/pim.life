@@ -2658,7 +2658,7 @@ angular.module('pim.controllersShared', [])
                     },
                     series: $scope.general_seriesP1
                 }); 
-            //console.log("$scope.general_seriesP1", $scope.general_seriesP1)
+            console.log("$scope.general_seriesP1", $scope.general_seriesP1)
 
         graphArea2 = Highcharts.chart('graphArea2', {
                     chart: {
@@ -4509,16 +4509,16 @@ angular.module('pim.controllersShared', [])
 .controller('FeedbackCtrl', function($scope,Camera, $ionicHistory, $ionicScrollDelegate, pickerView, $cordovaSocialSharing, PaymentFriend, DATA, Catgs, ResetePage, Badges, $state, $rootScope, Accounts, $timeout, $ionicLoading, $q, User, Icons, $stateParams, Alert, SharedService, Go, $location, $ionicActionSheet, $filter, $ionicModal) {
     
     ///////////////////////////////////////////////////////
+    $scope.trans = PaymentFriend;
+    $scope.rating = {};
+    $scope.rating.max = 5;
+    $scope.requests = [];
+    $scope.rating.rate = 0;
+    $scope.ImgURI = [];
+    
     if( !$rootScope.FeedBackData ){
         $rootScope.shareWithFaceBook = false;
-        $rootScope.shareWithTwitter = false; 
-
-        $scope.trans = PaymentFriend;
-        $scope.rating = {};
-        $scope.rating.max = 5;
-        $scope.requests = [];
-        $scope.rating.rate = 0;
-        $scope.ImgURI = [];
+        $rootScope.shareWithTwitter = false;  
     } 
 
     $scope.$on('$ionicView.beforeEnter', function() { 
@@ -6421,7 +6421,7 @@ angular.module('pim.controllersShared', [])
         return $sce.trustAsHtml(string);
     }; 
 
-    $scope.html = '<p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Editeur de l’application&nbsp;</span></u></strong><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">: </span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">La présente application est la propriété de la société PIM, Société par actions simplifiée au capital de 50.000 € immatriculée au RCS de Bordeaux sous le numéro 829&nbsp;261 114, dont le siège social se situe 74 Avenue Thiers, 33100 BORDEAUX.</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">Numéro de TVA&nbsp;: 829&nbsp;261 114</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">Numéro de TVA&nbsp;intracommunautaire : FR 07&nbsp;829&nbsp;261 114</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">Téléphone : +33 0970 466&nbsp;781</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">Service Client&nbsp;: <a href="mailto:contact@pim.life">contact@pim.life</a></span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">PIM est une marque déposée de PIM SAS.</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Directeurs de la publication</span></u></strong><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;"> : </span></p><ul style="margin-bottom: 0cm; margin-top: 0px;" data-mce-style="margin-bottom: 0cm; margin-top: 0px;"> <li style="text-align: justify; margin: 0cm 0cm 0.0001pt 0.4px; font-size: 12pt; font-family: Calibri; text-indent: 0.4px;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt 0.4px; font-size: 12pt; font-family: Calibri; text-indent: 0.4px;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">M Gilles VERBECQ, Président</span></li><li style="text-align: justify; margin: 0cm 0cm 0.0001pt 0.4px; font-size: 12pt; font-family: Calibri; text-indent: 0.4px;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt 0.4px; font-size: 12pt; font-family: Calibri; text-indent: 0.4px;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">M David BOUCHER, Associé</span></li></ul><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Hébergeur de l’application : &nbsp;</span></u></strong></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">Hébergeur&nbsp;: </span><a style="color: #0563c1; text-decoration: underline;" href="https://aws.amazon.com/fr/contact-us/?nc1=f_m" data-mce-href="https://aws.amazon.com/fr/contact-us/?nc1=f_m" data-mce-style="color: #0563c1; text-decoration: underline;" data-mce-linkchecker-status="valid"><span style="font-size: 10.0pt; color: windowtext;" data-mce-style="font-size: 10.0pt; color: windowtext;">Amazon Web Services</span></a></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">Toute utilisation de l’Appli PIM vaut acceptation inconditionnelle de la part de tout internaute et des clients des mentions contenues dans le présent avertissement.</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Intermédiation en financement participatif&nbsp;: </span></u></strong></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">PIM est enregistré auprès de l’ORIAS en qualité d’intermédiaire en financement participatif sous le numéro&nbsp;: 829261114.</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Agent de paiement&nbsp;: </span></u></strong></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">PIM est agréé en qualité d’agent de paiement sous le numéro 829261114 &nbsp;par l’</span><a style="color: #0563c1; text-decoration: underline;" href="http://acpr.banque-france.fr/accueil.html" target="_blank" rel="noopener" data-mce-href="http://acpr.banque-france.fr/accueil.html" data-mce-style="color: #0563c1; text-decoration: underline;" data-mce-linkchecker-status="valid"><span style="font-size: 10.0pt; color: windowtext;" data-mce-style="font-size: 10.0pt; color: windowtext;">Autorité de Contrôle Prudentiel et de Résolution</span></a><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;"> (« ACPR ») agissant au nom et pour le compte de la société TREEZOR, Société par actions simplifiée au capital de 2&nbsp;225 000 euros, immatriculée au registre du commerce et des sociétés de Nanterre sous le numéro 807 465 059 dont le siège social est situé 94 rue de Villiers à Levallois-Perret (92300), établissement agréé inscrit sur la liste des établissements de monnaie électronique publiée sur le site Internet de l’ACPR sous le numéro </span><a style="color: #0563c1; text-decoration: underline;" href="https://www.regafi.fr/spip.php?page=results&amp;type=simple&amp;id_secteur=1&amp;lang=fr&amp;denomination=treezor" data-mce-href="https://www.regafi.fr/spip.php?page=results&amp;type=simple&amp;id_secteur=1&amp;lang=fr&amp;denomination=treezor" data-mce-style="color: #0563c1; text-decoration: underline;" data-mce-linkchecker-status="valid"><span style="font-size: 10.0pt; color: windowtext;" data-mce-style="font-size: 10.0pt; color: windowtext;">16798</span></a> <span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">(agrément consultable dans le Registre des agents financiers (</span><a style="color: #0563c1; text-decoration: underline;" href="http://www.regafi.com/" target="_blank" rel="noopener" data-mce-href="http://www.regafi.com/" data-mce-style="color: #0563c1; text-decoration: underline;" data-mce-linkchecker-status="valid"><span style="font-size: 10.0pt; color: windowtext;" data-mce-style="font-size: 10.0pt; color: windowtext;">www.regafi.com</span></a><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">), pour fournir des services de paiement auprès des utilisateurs de l’application. </span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Données personnelles&nbsp;: </span></u></strong></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt; color: black;" data-mce-style="font-size: 10.0pt; color: black;">L’utilisateur est informé que des données personnelles le concernant sont collectées par PIM dans le cadre de l’utilisation de l’Application. PIM traite ces données personnelles conformément à la règlementation applicable, en particulier à la loi la loi n°78-17 du 6 janvier 1978 modifiée relative à l’informatique, aux fichiers et aux libertés et au Règlement européen 2016/679 dit «&nbsp;Règlement Général sur la Protection des Données&nbsp;».</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt; color: black;" data-mce-style="font-size: 10.0pt; color: black;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt; color: black;" data-mce-style="font-size: 10.0pt; color: black;">PIM a été déclaré auprès de la CNIL sous les numéros 2162509, 2162510, 2164047 et 2164050.&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt; color: black;" data-mce-style="font-size: 10.0pt; color: black;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt; color: black;" data-mce-style="font-size: 10.0pt; color: black;"><span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="Les" data-mce-index="0">Les</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="données" data-mce-index="1">données</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="personnelles" data-mce-index="2">personnelles</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="renseignées" data-mce-index="3">renseignées</span> par <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="l’utilisateur" data-mce-index="4">l’utilisateur</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="lors" data-mce-index="5">lors</span> de son inscription <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sur" data-mce-index="6">sur</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="l’Application" data-mce-index="7">l’Application</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sont" data-mce-index="8">sont</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="nécessaires" data-mce-index="9">nécessaires</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="à" data-mce-index="10">à</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="l’exécution" data-mce-index="11">l’exécution</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="12">des</span> services. <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="Elles" data-mce-index="13">Elles</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sont" data-mce-index="14">sont</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="collectées" data-mce-index="15">collectées</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="aux" data-mce-index="16">aux</span> fins de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="gestion" data-mce-index="17">gestion</span> de son <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="profil" data-mce-index="18">profil</span> au <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sein" data-mce-index="19">sein</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="l’Application" data-mce-index="20">l’Application</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="et" data-mce-index="21">et</span> de la <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="réalisation" data-mce-index="22">réalisation</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="23">des</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="opérations" data-mce-index="24">opérations</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="paiement" data-mce-index="25">paiement</span>. Le <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="détail" data-mce-index="26">détail</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="27">des</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="finalités" data-mce-index="28">finalités</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="29">des</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="traitements" data-mce-index="30">traitements</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="opérés" data-mce-index="31">opérés</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="dans" data-mce-index="32">dans</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="le" data-mce-index="33">le</span> cadre <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="34">des</span> services, <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="ainsi" data-mce-index="35">ainsi</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="que" data-mce-index="36">que</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="37">des</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="informations" data-mce-index="38">informations</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="complémentaires" data-mce-index="39">complémentaires</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sur" data-mce-index="40">sur</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="les" data-mce-index="41">les</span> bases <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="juridiques" data-mce-index="42">juridiques</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="43">des</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="traitements" data-mce-index="44">traitements</span>, la <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="durée" data-mce-index="45">durée</span> de conservation <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="46">des</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="données" data-mce-index="47">données</span>, <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="ou" data-mce-index="48">ou</span> encore <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="les" data-mce-index="49">les</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="garanties" data-mce-index="50">garanties</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sécurité" data-mce-index="51">sécurité</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="et" data-mce-index="52">et</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="confidentialité" data-mce-index="53">confidentialité</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="vos" data-mce-index="54">vos</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="données" data-mce-index="55">données</span>, <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sont" data-mce-index="56">sont</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="indiqués" data-mce-index="57">indiqués</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="dans" data-mce-index="58">dans</span> la&nbsp;<span style="color: rgb(0, 0, 0);" data-mce-style="color: #000000;"><a data-mce-href="https://pim.life/confidentialite" href="https://pim.life/confidentialite" target="_blank" rel="noopener" data-mce-linkchecker-status="valid" style="color: rgb(0, 0, 0);" data-mce-style="color: #000000;" class=""><u><span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="Politique" data-mce-index="59">Politique</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="confidentialité" data-mce-index="60">confidentialité</span></u>.</a></span></span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt; color: black;" data-mce-style="font-size: 10.0pt; color: black;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt; color: black;" data-mce-style="font-size: 10.0pt; color: black;">Pour <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="toute" data-mce-index="0">toute</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="demande" data-mce-index="1">demande</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="renseignement" data-mce-index="2">renseignement</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="concernant" data-mce-index="3">concernant</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="le" data-mce-index="4">le</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="traitement" data-mce-index="5">traitement</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="vos" data-mce-index="6">vos</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="données" data-mce-index="7">données</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="personnelles" data-mce-index="8">personnelles</span>, <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="ou" data-mce-index="9">ou</span> pour <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="exercer" data-mce-index="10">exercer</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="vos" data-mce-index="11">vos</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="droits" data-mce-index="12">droits</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="d’accès" data-mce-index="13">d’accès</span>, de rectification <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="ou" data-mce-index="14">ou</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="d’opposition" data-mce-index="15">d’opposition</span>, <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="vous" data-mce-index="16">vous</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="pouvez" data-mce-index="17">pouvez</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="contacter" data-mce-index="18">contacter</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="le" data-mce-index="19">le</span> service client de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="PIM" data-mce-index="20">PIM</span> par <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="courrier" data-mce-index="21">courrier</span> au 74 Avenue <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="Thiers" data-mce-index="22">Thiers</span>, 33100 BORDEAUX (France) <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="ou" data-mce-index="23">ou</span> par mail <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="à" data-mce-index="24">à</span> <a href="mailto:contact@pim.life">contact@pim.life</a>.</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Propriété intellectuelle&nbsp;</span></u></strong><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">:</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">L’intégralité de l’Application, l’ensemble des appellations, des éléments de forme, des programmes d’ordinateur, des bases de données du site, sont protégés sans considération de frontières notamment par des droits de propriété intellectuelle.</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">A défaut d’autorisation préalable et écrite de la part de la société PIM, toute utilisation en tout ou partie de ces éléments est interdite et passible de poursuites judiciaires, notamment pour contrefaçon.</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;">&nbsp;</span></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><strong><u><span style="font-size: 10.0pt; color: #ed7d31;" data-mce-style="font-size: 10.0pt; color: #ed7d31;">Loi applicable et attribution de compétence&nbsp;:</span></u></strong></p><p style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;" data-mce-style="text-align: justify; margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: Calibri;"><span style="font-size: 10.0pt;" data-mce-style="font-size: 10.0pt;"><span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="L\'utilisation" data-mce-index="0">L\'utilisation</span> de <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="l’Appli" data-mce-index="1">l’Appli</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="PIM" data-mce-index="2">PIM</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="est" data-mce-index="3">est</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="régie" data-mce-index="4">régie</span> par la <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="loi" data-mce-index="5">loi</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="française" data-mce-index="6">française</span>. <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="Seuls" data-mce-index="7">Seuls</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="les" data-mce-index="8">les</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="tribunaux" data-mce-index="9">tribunaux</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="du" data-mce-index="10">du</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="ressort" data-mce-index="11">ressort</span> de la <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="Cour" data-mce-index="12">Cour</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="d\'appel" data-mce-index="13">d\'appel</span> de Bordeaux <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="sont" data-mce-index="14">sont</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="compétents" data-mce-index="15">compétents</span> pour <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="connaître" data-mce-index="16">connaître</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="des" data-mce-index="17">des</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="éventuels" data-mce-index="18">éventuels</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="litiges" data-mce-index="19">litiges</span> <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="découlant" data-mce-index="20">découlant</span> de son <span class="mce-spellchecker-word" data-mce-bogus="1" data-mce-word="utilisation" data-mce-index="21">utilisation</span>.</span></p>';
+    $scope.html = '';
 
     $scope.$on('$ionicView.beforeEnter', function() {
 
@@ -6431,20 +6431,82 @@ angular.module('pim.controllersShared', [])
         Alert.loader(true);
         Go.post(postData).then(function(data) {
             if (data.success == 1) {
-                $scope.html = data.mentionslegales;
+                $scope.html = data.cgv;
             }
         });
     })
 
 })
 
-.controller('tarificationCtrl', function($scope, $cordovaFileOpener2, API, $sce, $stateParams, Go,BASE64_LOGOS, $filter, $ionicModal, $ionicLoading, $cordovaFile, $cordovaFileOpener2) {  
+.controller('tarificationCtrl', function($scope, $cordovaFileOpener2,Alert, API,$translate, User, $sce, $stateParams, Go,BASE64_LOGOS, $filter, $ionicModal, $ionicLoading, $cordovaFile, $cordovaFileOpener2) {  
 
     $scope.trustAsHtml = function(string) {
         return $sce.trustAsHtml(string);
     }; 
 
-    var docDefinition = { 
+
+    $scope.$on('$ionicView.beforeEnter', function() {
+        Alert.loader(false)
+        var postData = {
+            "task": "getGrilleTarifaire"
+        };
+
+        Go.post(postData).then(function(data) {
+            if (data.success == 1) {
+                generatePdf(data.grille);
+                Alert.loader(true)
+            }
+        });
+    })
+
+
+    
+
+
+     
+ 
+
+     
+    var base64ToUint8Array = function (base64) {  
+        var raw = atob(base64);
+        var uint8Array = new Uint8Array(raw.length);
+        for (var i = 0; i < raw.length; i++) {
+        uint8Array[i] = raw.charCodeAt(i);
+        }
+        return uint8Array;
+    }
+
+    var generatePdf = function (PRICINGDATA) {
+
+        var ConnectedUserType;
+        switch( User.GetDetails().isPro ){
+            case '0':
+                ConnectedUserType = $filter('translate')('tarification.perso');
+                break;
+            case '1':
+                ConnectedUserType = $filter('translate')('tarification.pro');
+                break;
+            case '2':
+                ConnectedUserType = $filter('translate')('tarification.assoc');
+                break;
+        }
+
+        var FullMonths = JSON.parse($filter('translate')('statistics.months') );
+        var date = new Date()
+        switch( $translate.use() ){
+            case 'fr':
+                var currenDate = date.getDate()+" "+FullMonths[ date.getMonth() ]+" "+date.getFullYear()
+                break;
+            case 'en':
+                var currenDate = FullMonths[ date.getMonth() ]+" "+date.getDate()+" "+date.getFullYear()
+                break;
+            default:
+                var currenDate = date.getDate()+" "+FullMonths[ date.getMonth() ]+" "+date.getFullYear()
+                break;
+        }
+        
+        
+        var docDefinition = { 
         pageSize: 'A4', 
         pageMargins: [ 20, 20, 20, 20 ],
         footer: { 
@@ -6476,7 +6538,9 @@ angular.module('pim.controllersShared', [])
                         width: 20
                     },
                     {
-                        text: 'TARIFS TTC au 13 avril 2018',
+                        text: $filter('translate')('tarification.date', {
+                            date: currenDate,
+                        }),
                         fontSize: 15,
                         margin: [0,20,0,10],
                         bold: true,
@@ -6484,7 +6548,7 @@ angular.module('pim.controllersShared', [])
                 ]
             }, 
             {
-                text: 'Une Appli mobile prépayée, une tarification transparentes et simple, sans découvert possible, sans frais cachés',
+                text: $filter('translate')('tarification.texte'),
                 fontSize: 10.5,
                 color: '#ef7f31',
                 bold: true,
@@ -6493,38 +6557,76 @@ angular.module('pim.controllersShared', [])
             },
             {
                 table: {
-                    widths: ['*', 90, 90, 90], 
+                    widths: ['*', 120], 
                     headerRows: 1,
                     body:  [ 
                         [ 
-                            { text: "Compte", style: 'tableHeader' }, 
-                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.compte'), style: 'tableHeader' }, 
+                            { text: ConnectedUserType, style: 'tableHeader',  alignment : 'center'}  
                         ],
                         [ 
-                            { text: "Compte courant avec RIB (IBAN) français", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "20 €", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.compte_courant_avec_rib_iban_francais'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.compte_courant_avec_rib_iban_francais
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },  
                         ],
                         [ 
-                            { text: "Historique des transactions", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.historique_des_transactions'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.historique_des_transactions
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },  
                         ],
                         [ 
-                            { text: "4 Portefeuilles virtuels", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'}, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.portefeuilles_virtuels'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.portefeuilles_virtuels
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },   
                         ],
                         [ 
-                            { text: "Frais de gestion annuels", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "10 € / an", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.frais_de_gestion_annuels'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.compte.frais_de_gestion_annuels
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },   
                         ]
                     ]
                 },
@@ -6532,26 +6634,60 @@ angular.module('pim.controllersShared', [])
             },
             {
                 table: {
-                    widths: ['*', 90, 90, 90], 
+                    widths: ['*', 120], 
                     headerRows: 1,
                     body:  [ 
                         [ 
-                            { text: "Virements", style: 'tableHeader' }, 
-                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.virements'), style: 'tableHeader' }, 
+                            { text: ConnectedUserType, style: 'tableHeader',  alignment : 'center'},   
                         ],
                         [ 
-                            { text: "1 Virement entrant - sortant / mois", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.virement_entrant_sortant_mois'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.virements.virement_entrant_sortant_mois
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },    
                         ],
                         [ 
-                            { text: "Virement entrant - sortant additionnel", style: 'tableBody' }, 
-                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
-                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
-                            { text: "0.20 € / virement", style: 'tableBody', alignment : 'center'},  
+                            { text: $filter('translate')('tarification.virement_entrant_sortant_additionne'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.virements.virement_entrant_sortant_additionne
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            }  
+                        ],
+                        [ 
+                            { text: $filter('translate')('tarification.nbrtransibanoffert'), style: 'tableBody' }, 
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.virements.nbrtransibanoffert
+                                ), 
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            }  
                         ]
                     ]
                 },
@@ -6560,38 +6696,80 @@ angular.module('pim.controllersShared', [])
             },
             {
                 table: {
-                    widths: ['*', 90, 90, 90], 
+                    widths: ['*', 120], 
                     headerRows: 1,
                     body:  [ 
                         [ 
                             { text: "Opérations intra - PIM", style: 'tableHeader' }, 
-                            { text: "Particuliers", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Professionnels", style: 'tableHeader',  alignment : 'center'},  
-                            { text: "Associations", style: 'tableHeader', alignment : 'center'},  
+                            { 
+                                    text: ConnectedUserType, 
+                                style: 'tableHeader',  
+                                alignment : 'center'
+                            },   
                         ],
                         [ 
                             { text: "Paiement par QR Code", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.paiement_par_qr_code
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },    
                         ],
                         [ 
                             { text: "Encaissement par QR Code", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "1,2 %", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.encaissement_par_qr_code
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },     
                         ],
                         [ 
                             { text: "Transfert d’argent à distance", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.transfert_dargent_distance
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },   
                         ],
                         [ 
                             { text: "Encaissement à distance", style: 'tableBody' }, 
-                            { text: "GRATUIT", style: 'tableBody', alignment : 'center'},  
-                            { text: "1, 2 %", style: 'tableBody', alignment : 'center'},  
-                           { text: "GRATUIT", style: 'tableBody', alignment : 'center'},    
+                            { 
+                                text: str_replace( 
+                                    ['{{gratuit}}','{{virement}}','{{an}}'], 
+                                    [
+                                        $filter('translate')('tarification.gratuit'),
+                                        $filter('translate')('tarification.virement'),
+                                        $filter('translate')('tarification.an')
+                                    ],
+                                    PRICINGDATA.operations_intra_pim.encaissement_a_distance
+                                ),  
+                                style: 'tableBody', 
+                                alignment : 'center'
+                            },    
                         ]
                     ]
                 },
@@ -6633,18 +6811,7 @@ angular.module('pim.controllersShared', [])
                 bold: true
             }
         }
-    }; 
-    var base64ToUint8Array = function (base64) {  
-        var raw = atob(base64);
-        var uint8Array = new Uint8Array(raw.length);
-        for (var i = 0; i < raw.length; i++) {
-        uint8Array[i] = raw.charCodeAt(i);
-        }
-        return uint8Array;
-    }
-
-    var generatePdf = function function_name(argument) {
- 
+    };
 
         var pdf = pdfMake.createPdf(docDefinition);
 
@@ -6652,6 +6819,7 @@ angular.module('pim.controllersShared', [])
             var pdfOutput = base64ToUint8Array(output) 
             var blob = new Blob([pdfOutput], {type: 'application/pdf'}); 
             $scope.pdfUrl = URL.createObjectURL(blob); 
+            Alert.loader(false)
         });
     }
 
@@ -6676,9 +6844,7 @@ angular.module('pim.controllersShared', [])
         return new Blob(byteArrays, { type: contentType });
     }
 
-    
-
-    generatePdf();
+     
 
     $scope.download = function () {
         console.log("HERE")
